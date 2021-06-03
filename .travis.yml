@@ -1,0 +1,29 @@
+sudo: required
+
+services:
+  - docker
+
+language: python
+
+python:
+  - "3.8"
+
+install:
+  - pip install pipenv
+  - pipenv install --dev --deploy
+
+script:
+  - PIPENV_PYUP_API_KEY="" pipenv check
+  - pipenv run flake8
+  - pipenv run pytest test --cov=. --cov-report term-missing
+
+after_success:
+  - pipenv run codecov
+
+env:
+  global:
+    - PIPENV_IGNORE_VIRTUALENVS=1
+
+branches:
+  only:
+    - master

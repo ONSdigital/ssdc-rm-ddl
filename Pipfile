@@ -1,0 +1,17 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+codecov = "==2.0.22"
+flake8 = "*"
+pytest = "==5.4.1"
+pytest-cov = "==2.10.1"
+
+
+[packages]
+psycopg2-binary = "*"
+
+[requires]
+python_version = "3.8"
