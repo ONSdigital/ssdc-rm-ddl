@@ -32,6 +32,7 @@
 
     create table collection_exercise (
        id uuid not null,
+        name varchar(255),
         survey_id uuid,
         primary key (id)
     );
