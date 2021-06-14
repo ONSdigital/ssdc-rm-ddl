@@ -4,11 +4,10 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-codecov = "==2.0.22"
+codecov = "*"
 flake8 = "*"
-pytest = "==5.4.1"
-pytest-cov = "==2.10.1"
-
+pytest = "*"
+pytest-cov = "*"
 
 [packages]
 psycopg2-binary = "*"
