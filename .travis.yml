@@ -13,7 +13,7 @@ install:
   - pipenv install --dev --deploy
 
 script:
-  - PIPENV_PYUP_API_KEY="" pipenv check
+  - PIPENV_PYUP_API_KEY="" pipenv check -i 40291
   - pipenv run flake8
   - pipenv run pytest test --cov=. --cov-report term-missing
 
