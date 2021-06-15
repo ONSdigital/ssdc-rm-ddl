@@ -37,6 +37,22 @@
         primary key (id)
     );
 
+    create table event (
+       id uuid not null,
+        event_channel varchar(255),
+        event_date timestamp with time zone,
+        event_description varchar(255),
+        event_payload jsonb,
+        event_source varchar(255),
+        event_transaction_id uuid,
+        event_type varchar(255),
+        message_timestamp Timestamp with time zone,
+        rm_event_processed timestamp with time zone,
+        caze_id uuid,
+        uac_qid_link_id uuid,
+        primary key (id)
+    );
+
     create table survey (
        id uuid not null,
         name varchar(255),
@@ -87,6 +103,16 @@ create index cases_case_ref_idx on cases (case_ref);
        add constraint FKrv1ksptm37exmrbj0yutm6fla 
        foreign key (survey_id) 
        references survey;
+
+    alter table if exists event 
+       add constraint FKhgvw8xq5panw486l3varef7pk 
+       foreign key (caze_id) 
+       references cases;
+
+    alter table if exists event 
+       add constraint FKamu77co5m9upj2b3c1oun21er 
+       foreign key (uac_qid_link_id) 
+       references uac_qid_link;
 
     alter table if exists uac_qid_link 
        add constraint FKngo7bm72f0focdujjma78t4nk 
