@@ -53,6 +53,34 @@
         primary key (id)
     );
 
+    create table job (
+       id uuid not null,
+        bulk_process varchar(255),
+        created_at timestamp with time zone,
+        created_by varchar(255),
+        fatal_error_description varchar(255),
+        file_id uuid,
+        file_name varchar(255),
+        file_row_count int4,
+        job_status varchar(255),
+        last_updated_at timestamp with time zone,
+        processing_row_number int4,
+        staging_row_number int4,
+        collection_exercise_id uuid,
+        primary key (id)
+    );
+
+    create table job_row (
+       id uuid not null,
+        job_row_status varchar(255),
+        original_row_data bytea,
+        original_row_line_number int4,
+        row_data jsonb,
+        validation_error_descriptions varchar(255),
+        job_id uuid,
+        primary key (id)
+    );
+
     create table survey (
        id uuid not null,
         name varchar(255),
@@ -68,6 +96,17 @@
         uac varchar(255),
         caze_id uuid,
         primary key (id)
+    );
+
+    create table user (
+       id uuid not null,
+        email varchar(255),
+        primary key (id)
+    );
+
+    create table user_bulk_processes (
+       user_id uuid not null,
+        bulk_processes varchar(255)
     );
 
     create table wave_of_contact (
@@ -114,10 +153,25 @@ create index cases_case_ref_idx on cases (case_ref);
        foreign key (uac_qid_link_id) 
        references uac_qid_link;
 
+    alter table if exists job 
+       add constraint FK6hra36ow5xge19dg3w1m7fd4r 
+       foreign key (collection_exercise_id) 
+       references collection_exercise;
+
+    alter table if exists job_row 
+       add constraint FK8motlil4mayre4vvdipnjime0 
+       foreign key (job_id) 
+       references job;
+
     alter table if exists uac_qid_link 
        add constraint FKngo7bm72f0focdujjma78t4nk 
        foreign key (caze_id) 
        references cases;
+
+    alter table if exists user_bulk_processes 
+       add constraint FKr3vw2rqbli09ry94pnwtp6btb 
+       foreign key (user_id) 
+       references user;
 
     alter table if exists wave_of_contact 
        add constraint FKcdvs1vhl3wiurb8w4o1h67gib 
