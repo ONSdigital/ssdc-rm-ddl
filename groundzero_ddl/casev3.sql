@@ -98,15 +98,15 @@
         primary key (id)
     );
 
-    create table user (
-       id uuid not null,
-        email varchar(255),
-        primary key (id)
-    );
-
     create table user_bulk_processes (
        user_id uuid not null,
         bulk_processes varchar(255)
+    );
+
+    create table users (
+       id uuid not null,
+        email varchar(255),
+        primary key (id)
     );
 
     create table wave_of_contact (
@@ -169,9 +169,9 @@ create index cases_case_ref_idx on cases (case_ref);
        references cases;
 
     alter table if exists user_bulk_processes 
-       add constraint FKr3vw2rqbli09ry94pnwtp6btb 
+       add constraint FKg7asr6shqyd7ydsg01oq0dijy 
        foreign key (user_id) 
-       references user;
+       references users;
 
     alter table if exists wave_of_contact 
        add constraint FKcdvs1vhl3wiurb8w4o1h67gib 
