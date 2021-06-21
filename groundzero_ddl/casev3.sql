@@ -55,7 +55,6 @@
 
     create table job (
        id uuid not null,
-        bulk_process varchar(255),
         created_at timestamp with time zone,
         created_by varchar(255),
         fatal_error_description varchar(255),
@@ -84,6 +83,7 @@
     create table survey (
        id uuid not null,
         name varchar(255),
+        sample_validation_rules jsonb,
         primary key (id)
     );
 
@@ -98,15 +98,15 @@
         primary key (id)
     );
 
-    create table user_bulk_processes (
-       user_id uuid not null,
-        bulk_processes varchar(255)
-    );
-
     create table users (
        id uuid not null,
         email varchar(255),
         primary key (id)
+    );
+
+    create table users_survey (
+       user_id uuid not null,
+        surveys_id uuid not null
     );
 
     create table wave_of_contact (
@@ -122,6 +122,9 @@
         primary key (id)
     );
 create index cases_case_ref_idx on cases (case_ref);
+
+    alter table if exists users_survey 
+       add constraint UK_6m5sfm18vispsa7os6vhrt09r unique (surveys_id);
 
     alter table if exists cases 
        add constraint FKrl77p02uu7a253tn2ro5mitv5 
@@ -168,8 +171,13 @@ create index cases_case_ref_idx on cases (case_ref);
        foreign key (caze_id) 
        references cases;
 
-    alter table if exists user_bulk_processes 
-       add constraint FKg7asr6shqyd7ydsg01oq0dijy 
+    alter table if exists users_survey 
+       add constraint FKlru4axdl8yjkpa9srv4xu814s 
+       foreign key (surveys_id) 
+       references survey;
+
+    alter table if exists users_survey 
+       add constraint FKedd4y3ae5jnsinluncc2e22u2 
        foreign key (user_id) 
        references users;
 
