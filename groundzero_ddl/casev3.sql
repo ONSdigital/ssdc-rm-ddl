@@ -104,7 +104,7 @@
         primary key (id)
     );
 
-    create table users_surveys (
+    create table users_survey (
        user_id uuid not null,
         surveys_id uuid not null
     );
@@ -123,8 +123,8 @@
     );
 create index cases_case_ref_idx on cases (case_ref);
 
-    alter table if exists users_surveys 
-       add constraint UK_dj94hub27g79tf3tbg2plyh8r unique (surveys_id);
+    alter table if exists users_survey 
+       add constraint UK_6m5sfm18vispsa7os6vhrt09r unique (surveys_id);
 
     alter table if exists cases 
        add constraint FKrl77p02uu7a253tn2ro5mitv5 
@@ -171,13 +171,13 @@ create index cases_case_ref_idx on cases (case_ref);
        foreign key (caze_id) 
        references cases;
 
-    alter table if exists users_surveys 
-       add constraint FKdp862xbyiaew758djhlgf9i4h 
+    alter table if exists users_survey 
+       add constraint FKlru4axdl8yjkpa9srv4xu814s 
        foreign key (surveys_id) 
        references survey;
 
-    alter table if exists users_surveys 
-       add constraint FKeopmks0b11k8cde0vnpkejrgq 
+    alter table if exists users_survey 
+       add constraint FKedd4y3ae5jnsinluncc2e22u2 
        foreign key (user_id) 
        references users;
 
