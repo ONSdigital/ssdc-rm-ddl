@@ -53,6 +53,28 @@
         primary key (id)
     );
 
+    create table fulfilment_next_trigger (
+       id uuid not null,
+        trigger_date_time timestamp with time zone,
+        primary key (id)
+    );
+
+    create table fulfilment_template (
+       fulfilment_code varchar(255) not null,
+        print_supplier varchar(255),
+        template jsonb,
+        primary key (fulfilment_code)
+    );
+
+    create table fulfilment_to_process (
+       id  bigserial not null,
+        batch_id uuid,
+        batch_quantity int4,
+        fulfilment_code varchar(255),
+        caze_id uuid,
+        primary key (id)
+    );
+
     create table job (
        id uuid not null,
         created_at timestamp with time zone,
@@ -155,6 +177,11 @@ create index cases_case_ref_idx on cases (case_ref);
        add constraint FKamu77co5m9upj2b3c1oun21er 
        foreign key (uac_qid_link_id) 
        references uac_qid_link;
+
+    alter table if exists fulfilment_to_process 
+       add constraint FK9cu8edtrwirw777f4x1qej03m 
+       foreign key (caze_id) 
+       references cases;
 
     alter table if exists job 
        add constraint FK6hra36ow5xge19dg3w1m7fd4r 
