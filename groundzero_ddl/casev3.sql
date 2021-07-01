@@ -1,4 +1,17 @@
 
+    create table action_rule (
+       id uuid not null,
+        classifiers bytea not null,
+        has_triggered BOOLEAN DEFAULT false not null,
+        pack_code varchar(255),
+        print_supplier varchar(255),
+        template jsonb,
+        trigger_date_time timestamp with time zone,
+        type varchar(255),
+        collection_exercise_id uuid,
+        primary key (id)
+    );
+
     create table cases (
        id uuid not null,
         address_invalid BOOLEAN DEFAULT false not null,
@@ -18,8 +31,8 @@
        id  bigserial not null,
         batch_id uuid,
         batch_quantity int4 not null,
+        action_rule_id uuid,
         caze_id uuid,
-        wave_of_contact_id uuid,
         primary key (id)
     );
 
@@ -130,23 +143,15 @@
        user_id uuid not null,
         surveys_id uuid not null
     );
-
-    create table wave_of_contact (
-       id uuid not null,
-        classifiers bytea not null,
-        has_triggered BOOLEAN DEFAULT false not null,
-        pack_code varchar(255),
-        print_supplier varchar(255),
-        template jsonb,
-        trigger_date_time timestamp with time zone,
-        type varchar(255),
-        collection_exercise_id uuid,
-        primary key (id)
-    );
 create index cases_case_ref_idx on cases (case_ref);
 
     alter table if exists users_survey 
        add constraint UK_6m5sfm18vispsa7os6vhrt09r unique (surveys_id);
+
+    alter table if exists action_rule 
+       add constraint FK6twtf1ksysh99e4g2ejmoy6c1 
+       foreign key (collection_exercise_id) 
+       references collection_exercise;
 
     alter table if exists cases 
        add constraint FKrl77p02uu7a253tn2ro5mitv5 
@@ -154,14 +159,14 @@ create index cases_case_ref_idx on cases (case_ref);
        references collection_exercise;
 
     alter table if exists case_to_process 
+       add constraint FKmqcrb58vhx7a7qcyyjjvm1y31 
+       foreign key (action_rule_id) 
+       references action_rule;
+
+    alter table if exists case_to_process 
        add constraint FK104hqblc26y5xjehv2x8dg4k3 
        foreign key (caze_id) 
        references cases;
-
-    alter table if exists case_to_process 
-       add constraint FKao8gf723128xjhos3vjh2h475 
-       foreign key (wave_of_contact_id) 
-       references wave_of_contact;
 
     alter table if exists collection_exercise 
        add constraint FKrv1ksptm37exmrbj0yutm6fla 
@@ -207,8 +212,3 @@ create index cases_case_ref_idx on cases (case_ref);
        add constraint FKedd4y3ae5jnsinluncc2e22u2 
        foreign key (user_id) 
        references users;
-
-    alter table if exists wave_of_contact 
-       add constraint FKcdvs1vhl3wiurb8w4o1h67gib 
-       foreign key (collection_exercise_id) 
-       references collection_exercise;
