@@ -1,14 +1,19 @@
 
     create table action_rule (
        id uuid not null,
-        classifiers bytea not null,
+        classifiers bytea,
         has_triggered BOOLEAN DEFAULT false not null,
-        pack_code varchar(255),
-        print_supplier varchar(255),
-        template jsonb,
         trigger_date_time timestamp with time zone,
         type varchar(255),
         collection_exercise_id uuid,
+        print_template_pack_code varchar(255),
+        primary key (id)
+    );
+
+    create table action_rule_survey_print_template (
+       id uuid not null,
+        print_template_pack_code varchar(255),
+        survey_id uuid,
         primary key (id)
     );
 
@@ -72,19 +77,19 @@
         primary key (id)
     );
 
-    create table fulfilment_template (
-       fulfilment_code varchar(255) not null,
-        print_supplier varchar(255),
-        template jsonb,
-        primary key (fulfilment_code)
+    create table fulfilment_survey_print_template (
+       id uuid not null,
+        print_template_pack_code varchar(255),
+        survey_id uuid,
+        primary key (id)
     );
 
     create table fulfilment_to_process (
        id  bigserial not null,
         batch_id uuid,
         batch_quantity int4,
-        fulfilment_code varchar(255),
         caze_id uuid,
+        print_template_pack_code varchar(255),
         primary key (id)
     );
 
@@ -113,6 +118,13 @@
         validation_error_descriptions varchar(255),
         job_id uuid,
         primary key (id)
+    );
+
+    create table print_template (
+       pack_code varchar(255) not null,
+        print_supplier varchar(255),
+        template jsonb,
+        primary key (pack_code)
     );
 
     create table survey (
@@ -153,6 +165,21 @@ create index cases_case_ref_idx on cases (case_ref);
        foreign key (collection_exercise_id) 
        references collection_exercise;
 
+    alter table if exists action_rule 
+       add constraint FK5pwarbhvswl774xodfnxgasvi 
+       foreign key (print_template_pack_code) 
+       references print_template;
+
+    alter table if exists action_rule_survey_print_template 
+       add constraint FK2p5hm28uix0uqs3gl2mdne2a7 
+       foreign key (print_template_pack_code) 
+       references print_template;
+
+    alter table if exists action_rule_survey_print_template 
+       add constraint FKfqpwm5s5wjqfvm7p2vhmw2e59 
+       foreign key (survey_id) 
+       references survey;
+
     alter table if exists cases 
        add constraint FKrl77p02uu7a253tn2ro5mitv5 
        foreign key (collection_exercise_id) 
@@ -183,10 +210,25 @@ create index cases_case_ref_idx on cases (case_ref);
        foreign key (uac_qid_link_id) 
        references uac_qid_link;
 
+    alter table if exists fulfilment_survey_print_template 
+       add constraint FKf1n5yseu1tlkmeasblbsxw9ky 
+       foreign key (print_template_pack_code) 
+       references print_template;
+
+    alter table if exists fulfilment_survey_print_template 
+       add constraint FKkarksqk2he61rw37g8hp0jvjj 
+       foreign key (survey_id) 
+       references survey;
+
     alter table if exists fulfilment_to_process 
        add constraint FK9cu8edtrwirw777f4x1qej03m 
        foreign key (caze_id) 
        references cases;
+
+    alter table if exists fulfilment_to_process 
+       add constraint FK8a3y4pwp485sgxxlr064n7rxc 
+       foreign key (print_template_pack_code) 
+       references print_template;
 
     alter table if exists job 
        add constraint FK6hra36ow5xge19dg3w1m7fd4r 
