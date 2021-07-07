@@ -145,20 +145,39 @@
         primary key (id)
     );
 
+    create table user_group (
+       id uuid not null,
+        primary key (id)
+    );
+
+    create table user_group_admin (
+       id uuid not null,
+        group_id uuid,
+        user_id uuid,
+        primary key (id)
+    );
+
+    create table user_group_member (
+       id uuid not null,
+        group_id uuid,
+        user_id uuid,
+        primary key (id)
+    );
+
+    create table user_group_permission (
+       id uuid not null,
+        authorised_activity varchar(255),
+        group_id uuid,
+        survey_id uuid,
+        primary key (id)
+    );
+
     create table users (
        id uuid not null,
         email varchar(255),
         primary key (id)
     );
-
-    create table users_survey (
-       user_id uuid not null,
-        surveys_id uuid not null
-    );
 create index cases_case_ref_idx on cases (case_ref);
-
-    alter table if exists users_survey 
-       add constraint UK_6m5sfm18vispsa7os6vhrt09r unique (surveys_id);
 
     alter table if exists action_rule 
        add constraint FK6twtf1ksysh99e4g2ejmoy6c1 
@@ -245,12 +264,32 @@ create index cases_case_ref_idx on cases (case_ref);
        foreign key (caze_id) 
        references cases;
 
-    alter table if exists users_survey 
-       add constraint FKlru4axdl8yjkpa9srv4xu814s 
-       foreign key (surveys_id) 
-       references survey;
+    alter table if exists user_group_admin 
+       add constraint FKc7secqw35qa62vst6c8fvmnkc 
+       foreign key (group_id) 
+       references user_group;
 
-    alter table if exists users_survey 
-       add constraint FKedd4y3ae5jnsinluncc2e22u2 
+    alter table if exists user_group_admin 
+       add constraint FK44cbs8vh8ugmfgduvjb9j02kj 
        foreign key (user_id) 
        references users;
+
+    alter table if exists user_group_member 
+       add constraint FKnyc05vqmhd9hq1hv6wexhdu4t 
+       foreign key (group_id) 
+       references user_group;
+
+    alter table if exists user_group_member 
+       add constraint FKjbhg45atfwht2ji7xu241m4qp 
+       foreign key (user_id) 
+       references users;
+
+    alter table if exists user_group_permission 
+       add constraint FKao3eqnwgryopngpoq65744h2m 
+       foreign key (group_id) 
+       references user_group;
+
+    alter table if exists user_group_permission 
+       add constraint FKep4hjlw1esp4s8p3row2syxjq 
+       foreign key (survey_id) 
+       references survey;
