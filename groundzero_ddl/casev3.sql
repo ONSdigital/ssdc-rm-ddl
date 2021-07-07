@@ -1,14 +1,19 @@
 
     create table action_rule (
        id uuid not null,
-        classifiers bytea not null,
+        classifiers bytea,
         has_triggered BOOLEAN DEFAULT false not null,
-        pack_code varchar(255),
-        print_supplier varchar(255),
-        template jsonb,
         trigger_date_time timestamp with time zone,
         type varchar(255),
         collection_exercise_id uuid,
+        print_template_pack_code varchar(255),
+        primary key (id)
+    );
+
+    create table action_rule_survey_print_template (
+       id uuid not null,
+        print_template_pack_code varchar(255),
+        survey_id uuid,
         primary key (id)
     );
 
@@ -72,19 +77,19 @@
         primary key (id)
     );
 
-    create table fulfilment_template (
-       fulfilment_code varchar(255) not null,
-        print_supplier varchar(255),
-        template jsonb,
-        primary key (fulfilment_code)
+    create table fulfilment_survey_print_template (
+       id uuid not null,
+        print_template_pack_code varchar(255),
+        survey_id uuid,
+        primary key (id)
     );
 
     create table fulfilment_to_process (
        id  bigserial not null,
         batch_id uuid,
         batch_quantity int4,
-        fulfilment_code varchar(255),
         caze_id uuid,
+        print_template_pack_code varchar(255),
         primary key (id)
     );
 
@@ -115,6 +120,13 @@
         primary key (id)
     );
 
+    create table print_template (
+       pack_code varchar(255) not null,
+        print_supplier varchar(255),
+        template jsonb,
+        primary key (pack_code)
+    );
+
     create table survey (
        id uuid not null,
         name varchar(255),
@@ -133,25 +145,63 @@
         primary key (id)
     );
 
+    create table user_group (
+       id uuid not null,
+        name varchar(255),
+        primary key (id)
+    );
+
+    create table user_group_admin (
+       id uuid not null,
+        group_id uuid,
+        user_id uuid,
+        primary key (id)
+    );
+
+    create table user_group_member (
+       id uuid not null,
+        group_id uuid,
+        user_id uuid,
+        primary key (id)
+    );
+
+    create table user_group_permission (
+       id uuid not null,
+        authorised_activity varchar(255),
+        group_id uuid,
+        survey_id uuid,
+        primary key (id)
+    );
+
     create table users (
        id uuid not null,
         email varchar(255),
         primary key (id)
     );
-
-    create table users_survey (
-       user_id uuid not null,
-        surveys_id uuid not null
-    );
 create index cases_case_ref_idx on cases (case_ref);
 
-    alter table if exists users_survey 
-       add constraint UK_6m5sfm18vispsa7os6vhrt09r unique (surveys_id);
+    alter table if exists users 
+       add constraint users_email_idx unique (email);
 
     alter table if exists action_rule 
        add constraint FK6twtf1ksysh99e4g2ejmoy6c1 
        foreign key (collection_exercise_id) 
        references collection_exercise;
+
+    alter table if exists action_rule 
+       add constraint FK5pwarbhvswl774xodfnxgasvi 
+       foreign key (print_template_pack_code) 
+       references print_template;
+
+    alter table if exists action_rule_survey_print_template 
+       add constraint FK2p5hm28uix0uqs3gl2mdne2a7 
+       foreign key (print_template_pack_code) 
+       references print_template;
+
+    alter table if exists action_rule_survey_print_template 
+       add constraint FKfqpwm5s5wjqfvm7p2vhmw2e59 
+       foreign key (survey_id) 
+       references survey;
 
     alter table if exists cases 
        add constraint FKrl77p02uu7a253tn2ro5mitv5 
@@ -183,10 +233,25 @@ create index cases_case_ref_idx on cases (case_ref);
        foreign key (uac_qid_link_id) 
        references uac_qid_link;
 
+    alter table if exists fulfilment_survey_print_template 
+       add constraint FKf1n5yseu1tlkmeasblbsxw9ky 
+       foreign key (print_template_pack_code) 
+       references print_template;
+
+    alter table if exists fulfilment_survey_print_template 
+       add constraint FKkarksqk2he61rw37g8hp0jvjj 
+       foreign key (survey_id) 
+       references survey;
+
     alter table if exists fulfilment_to_process 
        add constraint FK9cu8edtrwirw777f4x1qej03m 
        foreign key (caze_id) 
        references cases;
+
+    alter table if exists fulfilment_to_process 
+       add constraint FK8a3y4pwp485sgxxlr064n7rxc 
+       foreign key (print_template_pack_code) 
+       references print_template;
 
     alter table if exists job 
        add constraint FK6hra36ow5xge19dg3w1m7fd4r 
@@ -203,12 +268,32 @@ create index cases_case_ref_idx on cases (case_ref);
        foreign key (caze_id) 
        references cases;
 
-    alter table if exists users_survey 
-       add constraint FKlru4axdl8yjkpa9srv4xu814s 
-       foreign key (surveys_id) 
-       references survey;
+    alter table if exists user_group_admin 
+       add constraint FKc7secqw35qa62vst6c8fvmnkc 
+       foreign key (group_id) 
+       references user_group;
 
-    alter table if exists users_survey 
-       add constraint FKedd4y3ae5jnsinluncc2e22u2 
+    alter table if exists user_group_admin 
+       add constraint FK44cbs8vh8ugmfgduvjb9j02kj 
        foreign key (user_id) 
        references users;
+
+    alter table if exists user_group_member 
+       add constraint FKnyc05vqmhd9hq1hv6wexhdu4t 
+       foreign key (group_id) 
+       references user_group;
+
+    alter table if exists user_group_member 
+       add constraint FKjbhg45atfwht2ji7xu241m4qp 
+       foreign key (user_id) 
+       references users;
+
+    alter table if exists user_group_permission 
+       add constraint FKao3eqnwgryopngpoq65744h2m 
+       foreign key (group_id) 
+       references user_group;
+
+    alter table if exists user_group_permission 
+       add constraint FKep4hjlw1esp4s8p3row2syxjq 
+       foreign key (survey_id) 
+       references survey;
