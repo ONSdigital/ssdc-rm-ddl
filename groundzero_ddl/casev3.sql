@@ -147,6 +147,7 @@
 
     create table user_group (
        id uuid not null,
+        name varchar(255),
         primary key (id)
     );
 
@@ -178,6 +179,9 @@
         primary key (id)
     );
 create index cases_case_ref_idx on cases (case_ref);
+
+    alter table if exists users 
+       add constraint users_email_idx unique (email);
 
     alter table if exists action_rule 
        add constraint FK6twtf1ksysh99e4g2ejmoy6c1 
