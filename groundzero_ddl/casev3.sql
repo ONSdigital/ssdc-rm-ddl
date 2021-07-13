@@ -26,6 +26,7 @@
         receipt_received BOOLEAN DEFAULT false not null,
         refusal_received varchar(255),
         sample jsonb,
+        sample_sensitive jsonb,
         secret_sequence_number serial,
         survey_launched BOOLEAN DEFAULT false not null,
         collection_exercise_id uuid,
