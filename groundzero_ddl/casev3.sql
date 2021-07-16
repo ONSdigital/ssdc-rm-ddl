@@ -131,7 +131,9 @@
     create table survey (
        id uuid not null,
         name varchar(255),
+        sample_separator char(1),
         sample_validation_rules jsonb,
+        sample_with_header_row boolean,
         primary key (id)
     );
 
