@@ -179,8 +179,7 @@
         email varchar(255),
         primary key (id)
     );
-    create index cases_case_ref_idx on cases (case_ref);
-    create index case_sample_idx on cases using gin(sample);
+create index cases_case_ref_idx on cases (case_ref);
 
     alter table if exists users 
        add constraint users_email_idx unique (email);
