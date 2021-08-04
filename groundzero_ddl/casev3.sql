@@ -121,6 +121,13 @@
         primary key (id)
     );
 
+    create table message_to_send (
+       id uuid not null,
+        destination_topic varchar(255),
+        message_body bytea,
+        primary key (id)
+    );
+
     create table print_template (
        pack_code varchar(255) not null,
         print_supplier varchar(255),
