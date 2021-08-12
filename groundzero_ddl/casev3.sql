@@ -58,6 +58,7 @@
 
     create table event (
        id uuid not null,
+        created_by varchar(255),
         event_channel varchar(255),
         event_date timestamp with time zone,
         event_description varchar(255),
