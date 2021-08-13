@@ -19,9 +19,9 @@
 
     create table cases (
        id uuid not null,
-        address_invalid BOOLEAN DEFAULT false not null,
         case_ref int8,
         created_at timestamp with time zone,
+        invalid BOOLEAN DEFAULT false not null,
         last_updated_at timestamp with time zone,
         receipt_received BOOLEAN DEFAULT false not null,
         refusal_received varchar(255),
