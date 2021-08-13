@@ -86,6 +86,13 @@
         primary key (id)
     );
 
+    create table fulfilment_survey_sms_template (
+       id uuid not null,
+        sms_template_pack_code varchar(255),
+        survey_id uuid,
+        primary key (id)
+    );
+
     create table fulfilment_to_process (
        id  bigserial not null,
         batch_id uuid,
@@ -136,6 +143,13 @@
         primary key (pack_code)
     );
 
+    create table sms_template (
+       pack_code varchar(255) not null,
+        notify_id uuid not null,
+        template jsonb not null,
+        primary key (pack_code)
+    );
+
     create table survey (
        id uuid not null,
         name varchar(255),
@@ -150,8 +164,8 @@
         active BOOLEAN DEFAULT true not null,
         created_at timestamp with time zone,
         last_updated_at timestamp with time zone,
-        qid varchar(255),
-        uac varchar(255),
+        qid varchar(255) not null,
+        uac varchar(255) not null,
         caze_id uuid,
         primary key (id)
     );
@@ -251,6 +265,16 @@ create index cases_case_ref_idx on cases (case_ref);
 
     alter table if exists fulfilment_survey_print_template 
        add constraint FKkarksqk2he61rw37g8hp0jvjj 
+       foreign key (survey_id) 
+       references survey;
+
+    alter table if exists fulfilment_survey_sms_template 
+       add constraint FKqpoh4166ajt0h9qxwq43asj48 
+       foreign key (sms_template_pack_code) 
+       references sms_template;
+
+    alter table if exists fulfilment_survey_sms_template 
+       add constraint FKi9auhquvx2gipducjycr08ti1 
        foreign key (survey_id) 
        references survey;
 
