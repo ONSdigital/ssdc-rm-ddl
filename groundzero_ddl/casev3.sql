@@ -19,9 +19,9 @@
 
     create table cases (
        id uuid not null,
-        address_invalid BOOLEAN DEFAULT false not null,
         case_ref int8,
         created_at timestamp with time zone,
+        invalid BOOLEAN DEFAULT false not null,
         last_updated_at timestamp with time zone,
         receipt_received BOOLEAN DEFAULT false not null,
         refusal_received varchar(255),
@@ -58,16 +58,17 @@
 
     create table event (
        id uuid not null,
+        channel varchar(255),
+        correlation_id uuid,
         created_by varchar(255),
-        event_channel varchar(255),
-        event_date timestamp with time zone,
-        event_description varchar(255),
-        event_payload jsonb,
-        event_source varchar(255),
-        event_transaction_id uuid,
-        event_type varchar(255),
+        date_time timestamp with time zone,
+        description varchar(255),
+        message_id uuid,
         message_timestamp Timestamp with time zone,
-        rm_event_processed timestamp with time zone,
+        payload jsonb,
+        processed_at timestamp with time zone,
+        source varchar(255),
+        type varchar(255),
         caze_id uuid,
         uac_qid_link_id uuid,
         primary key (id)
