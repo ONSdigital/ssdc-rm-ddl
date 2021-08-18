@@ -165,8 +165,8 @@
         active BOOLEAN DEFAULT true not null,
         created_at timestamp with time zone,
         last_updated_at timestamp with time zone,
-        qid varchar(255) not null,
-        uac varchar(255) not null,
+        qid varchar(255),
+        uac varchar(255),
         caze_id uuid,
         primary key (id)
     );
