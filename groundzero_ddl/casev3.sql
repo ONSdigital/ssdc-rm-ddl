@@ -127,7 +127,6 @@
        id uuid not null,
         destination_topic varchar(255),
         message_body bytea,
-        send_to_our_project boolean,
         primary key (id)
     );
 
