@@ -147,7 +147,7 @@
 
     create table sms_template (
        pack_code varchar(255) not null,
-        notify_id uuid not null,
+        notify_template_id uuid not null,
         template jsonb not null,
         primary key (pack_code)
     );
