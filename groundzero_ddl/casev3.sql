@@ -3,17 +3,17 @@
        id uuid not null,
         classifiers bytea,
         has_triggered BOOLEAN DEFAULT false not null,
-        trigger_date_time timestamp with time zone,
-        type varchar(255),
-        collection_exercise_id uuid,
+        trigger_date_time timestamp with time zone not null,
+        type varchar(255) not null,
+        collection_exercise_id uuid not null,
         print_template_pack_code varchar(255),
         primary key (id)
     );
 
     create table action_rule_survey_print_template (
        id uuid not null,
-        print_template_pack_code varchar(255),
-        survey_id uuid,
+        print_template_pack_code varchar(255) not null,
+        survey_id uuid not null,
         primary key (id)
     );
 
@@ -29,46 +29,46 @@
         sample_sensitive jsonb,
         secret_sequence_number serial,
         survey_launched BOOLEAN DEFAULT false not null,
-        collection_exercise_id uuid,
+        collection_exercise_id uuid not null,
         primary key (id)
     );
 
     create table case_to_process (
        id  bigserial not null,
-        batch_id uuid,
+        batch_id uuid not null,
         batch_quantity int4 not null,
-        action_rule_id uuid,
-        caze_id uuid,
+        action_rule_id uuid not null,
+        caze_id uuid not null,
         primary key (id)
     );
 
     create table cluster_leader (
        id uuid not null,
-        host_last_seen_alive_at timestamp with time zone,
-        host_name varchar(255),
+        host_last_seen_alive_at timestamp with time zone not null,
+        host_name varchar(255) not null,
         primary key (id)
     );
 
     create table collection_exercise (
        id uuid not null,
-        name varchar(255),
-        survey_id uuid,
+        name varchar(255) not null,
+        survey_id uuid not null,
         primary key (id)
     );
 
     create table event (
        id uuid not null,
-        channel varchar(255),
-        correlation_id uuid,
+        channel varchar(255) not null,
+        correlation_id uuid not null,
         created_by varchar(255),
-        date_time timestamp with time zone,
-        description varchar(255),
-        message_id uuid,
-        message_timestamp Timestamp with time zone,
+        date_time timestamp with time zone not null,
+        description varchar(255) not null,
+        message_id uuid not null,
+        message_timestamp Timestamp with time zone not null,
         payload jsonb,
-        processed_at timestamp with time zone,
-        source varchar(255),
-        type varchar(255),
+        processed_at timestamp with time zone not null,
+        source varchar(255) not null,
+        type varchar(255) not null,
         caze_id uuid,
         uac_qid_link_id uuid,
         primary key (id)
@@ -76,21 +76,21 @@
 
     create table fulfilment_next_trigger (
        id uuid not null,
-        trigger_date_time timestamp with time zone,
+        trigger_date_time timestamp with time zone not null,
         primary key (id)
     );
 
     create table fulfilment_survey_print_template (
        id uuid not null,
-        print_template_pack_code varchar(255),
-        survey_id uuid,
+        print_template_pack_code varchar(255) not null,
+        survey_id uuid not null,
         primary key (id)
     );
 
     create table fulfilment_survey_sms_template (
        id uuid not null,
-        sms_template_pack_code varchar(255),
-        survey_id uuid,
+        sms_template_pack_code varchar(255) not null,
+        survey_id uuid not null,
         primary key (id)
     );
 
@@ -98,49 +98,49 @@
        id  bigserial not null,
         batch_id uuid,
         batch_quantity int4,
-        caze_id uuid,
-        print_template_pack_code varchar(255),
+        caze_id uuid not null,
+        print_template_pack_code varchar(255) not null,
         primary key (id)
     );
 
     create table job (
        id uuid not null,
         created_at timestamp with time zone,
-        created_by varchar(255),
+        created_by varchar(255) not null,
         fatal_error_description varchar(255),
-        file_id uuid,
-        file_name varchar(255),
-        file_row_count int4,
-        job_status varchar(255),
+        file_id uuid not null,
+        file_name varchar(255) not null,
+        file_row_count int4 not null,
+        job_status varchar(255) not null,
         last_updated_at timestamp with time zone,
-        processing_row_number int4,
-        staging_row_number int4,
-        collection_exercise_id uuid,
+        processing_row_number int4 not null,
+        staging_row_number int4 not null,
+        collection_exercise_id uuid not null,
         primary key (id)
     );
 
     create table job_row (
        id uuid not null,
-        job_row_status varchar(255),
-        original_row_data bytea,
-        original_row_line_number int4,
+        job_row_status varchar(255) not null,
+        original_row_data bytea not null,
+        original_row_line_number int4 not null,
         row_data jsonb,
         validation_error_descriptions varchar(255),
-        job_id uuid,
+        job_id uuid not null,
         primary key (id)
     );
 
     create table message_to_send (
        id uuid not null,
-        destination_topic varchar(255),
-        message_body bytea,
+        destination_topic varchar(255) not null,
+        message_body bytea not null,
         primary key (id)
     );
 
     create table print_template (
        pack_code varchar(255) not null,
-        print_supplier varchar(255),
-        template jsonb,
+        print_supplier varchar(255) not null,
+        template jsonb not null,
         primary key (pack_code)
     );
 
@@ -153,10 +153,10 @@
 
     create table survey (
        id uuid not null,
-        name varchar(255),
-        sample_separator char(1),
-        sample_validation_rules jsonb,
-        sample_with_header_row boolean,
+        name varchar(255) not null,
+        sample_separator char(1) not null,
+        sample_validation_rules jsonb not null,
+        sample_with_header_row boolean not null,
         primary key (id)
     );
 
@@ -165,43 +165,43 @@
         active BOOLEAN DEFAULT true not null,
         created_at timestamp with time zone,
         last_updated_at timestamp with time zone,
-        qid varchar(255),
-        uac varchar(255),
-        caze_id uuid,
+        qid varchar(255) not null,
+        uac varchar(255) not null,
+        caze_id uuid not null,
         primary key (id)
     );
 
     create table user_group (
        id uuid not null,
-        name varchar(255),
+        name varchar(255) not null,
         primary key (id)
     );
 
     create table user_group_admin (
        id uuid not null,
-        group_id uuid,
-        user_id uuid,
+        group_id uuid not null,
+        user_id uuid not null,
         primary key (id)
     );
 
     create table user_group_member (
        id uuid not null,
-        group_id uuid,
-        user_id uuid,
+        group_id uuid not null,
+        user_id uuid not null,
         primary key (id)
     );
 
     create table user_group_permission (
        id uuid not null,
         authorised_activity varchar(255),
-        group_id uuid,
+        group_id uuid not null,
         survey_id uuid,
         primary key (id)
     );
 
     create table users (
        id uuid not null,
-        email varchar(255),
+        email varchar(255) not null,
         primary key (id)
     );
 create index cases_case_ref_idx on cases (case_ref);
