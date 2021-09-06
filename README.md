@@ -7,11 +7,11 @@ To run:
 It's very important that the DDL script to build ground zero is run, instead of manually editing the files in the `groundzero_ddl` directory, so that the database is always perfectly in sync with the code on the master branch.
 
 If you have made changes to Action Scheduler, Case Processor, Exception Manager or the UAC-QID Service and you need to re-generate the ground zero DDL, you can specify specific branches with the following options:
-- `CASE_PROCESSOR_BRANCH`
+- `SHARED_ENTITIES_BRANCH`
 - `UAC_QID_SERVICE_BRANCH`
 - `EXCEPTION_MANAGER_BRANCH`
 
-For example, you might want to run `CASE_PROCESSOR_BRANCH=example-branch build_groundzero_ddl.sh` to get the groundzero DDL to be generated for an as-yet unmerged branch called `example-branch`.
+For example, you might want to run `SHARED_ENTITIES_BRANCH=example-branch build_groundzero_ddl.sh` to get the groundzero DDL to be generated for an as-yet unmerged branch called `example-branch`.
 
 Once you have run the the `build_groundzero_ddl.sh` script, you will be able to see any differences between the old and the new DDL in Git, and create patch script(s) accordingly.
 

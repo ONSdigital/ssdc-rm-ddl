@@ -8,11 +8,11 @@ rm -rf temp_clone
 mkdir temp_clone
 cd temp_clone
 
-if [ -z "$CASE_PROCESSOR_BRANCH" ]; then
-  git clone https://github.com/ONSdigital/ssdc-rm-caseprocessor.git
+if [ -z "$SHARED_ENTITIES_BRANCH" ]; then
+  git clone https://github.com/ONSdigital/ssdc-rm-common-entity-model.git
 else
-  echo "Cloning Case Processor branch $CASE_PROCESSOR_BRANCH"
-  git clone --branch $CASE_PROCESSOR_BRANCH https://github.com/ONSdigital/ssdc-rm-caseprocessor.git
+  echo "Cloning Shared Entities branch $SHARED_ENTITIES_BRANCH"
+  git clone --branch $SHARED_ENTITIES_BRANCH https://github.com/ONSdigital/ssdc-rm-common-entity-model.git
 fi
 
 if [ -z "$UAC_QID_SERVICE_BRANCH" ]; then
@@ -31,8 +31,11 @@ fi
 
 cd ..
 
-mkdir -p git_cloned_src/uk/gov/ons/ssdc/caseprocessor/model/entity
-cp temp_clone/ssdc-rm-caseprocessor/src/main/java/uk/gov/ons/ssdc/caseprocessor/model/entity/* git_cloned_src/uk/gov/ons/ssdc/caseprocessor/model/entity
+mkdir -p git_cloned_src/uk/gov/ons/ssdc/common/model/entity
+cp temp_clone/ssdc-rm-common-entity-model/src/main/java/uk/gov/ons/ssdc/common/model/entity/* git_cloned_src/uk/gov/ons/ssdc/common/model/entity
+
+mkdir -p git_cloned_src/uk/gov/ons/ssdc/common/validation
+cp temp_clone/ssdc-rm-common-entity-model/src/main/java/uk/gov/ons/ssdc/common/validation/* git_cloned_src/uk/gov/ons/ssdc/common/validation
 
 mkdir -p git_cloned_src/uk/gov/ons/ssdc/uacqid/model/entity
 cp temp_clone/ssdc-rm-uac-qid-service/src/main/java/uk/gov/ons/ssdc/uacqid/model/entity/*.java git_cloned_src/uk/gov/ons/ssdc/uacqid/model/entity
@@ -46,6 +49,6 @@ mvn clean package
 
 rm -rf git_cloned_src
 
-java -jar target/ssdc-rm-ddl-1.0-SNAPSHOT.jar casev3 uk.gov.ons.ssdc.caseprocessor.model.entity
+java -jar target/ssdc-rm-ddl-1.0-SNAPSHOT.jar casev3 uk.gov.ons.ssdc.common.model.entity
 java -jar target/ssdc-rm-ddl-1.0-SNAPSHOT.jar uacqid uk.gov.ons.ssdc.uacqid.model.entity
 java -jar target/ssdc-rm-ddl-1.0-SNAPSHOT.jar exceptionmanager uk.gov.ons.ssdc.exceptionmanager.model.entity
