@@ -137,6 +137,17 @@
         primary key (id)
     );
 
+    create table print_file_row (
+       id  bigserial not null,
+        batch_id uuid,
+        batch_quantity int4 not null,
+        pack_code varchar(255) not null,
+        print_supplier varchar(255) not null,
+        row varchar(255),
+        action_rule_id uuid,
+        primary key (id)
+    );
+
     create table print_template (
        pack_code varchar(255) not null,
         print_supplier varchar(255) not null,
@@ -298,6 +309,11 @@ create index cases_case_ref_idx on cases (case_ref);
        add constraint FK8motlil4mayre4vvdipnjime0 
        foreign key (job_id) 
        references job;
+
+    alter table if exists print_file_row 
+       add constraint FKfo2cs8srx9nsfeliw3ekveehu 
+       foreign key (action_rule_id) 
+       references action_rule;
 
     alter table if exists uac_qid_link 
        add constraint FKngo7bm72f0focdujjma78t4nk 
