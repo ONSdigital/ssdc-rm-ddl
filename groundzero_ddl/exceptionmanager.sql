@@ -19,6 +19,7 @@
         routing_key varchar(255),
         service varchar(255),
         skipped_timestamp timestamp with time zone,
+        skipping_user varchar(255),
         subscription varchar(255),
         primary key (id)
     );
