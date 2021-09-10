@@ -139,11 +139,11 @@
 
     create table print_file_row (
        id  bigserial not null,
-        batch_id uuid,
+        batch_id uuid not null,
         batch_quantity int4 not null,
         pack_code varchar(255) not null,
         print_supplier varchar(255) not null,
-        row varchar(255),
+        row varchar(255) not null,
         primary key (id)
     );
 
