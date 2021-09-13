@@ -98,6 +98,8 @@
        id  bigserial not null,
         batch_id uuid,
         batch_quantity int4,
+        correlation_id uuid not null,
+        originating_user varchar(255),
         caze_id uuid not null,
         print_template_pack_code varchar(255) not null,
         primary key (id)
