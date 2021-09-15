@@ -28,7 +28,7 @@
         sample jsonb,
         sample_sensitive jsonb,
         secret_sequence_number serial,
-        survey_launched BOOLEAN DEFAULT false not null,
+        eq_launched BOOLEAN DEFAULT false not null,
         collection_exercise_id uuid not null,
         primary key (id)
     );
