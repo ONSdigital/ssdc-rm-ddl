@@ -45,3 +45,9 @@ rm -rf git_cloned_src
 java -jar target/ssdc-rm-ddl-1.0-SNAPSHOT.jar casev3 uk.gov.ons.ssdc.common.model.entity
 java -jar target/ssdc-rm-ddl-1.0-SNAPSHOT.jar uacqid uk.gov.ons.ssdc.uacqid.model.entity
 java -jar target/ssdc-rm-ddl-1.0-SNAPSHOT.jar exceptionmanager uk.gov.ons.ssdc.exceptionmanager.model.entity
+
+./build_init_script.sh
+
+cd integration-testing-image
+docker build . -t rm-postgres-case-integration-testing:latest
+cd ..
