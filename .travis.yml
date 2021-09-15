@@ -30,11 +30,11 @@ jobs:
       jdk: openjdk11
 
       before_install:
-        - cd ssdc-rm-common-entity-model && mvn fmt:check
+        - make format-check-common
 
       install: echo "SKIPPING DEFAULT INSTALL" # Travis has a default maven install. Don't build twice!
 
-      script: cd ssdc-rm-common-entity-model && travis_wait mvn compile
+      script: travis_wait make build-common
 
       cache:
         directories:
