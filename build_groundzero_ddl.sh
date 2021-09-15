@@ -48,6 +48,6 @@ java -jar target/ssdc-rm-ddl-1.0-SNAPSHOT.jar exceptionmanager uk.gov.ons.ssdc.e
 
 ./build_init_script.sh
 
-cd integration-testing-image
-docker build . -t rm-postgres-case-integration-testing:latest
+cd dev-common-postgres-image
+docker build . -t rm-ssdc-rm-dev-common-postgres:latest
 cd ..
