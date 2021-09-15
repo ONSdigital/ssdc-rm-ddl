@@ -9,6 +9,3 @@ lint:
 
 test: check lint
 	pipenv run pytest
-
-build_common:
-	cd ssdc-rm-common-entity-model && mvn deploy
