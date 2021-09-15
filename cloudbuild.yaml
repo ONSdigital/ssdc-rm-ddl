@@ -1,0 +1,5 @@
+steps:
+  - name: maven:3-jdk-11
+    entrypoint: make
+    args: ['build_common']
+logsBucket: 'gs://ssdc-rm-ci-cloud-build-logging'
