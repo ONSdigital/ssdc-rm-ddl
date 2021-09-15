@@ -30,11 +30,11 @@ jobs:
       jdk: openjdk11
 
       before_install:
-        - cd dev-common-postgres-image && mvn fmt:check
+        - cd ssdc-rm-common-entity-model && mvn fmt:check
 
       install: echo "SKIPPING DEFAULT INSTALL" # Travis has a default maven install. Don't build twice!
 
-      script: cd dev-common-postgres-image && travis_wait mvn compile
+      script: cd ssdc-rm-common-entity-model && travis_wait mvn compile
 
       cache:
         directories:
