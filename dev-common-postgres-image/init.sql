@@ -23,6 +23,7 @@ set schema 'casev3';
        id uuid not null,
         case_ref int8,
         created_at timestamp with time zone,
+        eq_launched BOOLEAN DEFAULT false not null,
         invalid BOOLEAN DEFAULT false not null,
         last_updated_at timestamp with time zone,
         receipt_received BOOLEAN DEFAULT false not null,
@@ -30,7 +31,6 @@ set schema 'casev3';
         sample jsonb,
         sample_sensitive jsonb,
         secret_sequence_number serial,
-        survey_launched BOOLEAN DEFAULT false not null,
         collection_exercise_id uuid not null,
         primary key (id)
     );
@@ -111,6 +111,7 @@ set schema 'casev3';
        id uuid not null,
         created_at timestamp with time zone,
         created_by varchar(255) not null,
+        error_row_count int4 not null,
         fatal_error_description varchar(255),
         file_id uuid not null,
         file_name varchar(255) not null,
@@ -119,6 +120,7 @@ set schema 'casev3';
         last_updated_at timestamp with time zone,
         processing_row_number int4 not null,
         staging_row_number int4 not null,
+        validating_row_number int4 not null,
         collection_exercise_id uuid not null,
         primary key (id)
     );
