@@ -3,27 +3,42 @@ sudo: required
 services:
   - docker
 
-language: python
+jobs:
+  include:
+    - language: python
 
-python:
-  - "3.9"
+      python:
+        - "3.9"
 
-install:
-  - pip install pipenv
-  - pipenv install --dev --deploy
+      install:
+        - pip install pipenv
+        - pipenv install --dev --deploy
 
-script:
-  - PIPENV_PYUP_API_KEY="" pipenv check -i 40291 -i 39253
-  - pipenv run flake8
-  - pipenv run pytest test --cov=. --cov-report term-missing
+      script:
+        - PIPENV_PYUP_API_KEY="" pipenv check -i 40291 -i 39253
+        - pipenv run flake8
+        - pipenv run pytest test --cov=. --cov-report term-missing
 
-after_success:
-  - pipenv run codecov
+      after_success:
+        - pipenv run codecov
 
-env:
-  global:
-    - PIPENV_IGNORE_VIRTUALENVS=1
+      env:
+        global:
+          - PIPENV_IGNORE_VIRTUALENVS=1
 
+    - language: java
+      jdk: openjdk11
+
+      before_install:
+        - make format-check-common
+
+      install: echo "SKIPPING DEFAULT INSTALL" # Travis has a default maven install. Don't build twice!
+
+      script: travis_wait make build-common
+
+      cache:
+        directories:
+          - $HOME/.m2
 branches:
   only:
     - main

@@ -1,0 +1,9 @@
+steps:
+  - name: maven:3-jdk-11
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |-
+        cd ssdc-rm-common-entity-model
+        mvn deploy
+logsBucket: 'gs://ssdc-rm-ci-cloud-build-logging'

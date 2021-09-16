@@ -1,3 +1,5 @@
+create schema if not exists casev3;
+set schema 'casev3';
 
     create table action_rule (
        id uuid not null,
