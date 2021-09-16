@@ -19,9 +19,6 @@ build-common:
 dev-install-common:
 	cd ssdc-rm-common-entity-model && mvn install
 
-dev-install-common:
-	cd ssdc-rm-common-entity-model && mvn install
-
 dev-update-ddl:
 	./build_groundzero_ddl.sh
 
