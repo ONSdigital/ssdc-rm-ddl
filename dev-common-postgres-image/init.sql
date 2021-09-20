@@ -4,6 +4,7 @@ set schema 'casev3';
     create table action_rule (
        id uuid not null,
         classifiers bytea,
+        created_by varchar(255) not null,
         has_triggered BOOLEAN DEFAULT false not null,
         trigger_date_time timestamp with time zone not null,
         type varchar(255) not null,
