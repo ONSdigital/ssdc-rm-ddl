@@ -20,6 +20,13 @@
         primary key (id)
     );
 
+    create table action_rule_survey_sms_template (
+       id uuid not null,
+        sms_template_pack_code varchar(255) not null,
+        survey_id uuid not null,
+        primary key (id)
+    );
+
     create table cases (
        id uuid not null,
         case_ref int8,
@@ -248,6 +255,16 @@ create index cases_case_ref_idx on cases (case_ref);
 
     alter table if exists action_rule_survey_print_template 
        add constraint FKfqpwm5s5wjqfvm7p2vhmw2e59 
+       foreign key (survey_id) 
+       references survey;
+
+    alter table if exists action_rule_survey_sms_template 
+       add constraint FKrtyhiquv8tgdiv0sc2e5ovqld 
+       foreign key (sms_template_pack_code) 
+       references sms_template;
+
+    alter table if exists action_rule_survey_sms_template 
+       add constraint FKcksec9j9chi54k0fuhsywnfne 
        foreign key (survey_id) 
        references survey;
 
