@@ -41,6 +41,8 @@ public class ActionRule {
 
   @ManyToOne private PrintTemplate printTemplate;
 
+  @ManyToOne private SmsTemplate smsTemplate;
+
   @Column(nullable = false)
   private String createdBy;
 
