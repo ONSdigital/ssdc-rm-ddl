@@ -41,6 +41,9 @@ public class ActionRule {
 
   @ManyToOne private PrintTemplate printTemplate;
 
+  @Column(nullable = false)
+  private String createdBy;
+
   @ManyToOne(optional = false)
   private CollectionExercise collectionExercise;
 
