@@ -6,6 +6,7 @@ set schema 'casev3';
         classifiers bytea,
         created_by varchar(255) not null,
         has_triggered BOOLEAN DEFAULT false not null,
+        phone_number_column varchar(255),
         trigger_date_time timestamp with time zone not null,
         type varchar(255) not null,
         collection_exercise_id uuid not null,

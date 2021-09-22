@@ -46,6 +46,8 @@ public class ActionRule {
   @Column(nullable = false)
   private String createdBy;
 
+  @Column private String phoneNumberColumn;
+
   @ManyToOne(optional = false)
   private CollectionExercise collectionExercise;
 
