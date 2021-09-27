@@ -6,16 +6,25 @@ set schema 'casev3';
         classifiers bytea,
         created_by varchar(255) not null,
         has_triggered BOOLEAN DEFAULT false not null,
+        phone_number_column varchar(255),
         trigger_date_time timestamp with time zone not null,
         type varchar(255) not null,
         collection_exercise_id uuid not null,
         print_template_pack_code varchar(255),
+        sms_template_pack_code varchar(255),
         primary key (id)
     );
 
     create table action_rule_survey_print_template (
        id uuid not null,
         print_template_pack_code varchar(255) not null,
+        survey_id uuid not null,
+        primary key (id)
+    );
+
+    create table action_rule_survey_sms_template (
+       id uuid not null,
+        sms_template_pack_code varchar(255) not null,
         survey_id uuid not null,
         primary key (id)
     );
@@ -236,6 +245,11 @@ create index cases_case_ref_idx on cases (case_ref);
        foreign key (print_template_pack_code) 
        references print_template;
 
+    alter table if exists action_rule 
+       add constraint FKtnrm1hhiyehmygso5dsb6dv7a 
+       foreign key (sms_template_pack_code) 
+       references sms_template;
+
     alter table if exists action_rule_survey_print_template 
        add constraint FK2p5hm28uix0uqs3gl2mdne2a7 
        foreign key (print_template_pack_code) 
@@ -243,6 +257,16 @@ create index cases_case_ref_idx on cases (case_ref);
 
     alter table if exists action_rule_survey_print_template 
        add constraint FKfqpwm5s5wjqfvm7p2vhmw2e59 
+       foreign key (survey_id) 
+       references survey;
+
+    alter table if exists action_rule_survey_sms_template 
+       add constraint FKrtyhiquv8tgdiv0sc2e5ovqld 
+       foreign key (sms_template_pack_code) 
+       references sms_template;
+
+    alter table if exists action_rule_survey_sms_template 
+       add constraint FKcksec9j9chi54k0fuhsywnfne 
        foreign key (survey_id) 
        references survey;
 
