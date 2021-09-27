@@ -5,3 +5,5 @@ ENV POSTGRES_PASSWORD postgres
 ENV POSTGRES_DB postgres
 
 COPY init.sql /docker-entrypoint-initdb.d/
+RUN chown postgres:postgres /docker-entrypoint-initdb.d
+RUN chown postgres:postgres /docker-entrypoint-initdb.d/*.sql
