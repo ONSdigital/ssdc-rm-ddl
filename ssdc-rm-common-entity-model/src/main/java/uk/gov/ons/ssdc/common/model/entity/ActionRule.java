@@ -2,6 +2,7 @@ package uk.gov.ons.ssdc.common.model.entity;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import java.time.OffsetDateTime;
+import java.util.Map;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,7 +54,7 @@ public class ActionRule {
 
   @Type(type = "jsonb")
   @Column(columnDefinition = "jsonb")
-  private String uacMetadata;
+  private Map<String, String> uacMetadata;
 
   public void setClassifiers(String classifierClauseStr) {
     if (classifierClauseStr == null) {

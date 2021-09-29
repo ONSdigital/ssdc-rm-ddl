@@ -190,9 +190,9 @@
         active BOOLEAN DEFAULT true not null,
         created_at timestamp with time zone,
         last_updated_at timestamp with time zone,
-        metadata jsonb,
         qid varchar(255) not null,
         uac varchar(255) not null,
+        uac_metadata jsonb,
         caze_id uuid not null,
         primary key (id)
     );
