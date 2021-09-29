@@ -10,4 +10,4 @@ ALTER TABLE casev3.action_rule
     ADD COLUMN IF NOT EXISTS uac_metadata jsonb;
 
 ALTER TABLE casev3.uac_qid_link
-    ADD COLUMN IF NOT EXISTS metadata json;
+    ADD COLUMN IF NOT EXISTS uac_metadata json;
