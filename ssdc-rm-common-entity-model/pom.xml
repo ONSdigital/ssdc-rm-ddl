@@ -7,11 +7,7 @@
   <groupId>uk.gov.ons.ssdc</groupId>
   <artifactId>ssdc-rm-common-entity-model</artifactId>
   <version>2.4.0-SNAPSHOT</version>
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> fa2a11971394e9cd23f0db6c5aff804bc898bd7c
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
