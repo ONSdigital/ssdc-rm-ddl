@@ -61,12 +61,12 @@ public class Job {
   @OneToMany(mappedBy = "job")
   private List<JobRow> jobRows;
 
-  @Column() private String processedBy;
+  @Column private String processedBy;
 
   @Column(columnDefinition = "timestamp with time zone")
   private OffsetDateTime processedAt;
 
-  @Column() private String cancelledBy;
+  @Column private String cancelledBy;
 
   @Column(columnDefinition = "timestamp with time zone")
   private OffsetDateTime cancelledAt;
