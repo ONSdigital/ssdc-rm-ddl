@@ -1,11 +1,16 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import java.util.UUID;
 import javax.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 
 @Entity
 @Data
+@TypeDefs({@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)})
 public class FulfilmentToProcess {
 
   @Id
@@ -26,4 +31,8 @@ public class FulfilmentToProcess {
   private UUID correlationId;
 
   @Column private String originatingUser;
+
+  @Type(type = "jsonb")
+  @Column(columnDefinition = "jsonb")
+  private Object uacMetadata;
 }
