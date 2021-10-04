@@ -51,18 +51,12 @@ public class Case {
   @UpdateTimestamp
   private OffsetDateTime lastUpdatedAt;
 
-  @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
-  private boolean receiptReceived;
-
   @Enumerated(EnumType.STRING)
   @Column
   private RefusalType refusalReceived;
 
   @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
   private boolean invalid;
-
-  @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
-  private boolean eqLaunched;
 
   @Type(type = "jsonb")
   @Column(columnDefinition = "jsonb")
