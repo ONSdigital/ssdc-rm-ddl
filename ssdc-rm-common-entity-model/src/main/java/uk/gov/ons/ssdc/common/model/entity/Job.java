@@ -66,7 +66,7 @@ public class Job {
   @Column(columnDefinition = "timestamp with time zone")
   private OffsetDateTime processedAt;
 
-  @Column() private String cancelledBy;
+  @Column private String cancelledBy;
 
   @Column(columnDefinition = "timestamp with time zone")
   private OffsetDateTime cancelledAt;
