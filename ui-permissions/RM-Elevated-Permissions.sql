@@ -1,0 +1,23 @@
+INSERT INTO casev3.user_group (id, name) VALUES ('e9ed16cb-8589-435b-898b-38c038bcdaaf', 'RM ELEVATED');
+
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('d0ad4df3-ee5b-4761-bd24-0546969d836e', 'LIST_SURVEYS', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('16d5d137-5cc4-4079-ac13-24cfdd82eb07', 'VIEW_SURVEY', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('f1095161-a1e5-4b3d-abcf-40ea21cda12e', 'CREATE_SURVEY', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('ef29ec9f-e1e8-4574-bb21-5c3fb91904f7', 'CREATE_SMS_TEMPLATE', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('5357b0ef-25bd-4a00-813d-ac1339e27621', 'LIST_COLLECTION_EXERCISES', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('0dcbe0ee-05a9-4ab9-b570-55a619829f56', 'VIEW_COLLECTION_EXERCISE', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('91f0603f-c14e-4482-916f-78b1a2362eb7', 'CREATE_COLLECTION_EXERCISE', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('2bc1d2e9-3e54-44d6-b337-a604708fd4be', 'ALLOW_SMS_TEMPLATE_ON_ACTION_RULE', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('9b663c02-2cad-42ef-b5b4-ecf94736964f', 'LIST_ALLOWED_SMS_TEMPLATES_ON_ACTION_RULES', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('26c48df3-b05c-4a9e-81d6-ec1ace590e02', 'SEARCH_CASES', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('edcb4155-c943-4d73-acb6-a0aeb86c32f2', 'VIEW_CASE_DETAILS', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('dc6f201d-dadf-411a-bd3a-8c79ecbbb380', 'LIST_ACTION_RULES', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('7bb66b63-e9ed-4406-a4cb-780afbb3b3cb', 'CREATE_DEACTIVATE_UAC_ACTION_RULE', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('91505eb7-2697-484f-b6a0-47d9dd43e175', 'CREATE_SMS_ACTION_RULE', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('8bcb45a2-f332-4bf4-860a-0eff57208624', 'LOAD_SAMPLE', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('7929efb4-1854-4eba-af5b-c79ffa063459', 'VIEW_SAMPLE_LOAD_PROGRESS', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('ca2a4731-41d3-46dc-b61d-24ca66c1727e', 'DEACTIVATE_UAC', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('0ab568db-f2d4-4113-8e53-e129a8b5d90e', 'CREATE_CASE_REFUSAL', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('134afb0a-45fd-4330-bc03-b5e8ae0e60dc', 'CREATE_CASE_INVALID_CASE', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('d772c92e-05d4-45df-810f-36d683020177', 'UPDATE_SAMPLE_SENSITIVE', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('825049a2-6e39-4eb0-a55d-e2810af065da', 'LIST_SMS_TEMPLATES', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
