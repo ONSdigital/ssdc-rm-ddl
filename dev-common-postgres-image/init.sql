@@ -117,6 +117,8 @@ set schema 'casev3';
 
     create table job (
        id uuid not null,
+        cancelled_at timestamp with time zone,
+        cancelled_by varchar(255),
         created_at timestamp with time zone,
         created_by varchar(255) not null,
         error_row_count int4 not null,
@@ -126,6 +128,8 @@ set schema 'casev3';
         file_row_count int4 not null,
         job_status varchar(255) not null,
         last_updated_at timestamp with time zone,
+        processed_at timestamp with time zone,
+        processed_by varchar(255),
         processing_row_number int4 not null,
         staging_row_number int4 not null,
         validating_row_number int4 not null,
