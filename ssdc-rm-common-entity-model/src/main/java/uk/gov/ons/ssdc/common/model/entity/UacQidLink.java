@@ -29,6 +29,12 @@ public class UacQidLink {
   @ManyToOne(optional = false)
   private Case caze;
 
+  @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+  private boolean receiptReceived;
+
+  @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+  private boolean eqLaunched;
+
   @OneToMany(mappedBy = "uacQidLink")
   private List<Event> events;
 
