@@ -190,10 +190,10 @@
         created_at timestamp with time zone,
         eq_launched BOOLEAN DEFAULT false not null,
         last_updated_at timestamp with time zone,
+        metadata jsonb,
         qid varchar(255) not null,
         receipt_received BOOLEAN DEFAULT false not null,
         uac varchar(255) not null,
-        uac_metadata jsonb,
         caze_id uuid not null,
         primary key (id)
     );

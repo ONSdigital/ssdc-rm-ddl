@@ -51,5 +51,5 @@ public class UacQidLink {
 
   @Type(type = "jsonb")
   @Column(columnDefinition = "jsonb")
-  private Object uacMetadata;
+  private Object metadata;
 }
