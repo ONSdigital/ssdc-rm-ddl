@@ -6,16 +6,20 @@ import java.util.Optional;
 
 public class RegexRule implements Rule {
   private final String expression;
+  private final String userFriendlyError;
 
   @JsonCreator
-  public RegexRule(@JsonProperty("expression") String expression) {
+  public RegexRule(
+      @JsonProperty("expression") String expression,
+      @JsonProperty("userFriendlyError") String userFriendlyError) {
     this.expression = expression;
+    this.userFriendlyError = userFriendlyError;
   }
 
   @Override
   public Optional<String> checkValidity(String data) {
     if (!data.matches(expression)) {
-      return Optional.of("Value does not match regex expression: " + expression);
+      return Optional.of(userFriendlyError);
     }
 
     return Optional.empty();
