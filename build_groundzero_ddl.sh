@@ -8,6 +8,13 @@ rm -rf temp_clone
 mkdir temp_clone
 cd temp_clone
 
+if [ -z "$SAMPLE_VALIDATION_BRANCH" ]; then
+  git clone git@github.com:ONSdigital/ssdc-shared-sample-validation.git
+else
+  echo "Cloning Sample Validation branch $SAMPLE_VALIDATION_BRANCH"
+  git clone --branch $SAMPLE_VALIDATION_BRANCH git@github.com:ONSdigital/ssdc-shared-sample-validation.git
+fi
+
 if [ -z "$UAC_QID_SERVICE_BRANCH" ]; then
   git clone git@github.com:ONSdigital/ssdc-rm-uac-qid-service.git
 else
@@ -28,7 +35,7 @@ mkdir -p git_cloned_src/uk/gov/ons/ssdc/common/model/entity
 cp ssdc-rm-common-entity-model/src/main/java/uk/gov/ons/ssdc/common/model/entity/* git_cloned_src/uk/gov/ons/ssdc/common/model/entity
 
 mkdir -p git_cloned_src/uk/gov/ons/ssdc/common/validation
-cp ssdc-rm-common-entity-model/src/main/java/uk/gov/ons/ssdc/common/validation/* git_cloned_src/uk/gov/ons/ssdc/common/validation
+cp temp_clone/ssdc-shared-sample-validation/src/main/java/uk/gov/ons/ssdc/common/validation/* git_cloned_src/uk/gov/ons/ssdc/common/validation
 
 mkdir -p git_cloned_src/uk/gov/ons/ssdc/uacqid/model/entity
 cp temp_clone/ssdc-rm-uac-qid-service/src/main/java/uk/gov/ons/ssdc/uacqid/model/entity/*.java git_cloned_src/uk/gov/ons/ssdc/uacqid/model/entity
