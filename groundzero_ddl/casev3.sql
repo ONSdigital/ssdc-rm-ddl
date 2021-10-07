@@ -7,6 +7,7 @@
         phone_number_column varchar(255),
         trigger_date_time timestamp with time zone not null,
         type varchar(255) not null,
+        uac_metadata jsonb,
         collection_exercise_id uuid not null,
         print_template_pack_code varchar(255),
         sms_template_pack_code varchar(255),
@@ -108,6 +109,7 @@
         batch_quantity int4,
         correlation_id uuid not null,
         originating_user varchar(255),
+        uac_metadata jsonb,
         caze_id uuid not null,
         print_template_pack_code varchar(255) not null,
         primary key (id)
@@ -192,6 +194,7 @@
         created_at timestamp with time zone,
         eq_launched BOOLEAN DEFAULT false not null,
         last_updated_at timestamp with time zone,
+        metadata jsonb,
         qid varchar(255) not null,
         receipt_received BOOLEAN DEFAULT false not null,
         uac varchar(255) not null,
