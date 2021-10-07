@@ -51,6 +51,10 @@ public class ActionRule {
   @ManyToOne(optional = false)
   private CollectionExercise collectionExercise;
 
+  @Type(type = "jsonb")
+  @Column(columnDefinition = "jsonb")
+  private Object uacMetadata;
+
   public void setClassifiers(String classifierClauseStr) {
     if (classifierClauseStr == null) {
       classifiers = null;
