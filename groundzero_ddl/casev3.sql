@@ -60,7 +60,10 @@
 
     create table collection_exercise (
        id uuid not null,
+        end_date timestamp with time zone not null,
         name varchar(255) not null,
+        reference varchar(255) not null,
+        start_date timestamp with time zone not null,
         survey_id uuid not null,
         primary key (id)
     );

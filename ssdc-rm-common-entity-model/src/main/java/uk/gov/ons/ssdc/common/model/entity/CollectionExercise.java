@@ -1,5 +1,6 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -30,4 +31,13 @@ public class CollectionExercise {
 
   @OneToMany(mappedBy = "collectionExercise")
   private List<Job> jobs;
+
+  @Column(nullable = false)
+  private String reference;
+
+  @Column(nullable = false, columnDefinition = "timestamp with time zone")
+  private OffsetDateTime startDate;
+
+  @Column(nullable = false, columnDefinition = "timestamp with time zone")
+  private OffsetDateTime endDate;
 }
