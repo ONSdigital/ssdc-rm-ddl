@@ -21,3 +21,6 @@ INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, sur
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('134afb0a-45fd-4330-bc03-b5e8ae0e60dc', 'CREATE_CASE_INVALID_CASE', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('d772c92e-05d4-45df-810f-36d683020177', 'UPDATE_SAMPLE_SENSITIVE', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('825049a2-6e39-4eb0-a55d-e2810af065da', 'LIST_SMS_TEMPLATES', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('afff624d-7b41-4e0d-985f-45448dee4799', 'EXCEPTION_MANAGER_VIEWER', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('7dc1061b-a896-4b77-9ec6-bb21c93ba4bf', 'EXCEPTION_MANAGER_PEEK', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('a697b82c-8f1e-4111-a106-6c97c617d1fc', 'EXCEPTION_MANAGER_QUARANTINE', 'e9ed16cb-8589-435b-898b-38c038bcdaaf', NULL);
