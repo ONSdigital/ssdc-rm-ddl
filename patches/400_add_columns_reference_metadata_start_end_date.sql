@@ -1,7 +1,7 @@
 -- ****************************************************************************
 -- RM SQL DATABASE UPDATE SCRIPT
 -- ****************************************************************************
--- Number: 300
+-- Number: 400
 -- Purpose: Add reference, metadata, start date and end date columns
 --          to collection_exercise table
 -- Author: Leo Howard
