@@ -29,6 +29,13 @@ public class Survey {
   private ColumnValidator[] sampleValidationRules;
 
   @Column(nullable = false)
+  private String sampleDefinitionUrl;
+
+  @Type(type = "jsonb")
+  @Column(columnDefinition = "jsonb")
+  private Object metadata;
+
+  @Column(nullable = false)
   private boolean sampleWithHeaderRow;
 
   @Column(nullable = false)
