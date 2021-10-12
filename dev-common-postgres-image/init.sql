@@ -241,6 +241,9 @@ set schema 'casev3';
     );
 create index cases_case_ref_idx on cases (case_ref);
 
+    alter table if exists user_group 
+       add constraint UK_kas9w8ead0ska5n3csefp2bpp unique (name);
+
     alter table if exists users 
        add constraint users_email_idx unique (email);
 
