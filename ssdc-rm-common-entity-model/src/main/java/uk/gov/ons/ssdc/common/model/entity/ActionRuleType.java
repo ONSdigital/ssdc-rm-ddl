@@ -5,5 +5,6 @@ public enum ActionRuleType {
   OUTBOUND_TELEPHONE,
   FACE_TO_FACE,
   DEACTIVATE_UAC,
-  SMS
+  SMS,
+  SHARE_WITH_RASRM
 }
