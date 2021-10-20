@@ -6,5 +6,5 @@ public enum ActionRuleType {
   FACE_TO_FACE,
   DEACTIVATE_UAC,
   SMS,
-  SHARE_WITH_RASRM
+  RASRM_MAIN_PRINT_SELECTION
 }
