@@ -1,0 +1,36 @@
+cd groundzero_ddl
+
+PSQL_CONNECT_WRITE_MODE="sslmode=verify-ca sslrootcert=/root/.postgresql/root.crt sslcert=/root/.postgresql/postgresql.crt sslkey=/root/.postgresql/postgresql.key hostaddr=$DB_HOST user=rmuser password=${DB_PASSWORD:=password} dbname=$DB_NAME"
+
+#Create the copy in/out files and run the copy out
+echo "begin transaction;" > copy_out_tables.sql
+echo "begin transaction;" > copy_in_tables.sql
+
+for TABLE_NAME in users user_group user_group_permission user_group_member user_group_admin
+do
+  echo "\copy casev3.$TABLE_NAME to backup_$TABLE_NAME.txt;" >> copy_out_tables.sql
+  echo "\copy casev3.$TABLE_NAME from backup_$TABLE_NAME.txt;" >> copy_in_tables.sql
+done
+
+echo "commit transaction;" >> copy_out_tables.sql
+echo "commit transaction;" >> copy_in_tables.sql
+
+psql "$PSQL_CONNECT_WRITE_MODE" -f copy_out_tables.sql
+
+#Run the ground zero
+. rebuild_from_ground_zero.sh
+
+#Restore the tables
+psql "$PSQL_CONNECT_WRITE_MODE" -f copy_in_tables.sql
+
+#Remove all table files
+for TABLE_NAME in users user_group user_group_permission user_group_member user_group_admin
+do
+  rm backup_$TABLE_NAME.txt
+done
+
+rm copy_out_tables.sql
+rm copy_in_tables.sql
+
+
+
