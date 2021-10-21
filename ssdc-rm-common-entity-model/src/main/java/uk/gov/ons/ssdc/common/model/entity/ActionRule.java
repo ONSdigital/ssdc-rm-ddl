@@ -39,7 +39,7 @@ public class ActionRule {
   @Column
   private byte[] classifiers;
 
-  @ManyToOne private PrintTemplate printTemplate;
+  @ManyToOne private ExportFileTemplate exportFileTemplate;
 
   @ManyToOne private SmsTemplate smsTemplate;
 

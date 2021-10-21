@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class PrintFileRow {
+public class ExportFileRow {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
@@ -25,7 +25,7 @@ public class PrintFileRow {
   private int batchQuantity;
 
   @Column(nullable = false)
-  private String printSupplier;
+  private String exportFileDestination;
 
   @Column(nullable = false)
   private String packCode;

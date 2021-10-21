@@ -18,7 +18,7 @@ public class FulfilmentToProcess {
   private long id;
 
   @ManyToOne(optional = false)
-  private PrintTemplate printTemplate;
+  private ExportFileTemplate exportFileTemplate;
 
   @ManyToOne(optional = false)
   private Case caze;

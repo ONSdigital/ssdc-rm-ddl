@@ -1,7 +1,7 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
 public enum ActionRuleType {
-  PRINT,
+  EXPORT_FILE,
   OUTBOUND_TELEPHONE,
   FACE_TO_FACE,
   DEACTIVATE_UAC,
