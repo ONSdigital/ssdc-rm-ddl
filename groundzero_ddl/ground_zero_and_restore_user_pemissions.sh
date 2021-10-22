@@ -6,11 +6,15 @@ PSQL_CONNECT_WRITE_MODE="sslmode=verify-ca sslrootcert=/root/.postgresql/root.cr
 echo "begin transaction;" > copy_out_tables.sql
 echo "begin transaction;" > copy_in_tables.sql
 
-for TABLE_NAME in users user_group user_group_permission user_group_member user_group_admin
+for TABLE_NAME in users user_group user_group_member user_group_admin
 do
   echo "\copy casev3.$TABLE_NAME to backup_$TABLE_NAME.txt;" >> copy_out_tables.sql
   echo "\copy casev3.$TABLE_NAME from backup_$TABLE_NAME.txt;" >> copy_in_tables.sql
 done
+
+#Only copy the global permissions from the user_group_permission table, as survey specific permissions will no longer work
+echo "\copy (select * from casev3.user_group_permission where survey_id is null) to backup_user_group_permission.txt;" >> copy_out_tables.sql
+echo "\copy casev3.user_group_permission from backup_user_group_permission.txt;" >> copy_in_tables.sql
 
 echo "commit transaction;" >> copy_out_tables.sql
 echo "commit transaction;" >> copy_in_tables.sql
