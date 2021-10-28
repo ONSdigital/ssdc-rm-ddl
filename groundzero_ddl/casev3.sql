@@ -9,14 +9,14 @@
         type varchar(255) not null,
         uac_metadata jsonb,
         collection_exercise_id uuid not null,
-        print_template_pack_code varchar(255),
+        export_file_template_pack_code varchar(255),
         sms_template_pack_code varchar(255),
         primary key (id)
     );
 
-    create table action_rule_survey_print_template (
+    create table action_rule_survey_export_file_template (
        id uuid not null,
-        print_template_pack_code varchar(255) not null,
+        export_file_template_pack_code varchar(255) not null,
         survey_id uuid not null,
         primary key (id)
     );
@@ -87,15 +87,32 @@
         primary key (id)
     );
 
+    create table export_file_row (
+       id  bigserial not null,
+        batch_id uuid not null,
+        batch_quantity int4 not null,
+        export_file_destination varchar(255) not null,
+        pack_code varchar(255) not null,
+        row varchar(255) not null,
+        primary key (id)
+    );
+
+    create table export_file_template (
+       pack_code varchar(255) not null,
+        export_file_destination varchar(255) not null,
+        template jsonb not null,
+        primary key (pack_code)
+    );
+
     create table fulfilment_next_trigger (
        id uuid not null,
         trigger_date_time timestamp with time zone not null,
         primary key (id)
     );
 
-    create table fulfilment_survey_print_template (
+    create table fulfilment_survey_export_file_template (
        id uuid not null,
-        print_template_pack_code varchar(255) not null,
+        export_file_template_pack_code varchar(255) not null,
         survey_id uuid not null,
         primary key (id)
     );
@@ -115,7 +132,7 @@
         originating_user varchar(255),
         uac_metadata jsonb,
         caze_id uuid not null,
-        print_template_pack_code varchar(255) not null,
+        export_file_template_pack_code varchar(255) not null,
         primary key (id)
     );
 
@@ -158,23 +175,6 @@
         destination_topic varchar(255) not null,
         message_body bytea not null,
         primary key (id)
-    );
-
-    create table print_file_row (
-       id  bigserial not null,
-        batch_id uuid not null,
-        batch_quantity int4 not null,
-        pack_code varchar(255) not null,
-        print_supplier varchar(255) not null,
-        row varchar(255) not null,
-        primary key (id)
-    );
-
-    create table print_template (
-       pack_code varchar(255) not null,
-        print_supplier varchar(255) not null,
-        template jsonb not null,
-        primary key (pack_code)
     );
 
     create table sms_template (
@@ -256,22 +256,22 @@ create index cases_case_ref_idx on cases (case_ref);
        references collection_exercise;
 
     alter table if exists action_rule 
-       add constraint FK5pwarbhvswl774xodfnxgasvi 
-       foreign key (print_template_pack_code) 
-       references print_template;
+       add constraint FK9fefdqv5a7vb04vu7gn6cad19 
+       foreign key (export_file_template_pack_code) 
+       references export_file_template;
 
     alter table if exists action_rule 
        add constraint FKtnrm1hhiyehmygso5dsb6dv7a 
        foreign key (sms_template_pack_code) 
        references sms_template;
 
-    alter table if exists action_rule_survey_print_template 
-       add constraint FK2p5hm28uix0uqs3gl2mdne2a7 
-       foreign key (print_template_pack_code) 
-       references print_template;
+    alter table if exists action_rule_survey_export_file_template 
+       add constraint FKpeyvyyoxpqh7rvae2hxmg2wd2 
+       foreign key (export_file_template_pack_code) 
+       references export_file_template;
 
-    alter table if exists action_rule_survey_print_template 
-       add constraint FKfqpwm5s5wjqfvm7p2vhmw2e59 
+    alter table if exists action_rule_survey_export_file_template 
+       add constraint FKmtao7nj3x74iki19rygx5pdcl 
        foreign key (survey_id) 
        references survey;
 
@@ -315,13 +315,13 @@ create index cases_case_ref_idx on cases (case_ref);
        foreign key (uac_qid_link_id) 
        references uac_qid_link;
 
-    alter table if exists fulfilment_survey_print_template 
-       add constraint FKf1n5yseu1tlkmeasblbsxw9ky 
-       foreign key (print_template_pack_code) 
-       references print_template;
+    alter table if exists fulfilment_survey_export_file_template 
+       add constraint FKjit0455kk2vnpbr6cs9wxsggv 
+       foreign key (export_file_template_pack_code) 
+       references export_file_template;
 
-    alter table if exists fulfilment_survey_print_template 
-       add constraint FKkarksqk2he61rw37g8hp0jvjj 
+    alter table if exists fulfilment_survey_export_file_template 
+       add constraint FK5u3w6updqcovaf7p4mkl8wtub 
        foreign key (survey_id) 
        references survey;
 
@@ -341,9 +341,9 @@ create index cases_case_ref_idx on cases (case_ref);
        references cases;
 
     alter table if exists fulfilment_to_process 
-       add constraint FK8a3y4pwp485sgxxlr064n7rxc 
-       foreign key (print_template_pack_code) 
-       references print_template;
+       add constraint FKic5eccg0ms41mlfe7aqyelje9 
+       foreign key (export_file_template_pack_code) 
+       references export_file_template;
 
     alter table if exists job 
        add constraint FK6hra36ow5xge19dg3w1m7fd4r 

@@ -8,12 +8,12 @@ import lombok.Data;
 
 @Data
 @Entity
-public class ActionRuleSurveyPrintTemplate {
+public class FulfilmentSurveyExportFileTemplate {
   @Id private UUID id;
 
   @ManyToOne(optional = false)
   private Survey survey;
 
   @ManyToOne(optional = false)
-  private PrintTemplate printTemplate;
+  private ExportFileTemplate exportFileTemplate;
 }
