@@ -45,13 +45,13 @@ public class Survey {
   private List<CollectionExercise> collectionExercises;
 
   @OneToMany(mappedBy = "survey")
-  private List<ActionRuleSurveyPrintTemplate> actionRulePrintTemplates;
+  private List<ActionRuleSurveyExportFileTemplate> actionRuleExportFileTemplates;
 
   @OneToMany(mappedBy = "survey")
   private List<ActionRuleSurveySmsTemplate> actionRuleSmsTemplates;
 
   @OneToMany(mappedBy = "survey")
-  private List<FulfilmentSurveyPrintTemplate> fulfilmentPrintTemplates;
+  private List<FulfilmentSurveyExportFileTemplate> fulfilmentExportFileTemplates;
 
   @OneToMany(mappedBy = "survey")
   private List<FulfilmentSurveySmsTemplate> smsTemplates;

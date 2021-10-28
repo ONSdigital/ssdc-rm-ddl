@@ -8,7 +8,7 @@ import org.hibernate.annotations.Type;
 
 @Data
 @Entity
-public class PrintTemplate {
+public class ExportFileTemplate {
   @Id private String packCode;
 
   @Type(type = "jsonb")
@@ -16,5 +16,5 @@ public class PrintTemplate {
   private String[] template;
 
   @Column(nullable = false)
-  private String printSupplier;
+  private String exportFileDestination;
 }
