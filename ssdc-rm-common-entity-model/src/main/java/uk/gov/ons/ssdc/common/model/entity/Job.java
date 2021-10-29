@@ -58,6 +58,10 @@ public class Job {
   @Column(nullable = false)
   private JobStatus jobStatus;
 
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private JobType jobType;
+
   @OneToMany(mappedBy = "job")
   private List<JobRow> jobRows;
 

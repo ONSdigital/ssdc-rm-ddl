@@ -150,6 +150,7 @@ set schema 'casev3';
         file_name varchar(255) not null,
         file_row_count int4 not null,
         job_status varchar(255) not null,
+        job_type varchar(255) not null,
         last_updated_at timestamp with time zone,
         processed_at timestamp with time zone,
         processed_by varchar(255),
