@@ -17,4 +17,7 @@ public class ExportFileTemplate {
 
   @Column(nullable = false)
   private String exportFileDestination;
+
+  @Column(nullable = false)
+  private String description;
 }

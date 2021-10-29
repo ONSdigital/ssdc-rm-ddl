@@ -18,4 +18,7 @@ public class SmsTemplate {
 
   @Column(nullable = false)
   private UUID notifyTemplateId;
+
+  @Column(nullable = false)
+  private String description;
 }
