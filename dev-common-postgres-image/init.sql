@@ -101,7 +101,9 @@ set schema 'casev3';
 
     create table export_file_template (
        pack_code varchar(255) not null,
+        description varchar(255) not null,
         export_file_destination varchar(255) not null,
+        metadata jsonb,
         template jsonb not null,
         primary key (pack_code)
     );
@@ -181,6 +183,8 @@ set schema 'casev3';
 
     create table sms_template (
        pack_code varchar(255) not null,
+        description varchar(255) not null,
+        metadata jsonb,
         notify_template_id uuid not null,
         template jsonb not null,
         primary key (pack_code)
