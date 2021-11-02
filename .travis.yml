@@ -15,7 +15,7 @@ jobs:
         - pipenv install --dev --deploy
 
       script:
-        - PIPENV_PYUP_API_KEY="" pipenv check -i 40291 -i 39253
+        - PIPENV_PYUP_API_KEY="" pipenv check -i 40291 -i 39253 -i 42218
         - pipenv run flake8
         - pipenv run pytest test --cov=. --cov-report term-missing
 
