@@ -51,8 +51,14 @@ public class Survey {
   private List<ActionRuleSurveySmsTemplate> actionRuleSmsTemplates;
 
   @OneToMany(mappedBy = "survey")
+  private List<ActionRuleSurveySmsTemplate> actionRuleEmailTemplates;
+
+  @OneToMany(mappedBy = "survey")
   private List<FulfilmentSurveyExportFileTemplate> fulfilmentExportFileTemplates;
 
   @OneToMany(mappedBy = "survey")
   private List<FulfilmentSurveySmsTemplate> smsTemplates;
+
+  @OneToMany(mappedBy = "survey")
+  private List<FulfilmentSurveyEmailTemplate> emailTemplates;
 }

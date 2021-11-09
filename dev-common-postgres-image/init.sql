@@ -5,14 +5,23 @@ set schema 'casev3';
        id uuid not null,
         classifiers bytea,
         created_by varchar(255) not null,
+        email_column varchar(255),
         has_triggered BOOLEAN DEFAULT false not null,
         phone_number_column varchar(255),
         trigger_date_time timestamp with time zone not null,
         type varchar(255) not null,
         uac_metadata jsonb,
         collection_exercise_id uuid not null,
+        email_template_pack_code varchar(255),
         export_file_template_pack_code varchar(255),
         sms_template_pack_code varchar(255),
+        primary key (id)
+    );
+
+    create table action_rule_survey_email_template (
+       id uuid not null,
+        email_template_pack_code varchar(255) not null,
+        survey_id uuid not null,
         primary key (id)
     );
 
@@ -71,6 +80,15 @@ set schema 'casev3';
         primary key (id)
     );
 
+    create table email_template (
+       pack_code varchar(255) not null,
+        description varchar(255) not null,
+        metadata jsonb,
+        notify_template_id uuid not null,
+        template jsonb not null,
+        primary key (pack_code)
+    );
+
     create table event (
        id uuid not null,
         channel varchar(255) not null,
@@ -111,6 +129,13 @@ set schema 'casev3';
     create table fulfilment_next_trigger (
        id uuid not null,
         trigger_date_time timestamp with time zone not null,
+        primary key (id)
+    );
+
+    create table fulfilment_survey_email_template (
+       id uuid not null,
+        email_template_pack_code varchar(255) not null,
+        survey_id uuid not null,
         primary key (id)
     );
 
@@ -262,6 +287,11 @@ create index cases_case_ref_idx on cases (case_ref);
        references collection_exercise;
 
     alter table if exists action_rule 
+       add constraint FKssc7f5mlut14gbb20282seiyn 
+       foreign key (email_template_pack_code) 
+       references email_template;
+
+    alter table if exists action_rule 
        add constraint FK9fefdqv5a7vb04vu7gn6cad19 
        foreign key (export_file_template_pack_code) 
        references export_file_template;
@@ -270,6 +300,16 @@ create index cases_case_ref_idx on cases (case_ref);
        add constraint FKtnrm1hhiyehmygso5dsb6dv7a 
        foreign key (sms_template_pack_code) 
        references sms_template;
+
+    alter table if exists action_rule_survey_email_template 
+       add constraint FKfjx53yvq2f07lipml9kcm8qlb 
+       foreign key (email_template_pack_code) 
+       references email_template;
+
+    alter table if exists action_rule_survey_email_template 
+       add constraint FKfucekff07exgw9xd5pd6wxc80 
+       foreign key (survey_id) 
+       references survey;
 
     alter table if exists action_rule_survey_export_file_template 
        add constraint FKpeyvyyoxpqh7rvae2hxmg2wd2 
@@ -320,6 +360,16 @@ create index cases_case_ref_idx on cases (case_ref);
        add constraint FKamu77co5m9upj2b3c1oun21er 
        foreign key (uac_qid_link_id) 
        references uac_qid_link;
+
+    alter table if exists fulfilment_survey_email_template 
+       add constraint FK7yn9o3bjnbaor6e15h1cfolj6 
+       foreign key (email_template_pack_code) 
+       references email_template;
+
+    alter table if exists fulfilment_survey_email_template 
+       add constraint FKtbsv7d3607v1drb4vilugvnk8 
+       foreign key (survey_id) 
+       references survey;
 
     alter table if exists fulfilment_survey_export_file_template 
        add constraint FKjit0455kk2vnpbr6cs9wxsggv 
