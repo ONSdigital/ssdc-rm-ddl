@@ -43,10 +43,14 @@ public class ActionRule {
 
   @ManyToOne private SmsTemplate smsTemplate;
 
+  @ManyToOne private EmailTemplate emailTemplate;
+
   @Column(nullable = false)
   private String createdBy;
 
   @Column private String phoneNumberColumn;
+
+  @Column private String emailColumn;
 
   @ManyToOne(optional = false)
   private CollectionExercise collectionExercise;

@@ -8,7 +8,7 @@ from config import Config
 PATCHES_DIRECTORY = Path(__file__).parent.joinpath('patches')
 
 # current_version should match the version in the ddl_version.sql file
-current_version = 'v1.2.0'
+current_version = 'v1.3.0'
 
 
 def get_current_patch_number(db_cursor):
