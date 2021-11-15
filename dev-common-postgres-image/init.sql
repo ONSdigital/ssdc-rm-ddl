@@ -194,7 +194,7 @@ set schema 'casev3';
         original_row_data bytea not null,
         original_row_line_number int4 not null,
         row_data jsonb,
-        validation_error_descriptions varchar(255),
+        validation_error_descriptions bytea,
         job_id uuid not null,
         primary key (id)
     );
