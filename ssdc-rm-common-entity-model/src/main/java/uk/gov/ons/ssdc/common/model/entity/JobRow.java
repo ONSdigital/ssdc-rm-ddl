@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import lombok.Data;
 import org.hibernate.annotations.Type;
@@ -37,5 +38,24 @@ public class JobRow {
   @Column(nullable = false)
   private JobRowStatus jobRowStatus;
 
-  @Column private String validationErrorDescriptions;
+  @Lob
+  @Type(type = "org.hibernate.type.BinaryType")
+  @Column
+  private byte[] validationErrorDescriptions;
+
+  public void setValidationErrorDescriptions(String validationErrorDescriptionsStr) {
+    if (validationErrorDescriptionsStr == null) {
+      validationErrorDescriptions = null;
+    } else {
+      validationErrorDescriptions = validationErrorDescriptionsStr.getBytes();
+    }
+  }
+
+  public String getValidationErrorDescriptions() {
+    if (validationErrorDescriptions == null) {
+      return null;
+    }
+
+    return new String(validationErrorDescriptions);
+  }
 }
