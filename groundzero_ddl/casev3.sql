@@ -69,6 +69,7 @@
 
     create table collection_exercise (
        id uuid not null,
+        collection_instrument_selection_rules jsonb,
         end_date timestamp with time zone not null,
         metadata jsonb,
         name varchar(255) not null,
