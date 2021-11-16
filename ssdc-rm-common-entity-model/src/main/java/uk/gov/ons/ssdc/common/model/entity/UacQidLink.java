@@ -52,4 +52,6 @@ public class UacQidLink {
   @Type(type = "jsonb")
   @Column(columnDefinition = "jsonb")
   private Object metadata;
+
+  @Column private String collectionInstrumentUrl;
 }

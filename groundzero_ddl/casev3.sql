@@ -228,6 +228,7 @@
     create table uac_qid_link (
        id uuid not null,
         active BOOLEAN DEFAULT true not null,
+        collection_instrument_url varchar(255),
         created_at timestamp with time zone,
         eq_launched BOOLEAN DEFAULT false not null,
         last_updated_at timestamp with time zone,

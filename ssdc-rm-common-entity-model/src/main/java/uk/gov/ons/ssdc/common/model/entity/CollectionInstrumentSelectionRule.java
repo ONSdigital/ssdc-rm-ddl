@@ -1,12 +1,23 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
+import lombok.Getter;
 
-@Data
-@AllArgsConstructor
-public class CollectionInstrumentSelectionRule {
-  private int priority;
-  private String spelExpression;
-  private String collectionInstrumentUrl;
+@Getter
+public class CollectionInstrumentSelectionRule implements Serializable {
+  private final int priority;
+  private final String spelExpression;
+  private final String collectionInstrumentUrl;
+
+  @JsonCreator
+  public CollectionInstrumentSelectionRule(
+      @JsonProperty("priority") int priority,
+      @JsonProperty("spelExpression") String spelExpression,
+      @JsonProperty("collectionInstrumentUrl") String collectionInstrumentUrl) {
+    this.priority = priority;
+    this.spelExpression = spelExpression;
+    this.collectionInstrumentUrl = collectionInstrumentUrl;
+  }
 }
