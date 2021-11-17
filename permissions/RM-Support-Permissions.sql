@@ -1,4 +1,9 @@
+DO $$
+BEGIN
 CREATE ROLE rm_support;
+EXCEPTION WHEN duplicate_object THEN RAISE NOTICE '%, skipping', SQLERRM USING ERRCODE = SQLSTATE;
+END
+$$;
 
 GRANT CONNECT ON DATABASE rm TO rm_support;
 

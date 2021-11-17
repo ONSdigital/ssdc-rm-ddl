@@ -1,4 +1,5 @@
-cd groundzero_ddl
+# Make sure we're working in the right directory
+cd groundzero_ddl || true
 
 PSQL_CONNECT_WRITE_MODE="sslmode=verify-ca sslrootcert=/root/.postgresql/root.crt sslcert=/root/.postgresql/postgresql.crt sslkey=/root/.postgresql/postgresql.key hostaddr=$DB_HOST user=rmuser password=${DB_PASSWORD:=password} dbname=$DB_NAME"
 

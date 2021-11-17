@@ -1,14 +1,18 @@
 -- ********************************************
 -- *** MANUAL RM SQL DATABASE UPDATE SCRIPT ***
 -- ********************************************
--- *** Number: 0012                         ***
--- *** Purpose: Create and grant            *** 
+-- *** Purpose: Create and grant            ***
 -- *** permissions on rm dev group role     ***
 -- ***                                      ***
 -- *** Author: Adam Hawtin                  ***
 -- ********************************************
 
+DO $$
+BEGIN
 CREATE ROLE rm_developer;
+EXCEPTION WHEN duplicate_object THEN RAISE NOTICE '%, skipping', SQLERRM USING ERRCODE = SQLSTATE;
+END
+$$;
 
 GRANT CONNECT ON DATABASE rm TO rm_developer;
 
