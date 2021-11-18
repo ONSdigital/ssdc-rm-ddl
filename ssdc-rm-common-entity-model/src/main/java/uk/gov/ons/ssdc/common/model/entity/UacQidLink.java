@@ -54,4 +54,6 @@ public class UacQidLink {
   private Object metadata;
 
   @Column private String collectionInstrumentUrl;
+
+  @Column private String uacHash;
 }

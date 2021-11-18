@@ -236,6 +236,7 @@
         qid varchar(255) not null,
         receipt_received BOOLEAN DEFAULT false not null,
         uac varchar(255) not null,
+        uac_hash varchar(255),
         caze_id uuid not null,
         primary key (id)
     );
