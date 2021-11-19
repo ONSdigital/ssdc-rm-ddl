@@ -69,7 +69,7 @@
 
     create table collection_exercise (
        id uuid not null,
-        collection_instrument_selection_rules jsonb,
+        collection_instrument_selection_rules jsonb not null,
         end_date timestamp with time zone not null,
         metadata jsonb,
         name varchar(255) not null,
@@ -228,7 +228,7 @@
     create table uac_qid_link (
        id uuid not null,
         active BOOLEAN DEFAULT true not null,
-        collection_instrument_url varchar(255),
+        collection_instrument_url varchar(255) not null,
         created_at timestamp with time zone,
         eq_launched BOOLEAN DEFAULT false not null,
         last_updated_at timestamp with time zone,
@@ -236,7 +236,7 @@
         qid varchar(255) not null,
         receipt_received BOOLEAN DEFAULT false not null,
         uac varchar(255) not null,
-        uac_hash varchar(255),
+        uac_hash varchar(255) not null,
         caze_id uuid not null,
         primary key (id)
     );

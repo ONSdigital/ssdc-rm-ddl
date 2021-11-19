@@ -51,6 +51,6 @@ public class CollectionExercise {
   private Object metadata;
 
   @Type(type = "jsonb")
-  @Column(columnDefinition = "jsonb")
+  @Column(nullable = false, columnDefinition = "jsonb")
   private CollectionInstrumentSelectionRule[] collectionInstrumentSelectionRules;
 }
