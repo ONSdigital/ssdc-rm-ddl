@@ -49,4 +49,8 @@ public class CollectionExercise {
   @Type(type = "jsonb")
   @Column(columnDefinition = "jsonb")
   private Object metadata;
+
+  @Type(type = "jsonb")
+  @Column(nullable = false, columnDefinition = "jsonb")
+  private CollectionInstrumentSelectionRule[] collectionInstrumentSelectionRules;
 }

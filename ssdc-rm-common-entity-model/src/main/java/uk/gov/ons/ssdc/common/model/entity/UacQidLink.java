@@ -52,4 +52,10 @@ public class UacQidLink {
   @Type(type = "jsonb")
   @Column(columnDefinition = "jsonb")
   private Object metadata;
+
+  @Column(nullable = false)
+  private String collectionInstrumentUrl;
+
+  @Column(nullable = false)
+  private String uacHash;
 }
