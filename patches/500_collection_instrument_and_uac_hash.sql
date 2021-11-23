@@ -23,7 +23,7 @@ ALTER TABLE casev3.collection_exercise ALTER COLUMN collection_instrument_select
 
 -- add the column
 ALTER TABLE casev3.uac_qid_link
-    ADD COLUMN IF NOT EXISTS collection_instrument_url jsonb;
+    ADD COLUMN IF NOT EXISTS collection_instrument_url varchar(255);
 
 -- give it a default value
 UPDATE casev3.uac_qid_link SET collection_instrument_url = 'https://raw.githubusercontent.com/ONSdigital/eq-questionnaire-schemas/main/schemas/social/en/social-demo.json';
