@@ -36,7 +36,7 @@ ALTER TABLE casev3.uac_qid_link ALTER COLUMN collection_instrument_url SET NOT N
 
 -- add the column
 ALTER TABLE casev3.uac_qid_link
-    ADD COLUMN IF NOT EXISTS uac_hash jsonb;
+    ADD COLUMN IF NOT EXISTS uac_hash varchar(255);
 
 -- give it a default value
 UPDATE casev3.uac_qid_link SET uac_hash = 'this is not a UAC hash because we need a data wipe';
