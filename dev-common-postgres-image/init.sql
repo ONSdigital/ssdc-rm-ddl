@@ -245,6 +245,7 @@ set schema 'casev3';
 
     create table user_group (
        id uuid not null,
+        description varchar(255),
         name varchar(255) not null,
         primary key (id)
     );

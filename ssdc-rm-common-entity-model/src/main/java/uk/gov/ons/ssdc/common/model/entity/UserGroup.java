@@ -15,6 +15,8 @@ import lombok.ToString;
 public class UserGroup {
   @Id private UUID id;
 
+  @Column private String description;
+
   @Column(nullable = false, unique = true)
   private String name;
 
