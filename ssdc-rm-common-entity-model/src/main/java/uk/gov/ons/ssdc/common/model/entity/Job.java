@@ -12,10 +12,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
 @Entity
+@DynamicUpdate
 public class Job {
   @Id private UUID id;
 

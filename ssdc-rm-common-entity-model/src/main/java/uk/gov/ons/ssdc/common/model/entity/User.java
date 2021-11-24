@@ -5,9 +5,11 @@ import java.util.UUID;
 import javax.persistence.*;
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
 
 @ToString(onlyExplicitlyIncluded = true) // Bidirectional relationship causes IDE stackoverflow
 @Entity
+@DynamicUpdate
 @Data
 @Table(
     name = "users",
