@@ -8,6 +8,7 @@ import javax.persistence.*;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -17,6 +18,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Data
 @TypeDefs({@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)})
 @Entity
+@DynamicUpdate
 public class UacQidLink {
   @Id private UUID id;
 

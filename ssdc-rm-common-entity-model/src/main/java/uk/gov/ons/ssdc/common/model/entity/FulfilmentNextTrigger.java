@@ -4,9 +4,11 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 import javax.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Data
+@DynamicUpdate
 public class FulfilmentNextTrigger {
   @Id private UUID id;
 

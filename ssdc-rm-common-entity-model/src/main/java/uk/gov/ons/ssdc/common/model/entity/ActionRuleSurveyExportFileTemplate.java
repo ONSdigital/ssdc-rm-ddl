@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Data
 @Entity
+@DynamicUpdate
 public class ActionRuleSurveyExportFileTemplate {
   @Id private UUID id;
 

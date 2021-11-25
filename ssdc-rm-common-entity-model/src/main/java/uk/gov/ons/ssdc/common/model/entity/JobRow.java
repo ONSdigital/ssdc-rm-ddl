@@ -11,12 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 @Data
 @Entity
+@DynamicUpdate
 @TypeDefs({@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)})
 public class JobRow {
   @Id private UUID id;
