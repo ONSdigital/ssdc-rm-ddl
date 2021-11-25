@@ -27,7 +27,7 @@ jobs:
           - PIPENV_IGNORE_VIRTUALENVS=1
 
     - language: java
-      jdk: openjdk11
+      jdk: openjdk17
 
       before_install:
         - make format-check-common
