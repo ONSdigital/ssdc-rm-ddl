@@ -6,7 +6,7 @@
 -- Author: Gavin Edwards
 -- ****************************************************************************
 
-SELECT * FROM casev3.user_group_permission
+DELETE FROM casev3.user_group_permission
 WHERE authorised_activity IN
 ('LIST_SURVEYS',
  'CREATE_SURVEY',
