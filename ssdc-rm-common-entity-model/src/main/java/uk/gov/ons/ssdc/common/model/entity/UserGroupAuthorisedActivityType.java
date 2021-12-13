@@ -2,12 +2,12 @@ package uk.gov.ons.ssdc.common.model.entity;
 
 public enum UserGroupAuthorisedActivityType {
   SUPER_USER,
-  LIST_SURVEYS,
+  LIST_SURVEYS(true),
   VIEW_SURVEY,
-  CREATE_SURVEY,
-  CREATE_EXPORT_FILE_TEMPLATE,
-  CREATE_SMS_TEMPLATE,
-  CREATE_EMAIL_TEMPLATE,
+  CREATE_SURVEY(true),
+  CREATE_EXPORT_FILE_TEMPLATE(true),
+  CREATE_SMS_TEMPLATE(true),
+  CREATE_EMAIL_TEMPLATE(true),
   LIST_COLLECTION_EXERCISES,
   VIEW_COLLECTION_EXERCISE,
   CREATE_COLLECTION_EXERCISE,
@@ -50,12 +50,26 @@ public enum UserGroupAuthorisedActivityType {
   CREATE_CASE_EMAIL_FULFILMENT,
   UPDATE_SAMPLE,
   UPDATE_SAMPLE_SENSITIVE,
-  LIST_EXPORT_FILE_TEMPLATES,
-  LIST_EXPORT_FILE_DESTINATIONS,
-  LIST_SMS_TEMPLATES,
-  LIST_EMAIL_TEMPLATES,
-  CONFIGURE_FULFILMENT_TRIGGER,
-  EXCEPTION_MANAGER_VIEWER,
-  EXCEPTION_MANAGER_PEEK,
-  EXCEPTION_MANAGER_QUARANTINE,
+  LIST_EXPORT_FILE_TEMPLATES(true),
+  LIST_EXPORT_FILE_DESTINATIONS(true),
+  LIST_SMS_TEMPLATES(true),
+  LIST_EMAIL_TEMPLATES(true),
+  CONFIGURE_FULFILMENT_TRIGGER(true),
+  EXCEPTION_MANAGER_VIEWER(true),
+  EXCEPTION_MANAGER_PEEK(true),
+  EXCEPTION_MANAGER_QUARANTINE(true);
+
+  private boolean global;
+
+  UserGroupAuthorisedActivityType() {
+    this.global = false;
+  }
+
+  UserGroupAuthorisedActivityType(boolean global) {
+    this.global = global;
+  }
+
+  public boolean isGlobal() {
+    return global;
+  }
 }
