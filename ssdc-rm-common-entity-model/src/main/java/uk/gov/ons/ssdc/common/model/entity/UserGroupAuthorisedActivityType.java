@@ -57,7 +57,8 @@ public enum UserGroupAuthorisedActivityType {
   CONFIGURE_FULFILMENT_TRIGGER(true),
   EXCEPTION_MANAGER_VIEWER(true),
   EXCEPTION_MANAGER_PEEK(true),
-  EXCEPTION_MANAGER_QUARANTINE(true);
+  EXCEPTION_MANAGER_QUARANTINE(true),
+  LIST_USERS;
 
   private boolean global;
 
