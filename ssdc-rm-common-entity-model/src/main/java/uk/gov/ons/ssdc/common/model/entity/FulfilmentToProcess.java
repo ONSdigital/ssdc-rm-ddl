@@ -37,4 +37,8 @@ public class FulfilmentToProcess {
   @Type(type = "jsonb")
   @Column(columnDefinition = "jsonb")
   private Object uacMetadata;
+
+  @Type(type = "jsonb")
+  @Column(columnDefinition = "jsonb")
+  private Object personalisation;
 }
