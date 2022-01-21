@@ -39,6 +39,7 @@
 
     create table cases (
        id uuid not null,
+        meta_data jsonb,
         case_ref int8,
         created_at timestamp with time zone,
         invalid BOOLEAN DEFAULT false not null,
