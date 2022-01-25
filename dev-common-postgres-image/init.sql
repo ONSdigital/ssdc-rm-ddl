@@ -160,6 +160,7 @@ set schema 'casev3';
         batch_quantity int4,
         correlation_id uuid not null,
         originating_user varchar(255),
+        personalisation jsonb,
         uac_metadata jsonb,
         caze_id uuid not null,
         export_file_template_pack_code varchar(255) not null,

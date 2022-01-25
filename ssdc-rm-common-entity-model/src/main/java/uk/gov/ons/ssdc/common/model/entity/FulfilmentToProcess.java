@@ -1,6 +1,7 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import java.util.Map;
 import java.util.UUID;
 import javax.persistence.*;
 import lombok.Data;
@@ -37,4 +38,8 @@ public class FulfilmentToProcess {
   @Type(type = "jsonb")
   @Column(columnDefinition = "jsonb")
   private Object uacMetadata;
+
+  @Type(type = "jsonb")
+  @Column(columnDefinition = "jsonb")
+  private Map<String, String> personalisation;
 }
