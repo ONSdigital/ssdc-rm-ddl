@@ -6,5 +6,5 @@
 -- Author: Adam Hawtin
 -- ****************************************************************************
 
-ALTER TABLE casev3.user_group
+ALTER TABLE casev3.fulfilment_to_process
     ADD COLUMN IF NOT EXISTS personalisation jsonb;
