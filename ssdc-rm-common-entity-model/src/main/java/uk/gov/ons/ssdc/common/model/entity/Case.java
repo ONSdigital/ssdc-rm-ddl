@@ -80,4 +80,7 @@ public class Case {
 
   @OneToMany(mappedBy = "caze")
   List<Event> events;
+
+  @OneToMany(mappedBy = "caze")
+  List<ResponsePeriod> responsePeriods;
 }
