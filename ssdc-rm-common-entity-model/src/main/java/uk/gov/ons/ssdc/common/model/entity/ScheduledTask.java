@@ -36,9 +36,14 @@ public class ScheduledTask {
   private String taskName;  //Be automatically named, maybe?
   private OffsetDateTime rmToActionDate;  // Indexed on this
 
-  private String sqlClassifier; // Should this fire, for examp// le for incentive:  Is there a completed PCR & EQ within the same response mech
-                                // This could be used for unforeseen other scheduledTask data issues.
+  private String classifer; // Should this fire, for example for incentive:  Is there a completed PCR & EQ within the same responsePeriod
+                            // This could be used for unforeseen other scheduledTask data issues.
+                            // or for MVP just have a sort of hard code SET_COMPLETED (PCR, EQ).
+                            // This could be SPEL now, or become moer advanced in the future with SPEL, SQL or a nother
+                            // For CIS we have quite simple requirements SET_COMPLETED TRUE/FALSE
+  
   private ScheduledTaskType taskType;  // eg.  SEND_BY_PACKCODE(CIS_PCR)
+
 
   @OneToOne
   private UacQidLink uacQidLink;  // If QID created on SEND, link to it.  Will make 'completing' this task easier.
