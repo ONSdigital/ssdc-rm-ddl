@@ -41,7 +41,7 @@ public class ScheduledTask {
   private ScheduledTaskType taskType;  // eg.  SEND_BY_PACKCODE(CIS_PCR)
 
   @OneToOne
-  private UacQidLink uacQidLink;
+  private UacQidLink uacQidLink;  // If QID created on SEND, link to it.  Will make 'completing' this task easier.
 
   @OneToOne
   private Event sentEvent; // Link to event confirming sending
