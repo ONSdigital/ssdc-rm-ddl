@@ -4,21 +4,29 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.time.OffsetDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 @ToString(onlyExplicitlyIncluded = true)
 @Data
-@TypeDefs({@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)})
 @Entity
+@TypeDefs({@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)})
 @DynamicUpdate
+@Table(
+        name = "scheduledTasks",
+        indexes = {@Index(name = "scheduled_task_date", columnList = "rmToActionDate")})
 public class ScheduledTask {
   @Id private UUID id;
 
@@ -28,12 +36,12 @@ public class ScheduledTask {
   private String taskName;  //Be automatically named, maybe?
   private OffsetDateTime rmToActionDate;  // Indexed on this
 
-  private String sqlClassifier; // Should this fire, for example for incentive:  Is there a completed PCR & EQ within the same response mech
+  private String sqlClassifier; // Should this fire, for examp// le for incentive:  Is there a completed PCR & EQ within the same response mech
                                 // This could be used for unforeseen other scheduledTask data issues.
+  private ScheduledTaskType taskType;  // eg.  SEND_BY_PACKCODE(CIS_PCR)
 
-
-
-  private String packCode;  // Should these really move on a database table anyway. Would be a foreign key here, not for this spike
+  @OneToOne
+  private UacQidLink uacQidLink;
 
   @OneToOne
   private Event sentEvent; // Link to event confirming sending
@@ -43,4 +51,8 @@ public class ScheduledTask {
 
   private boolean receiptRequiredForCompletion; // is a receipt required to move to completed, for reminders, no.
   private ScheduledTaskState actionState; //An enum of NOT_STARTED/SENT/COMPLETED/SUSPSENDED/NOT_COMPLETED.
+
+  @Type(type = "jsonb")
+  @Column(columnDefinition = "jsonb")
+  private Map<String, String> metaData;  //rude not too
 }
