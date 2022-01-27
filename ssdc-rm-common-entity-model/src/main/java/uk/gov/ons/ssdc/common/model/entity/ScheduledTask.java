@@ -51,6 +51,8 @@ public class ScheduledTask {
   private UacQidLink
       uacQidLink; // If QID created on SEND, link to it.  Will make 'completing' this task easier.
 
+  @OneToOne private Event sentEvent; // Link to event confirming sending
+
   @OneToOne private Event receiptingEvent; // Link to event confirming receipt, if required
 
   private boolean
