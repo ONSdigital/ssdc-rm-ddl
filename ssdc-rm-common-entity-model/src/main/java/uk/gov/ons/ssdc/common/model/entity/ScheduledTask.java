@@ -36,7 +36,8 @@ public class ScheduledTask {
 
   // This will have an ScheduledTaskType field
   // After that it may be a bit looser
-  // For letter out it might just look like: {ScheduledTaskType: ACTION_WITH_PACKCODE, packCode: CIS_PCR}
+  // For letter out it might just look like: {ScheduledTaskType: ACTION_WITH_PACKCODE, packCode:
+  // CIS_PCR}
   // For more 'complex' ones like 'Failure to complete'
   // { ScheduledTaskType: RUN_SOME_SPEL, SPEL: If condition A Do B  }
   // For INCENTIVE
@@ -49,8 +50,6 @@ public class ScheduledTask {
   @OneToOne
   private UacQidLink
       uacQidLink; // If QID created on SEND, link to it.  Will make 'completing' this task easier.
-
-  @OneToOne private Event sentEvent; // Link to event confirming sending
 
   @OneToOne private Event receiptingEvent; // Link to event confirming receipt, if required
 
