@@ -162,6 +162,7 @@
         uac_metadata jsonb,
         caze_id uuid not null,
         export_file_template_pack_code varchar(255) not null,
+        scheduled_task_id uuid,
         primary key (id)
     );
 
@@ -428,6 +429,11 @@ create index scheduled_task_date on scheduled_tasks (rm_to_action_date);
        add constraint FKic5eccg0ms41mlfe7aqyelje9 
        foreign key (export_file_template_pack_code) 
        references export_file_template;
+
+    alter table if exists fulfilment_to_process 
+       add constraint FKoylorf5kwhl03p5961mie2dqc 
+       foreign key (scheduled_task_id) 
+       references scheduled_tasks;
 
     alter table if exists job 
        add constraint FK6hra36ow5xge19dg3w1m7fd4r 

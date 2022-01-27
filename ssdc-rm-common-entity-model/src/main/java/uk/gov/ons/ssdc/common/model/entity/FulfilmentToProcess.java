@@ -37,4 +37,6 @@ public class FulfilmentToProcess {
   @Type(type = "jsonb")
   @Column(columnDefinition = "jsonb")
   private Object uacMetadata;
+
+  @OneToOne private ScheduledTask scheduledTask;
 }
