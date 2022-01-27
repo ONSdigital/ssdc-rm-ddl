@@ -35,6 +35,7 @@ public class ResponsePeriod {
   @OneToMany(mappedBy = "responsePeriod")
   List<ScheduledTask> scheduledTasks;
 
+  // State here too,  yuk - but... otherwise needs to understand all ScheduledTasks etc
   private ResponsePeriodState
       responsePeriodState; // If closed, suspended here - then all ScheduledActions closed
 

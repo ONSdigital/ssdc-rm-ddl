@@ -43,6 +43,9 @@ public class ScheduledTask {
   // For INCENTIVE
   // { ScheduledTaskType: RUN_SOME_SPEL, SPEL: If condition A Do B  }
   // SPEL is not an MVP requirement, but seems most flexible?
+
+  @Type(type = "jsonb")
+  @Column(columnDefinition = "jsonb")
   private Map<String, String> scheduledTaskDetails;
   // ^ of course we could 'just' have some sort of SPEL, magic thing here with nothing else?
   // But   ACTION_WITH_PACKCODE  seems really, really, really, common
