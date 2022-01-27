@@ -6,5 +6,5 @@ public enum ScheduledTaskState {
   SENT,
   COMPLETED,
   SUSPENDED,
-  NOT_COMPLETED
+  NOT_COMPLETED_WITHIN_PERIOD
 }

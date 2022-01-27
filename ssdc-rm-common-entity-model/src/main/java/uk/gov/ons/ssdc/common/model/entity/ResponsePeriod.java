@@ -33,7 +33,7 @@ public class ResponsePeriod {
   @ManyToOne private Case caze;
 
   @OneToMany(mappedBy = "responsePeriod")
-  List<ScheduledTask> responsePeriods;
+  List<ScheduledTask> scheduledTasks;
 
   private ResponsePeriodState
       responsePeriodState; // If closed, suspended here - then all ScheduledActions closed
