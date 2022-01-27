@@ -68,6 +68,10 @@ public class Case {
   @Column(columnDefinition = "jsonb")
   private Map<String, String> sampleSensitive;
 
+  @Type(type = "jsonb")
+  @Column(columnDefinition = "jsonb")
+  private Map<String, String> MetaData;
+
   @ManyToOne(optional = false)
   private CollectionExercise collectionExercise;
 
@@ -76,4 +80,7 @@ public class Case {
 
   @OneToMany(mappedBy = "caze")
   List<Event> events;
+
+  @OneToMany(mappedBy = "caze")
+  List<ResponsePeriod> responsePeriods;
 }

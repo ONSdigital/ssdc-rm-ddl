@@ -39,6 +39,7 @@
 
     create table cases (
        id uuid not null,
+        meta_data jsonb,
         case_ref int8,
         created_at timestamp with time zone,
         invalid BOOLEAN DEFAULT false not null,
@@ -206,6 +207,30 @@
         primary key (id)
     );
 
+    create table response_period (
+       id uuid not null,
+        meta_data jsonb,
+        name varchar(255),
+        response_period_state int4,
+        caze_id uuid,
+        primary key (id)
+    );
+
+    create table scheduled_tasks (
+       id uuid not null,
+        action_state int4,
+        meta_data jsonb,
+        receipt_required_for_completion boolean not null,
+        rm_to_action_date timestamp,
+        scheduled_task_details jsonb,
+        task_name varchar(255),
+        receipting_event_id uuid,
+        response_period_id uuid,
+        sent_event_id uuid,
+        uac_qid_link_id uuid,
+        primary key (id)
+    );
+
     create table sms_template (
        pack_code varchar(255) not null,
         description varchar(255) not null,
@@ -277,6 +302,7 @@
         primary key (id)
     );
 create index cases_case_ref_idx on cases (case_ref);
+create index scheduled_task_date on scheduled_tasks (rm_to_action_date);
 
     alter table if exists user_group 
        add constraint UK_kas9w8ead0ska5n3csefp2bpp unique (name);
@@ -413,6 +439,31 @@ create index cases_case_ref_idx on cases (case_ref);
        add constraint FK8motlil4mayre4vvdipnjime0 
        foreign key (job_id) 
        references job;
+
+    alter table if exists response_period 
+       add constraint FK7ctucyvag6nsrmx569eecxdch 
+       foreign key (caze_id) 
+       references cases;
+
+    alter table if exists scheduled_tasks 
+       add constraint FKcslkcy948rjlauni5798ihhr 
+       foreign key (receipting_event_id) 
+       references event;
+
+    alter table if exists scheduled_tasks 
+       add constraint FKiq32ynjtv29k2tcs5vgo1u04y 
+       foreign key (response_period_id) 
+       references response_period;
+
+    alter table if exists scheduled_tasks 
+       add constraint FK59qh0lqvb24vuc7hp3mpitmt2 
+       foreign key (sent_event_id) 
+       references event;
+
+    alter table if exists scheduled_tasks 
+       add constraint FKbpov3657jv9vhaud4bo65asgs 
+       foreign key (uac_qid_link_id) 
+       references uac_qid_link;
 
     alter table if exists uac_qid_link 
        add constraint FKngo7bm72f0focdujjma78t4nk 
