@@ -266,7 +266,6 @@ set schema 'casev3';
         uac varchar(255) not null,
         uac_hash varchar(255) not null,
         caze_id uuid not null,
-        scheduled_task_id uuid,
         primary key (id)
     );
 
@@ -477,11 +476,6 @@ create index scheduled_task_date on scheduled_tasks (rm_to_action_date);
        add constraint FKngo7bm72f0focdujjma78t4nk 
        foreign key (caze_id) 
        references cases;
-
-    alter table if exists uac_qid_link 
-       add constraint FK1co36ww3envxx1waet47xhreq 
-       foreign key (scheduled_task_id) 
-       references scheduled_tasks;
 
     alter table if exists user_group_admin 
        add constraint FKc7secqw35qa62vst6c8fvmnkc 

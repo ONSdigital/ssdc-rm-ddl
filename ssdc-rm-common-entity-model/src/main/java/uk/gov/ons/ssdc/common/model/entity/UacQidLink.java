@@ -31,8 +31,6 @@ public class UacQidLink {
   @ManyToOne(optional = false)
   private Case caze;
 
-  @OneToOne private ScheduledTask scheduledTask;
-
   @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
   private boolean receiptReceived;
 
