@@ -63,5 +63,7 @@ public class UacQidLink {
 
   // We want this to receipt a ScheduledTask, as appropriate
   // storing the actual ScheduledTask puts us in some referential loop
+  // Might need to make this ScheduledTask scheduledTask - but not caze, where appropriate?
+  // This would remove the death loop.  Production code issue
   private UUID scheduledTaskId;
 }
