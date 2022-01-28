@@ -32,6 +32,8 @@ public class ScheduledTask {
   @ManyToOne private ResponsePeriod responsePeriod;
 
   private String taskName; // Be automatically named, maybe?
+
+  @Column(nullable = false)
   private OffsetDateTime rmToActionDate; // Indexed on this
 
   // This will have an ScheduledTaskType field

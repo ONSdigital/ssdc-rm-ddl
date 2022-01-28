@@ -60,4 +60,8 @@ public class UacQidLink {
 
   @Column(nullable = false)
   private String uacHash;
+
+  // We want this to receipt a ScheduledTask, as appropriate
+  // storing the actual ScheduledTask puts us in some referential loop
+  private UUID scheduledTaskId;
 }
