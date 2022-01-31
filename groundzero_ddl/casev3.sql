@@ -249,6 +249,7 @@
         sample_separator char(1) not null,
         sample_validation_rules jsonb not null,
         sample_with_header_row boolean not null,
+        schedule_template jsonb,
         primary key (id)
     );
 

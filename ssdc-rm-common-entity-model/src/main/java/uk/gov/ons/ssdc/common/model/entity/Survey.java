@@ -63,4 +63,8 @@ public class Survey {
 
   @OneToMany(mappedBy = "survey")
   private List<FulfilmentSurveyEmailTemplate> emailTemplates;
+
+  @Type(type = "jsonb")
+  @Column(columnDefinition = "jsonb")
+  private Object scheduleTemplate;
 }
