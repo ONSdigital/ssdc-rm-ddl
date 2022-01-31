@@ -83,4 +83,18 @@ public class Case {
 
   @OneToMany(mappedBy = "caze")
   List<ResponsePeriod> responsePeriods;
+
+  // TODO:  Holder. we'd have some  JSON like:
+  /*
+  {
+   "reminderLetter": {
+    "contactPreference":"EMAIL",
+          "details":"me@here.com"
+    }
+  }
+  And so on?
+   */
+  @Type(type = "jsonb")
+  @Column(columnDefinition = "jsonb")
+  private Map<String, String> preferences;
 }

@@ -44,6 +44,7 @@
         created_at timestamp with time zone,
         invalid BOOLEAN DEFAULT false not null,
         last_updated_at timestamp with time zone,
+        preferences jsonb,
         refusal_received varchar(255),
         sample jsonb,
         sample_sensitive jsonb,
