@@ -56,5 +56,5 @@ java -jar target/ssdc-rm-ddl-1.0-SNAPSHOT.jar exceptionmanager uk.gov.ons.ssdc.e
 ./build_init_script.sh
 
 cd dev-common-postgres-image
-docker build . -t eu.gcr.io/ssdc-rm-ci/rm/ssdc-rm-dev-common-postgres:latest
+docker build . -t europe-west2-docker.pkg.dev/ssdc-rm-ci/docker/ssdc-rm-dev-common-postgres:latest
 cd ..
