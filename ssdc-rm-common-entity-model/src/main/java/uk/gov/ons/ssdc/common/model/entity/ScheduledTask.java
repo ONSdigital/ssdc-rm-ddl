@@ -51,11 +51,10 @@ public class ScheduledTask {
   // ^ of course we could 'just' have some sort of SPEL, magic thing here with nothing else?
   // But   ACTION_WITH_PACKCODE  seems really, really, really, common
 
-  private UUID
-      uacQidLinkId; // If QID created on SEND, link to it.  Will make 'completing' this task easier.
-
+  // Store these UUIDs just for auditing purposes, just storing UUIDs is open to failure, but
+  // far less tied in, far les DB intensive etc.
+  private UUID uacQidLinkId; // If QID created on SEND, link to it.
   private UUID sentEventId; // Link to event confirming sending
-
   private UUID receiptingEventId; // Link to event confirming receipt, if required
 
   private boolean
