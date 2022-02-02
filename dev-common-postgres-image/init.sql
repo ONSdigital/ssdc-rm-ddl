@@ -224,13 +224,13 @@ set schema 'casev3';
         action_state int4,
         meta_data jsonb,
         receipt_required_for_completion boolean not null,
+        receipting_event_id uuid,
         rm_to_action_date timestamp not null,
         scheduled_task_details jsonb,
-        task_name varchar(255),
-        receipting_event_id uuid,
-        response_period_id uuid,
         sent_event_id uuid,
+        task_name varchar(255),
         uac_qid_link_id uuid,
+        response_period_id uuid,
         primary key (id)
     );
 
@@ -456,24 +456,9 @@ create index scheduled_task_date on scheduled_tasks (rm_to_action_date);
        references cases;
 
     alter table if exists scheduled_tasks 
-       add constraint FKcslkcy948rjlauni5798ihhr 
-       foreign key (receipting_event_id) 
-       references event;
-
-    alter table if exists scheduled_tasks 
        add constraint FKiq32ynjtv29k2tcs5vgo1u04y 
        foreign key (response_period_id) 
        references response_period;
-
-    alter table if exists scheduled_tasks 
-       add constraint FK59qh0lqvb24vuc7hp3mpitmt2 
-       foreign key (sent_event_id) 
-       references event;
-
-    alter table if exists scheduled_tasks 
-       add constraint FKbpov3657jv9vhaud4bo65asgs 
-       foreign key (uac_qid_link_id) 
-       references uac_qid_link;
 
     alter table if exists uac_qid_link 
        add constraint FKngo7bm72f0focdujjma78t4nk 

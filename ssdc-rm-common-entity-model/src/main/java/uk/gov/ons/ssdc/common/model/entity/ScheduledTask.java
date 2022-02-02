@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
 import lombok.ToString;
@@ -52,13 +51,12 @@ public class ScheduledTask {
   // ^ of course we could 'just' have some sort of SPEL, magic thing here with nothing else?
   // But   ACTION_WITH_PACKCODE  seems really, really, really, common
 
-  @OneToOne
-  private UacQidLink
-      uacQidLink; // If QID created on SEND, link to it.  Will make 'completing' this task easier.
+  private UUID
+      uacQidLinkId; // If QID created on SEND, link to it.  Will make 'completing' this task easier.
 
-  @OneToOne private Event sentEvent; // Link to event confirming sending
+  private UUID sentEventId; // Link to event confirming sending
 
-  @OneToOne private Event receiptingEvent; // Link to event confirming receipt, if required
+  private UUID receiptingEventId; // Link to event confirming receipt, if required
 
   private boolean
       receiptRequiredForCompletion; // is a receipt required to move to completed, for reminders,
