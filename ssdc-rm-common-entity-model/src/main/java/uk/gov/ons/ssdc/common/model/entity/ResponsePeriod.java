@@ -1,5 +1,6 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class ResponsePeriod {
 
   private String name;
 
-  @ManyToOne private Case caze;
+  @JsonIgnore @ManyToOne private Case caze;
 
   @OneToMany(mappedBy = "responsePeriod")
   List<ScheduledTask> scheduledTasks;

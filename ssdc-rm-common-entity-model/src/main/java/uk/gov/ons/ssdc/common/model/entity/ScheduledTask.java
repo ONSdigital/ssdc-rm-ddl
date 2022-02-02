@@ -1,5 +1,6 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import java.time.OffsetDateTime;
 import java.util.Map;
@@ -28,7 +29,7 @@ import org.hibernate.annotations.TypeDefs;
 public class ScheduledTask {
   @Id private UUID id;
 
-  @ManyToOne private ResponsePeriod responsePeriod;
+  @JsonIgnore @ManyToOne private ResponsePeriod responsePeriod;
 
   private String taskName; // Be automatically named, maybe?
 
@@ -51,8 +52,8 @@ public class ScheduledTask {
   // ^ of course we could 'just' have some sort of SPEL, magic thing here with nothing else?
   // But   ACTION_WITH_PACKCODE  seems really, really, really, common
 
-  // Store these UUIDs just for auditing purposes, just storing UUIDs is open to failure, but
-  // far less tied in, far les DB intensive etc.
+  // Store these UUIDs just for auditing purposes, just storing UUIDs is more open to failure, but
+  // far less tied in, far less DB intensive etc.
   private UUID uacQidLinkId; // If QID created on SEND, link to it.
   private UUID sentEventId; // Link to event confirming sending
   private UUID receiptingEventId; // Link to event confirming receipt, if required
