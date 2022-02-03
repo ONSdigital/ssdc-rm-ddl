@@ -11,11 +11,12 @@ jobs:
         - "3.9"
 
       install:
-        - pip install pipenv
+        - pip uninstall -y numpy  # Remove the vulnerable Numpy which Travis provides
+        - pip install -U pipenv
         - pipenv install --dev --deploy
 
       script:
-        - PIPENV_PYUP_API_KEY="" pipenv check -i 40291 -i 39253 -i 42218
+        - pipenv check
         - pipenv run flake8
         - pipenv run pytest test --cov=. --cov-report term-missing
 
