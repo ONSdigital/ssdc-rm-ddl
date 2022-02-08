@@ -48,6 +48,7 @@ set schema 'casev3';
         refusal_received varchar(255),
         sample jsonb,
         sample_sensitive jsonb,
+        schedule jsonb,
         secret_sequence_number serial,
         collection_exercise_id uuid not null,
         primary key (id)
@@ -208,6 +209,16 @@ set schema 'casev3';
         primary key (id)
     );
 
+    create table scheduled_tasks (
+       id uuid not null,
+        name varchar(255) not null,
+        pack_code varchar(255),
+        rm_to_action_date timestamp not null,
+        scheduled_task_status int4,
+        scheduled_task_type int4,
+        primary key (id)
+    );
+
     create table sms_template (
        pack_code varchar(255) not null,
         description varchar(255) not null,
@@ -225,6 +236,7 @@ set schema 'casev3';
         sample_separator char(1) not null,
         sample_validation_rules jsonb not null,
         sample_with_header_row boolean not null,
+        schedule_template jsonb,
         primary key (id)
     );
 
@@ -279,6 +291,7 @@ set schema 'casev3';
         primary key (id)
     );
 create index cases_case_ref_idx on cases (case_ref);
+create index scheduled_task_date on scheduled_tasks (rm_to_action_date);
 
     alter table if exists user_group 
        add constraint UK_kas9w8ead0ska5n3csefp2bpp unique (name);
