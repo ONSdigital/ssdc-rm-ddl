@@ -159,6 +159,7 @@ set schema 'casev3';
         batch_id uuid,
         batch_quantity int4,
         correlation_id uuid not null,
+        message_id uuid not null,
         originating_user varchar(255),
         personalisation jsonb,
         uac_metadata jsonb,
@@ -279,6 +280,9 @@ set schema 'casev3';
         primary key (id)
     );
 create index cases_case_ref_idx on cases (case_ref);
+
+    alter table if exists fulfilment_to_process 
+       add constraint UK_oi6eanl9qiyiqi2p0quygsxgy unique (message_id);
 
     alter table if exists user_group 
        add constraint UK_kas9w8ead0ska5n3csefp2bpp unique (name);
