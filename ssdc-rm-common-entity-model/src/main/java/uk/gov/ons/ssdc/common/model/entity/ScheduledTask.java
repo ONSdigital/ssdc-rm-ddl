@@ -24,6 +24,9 @@ public class ScheduledTask {
   @Id private UUID id;
 
   @Column(nullable = false)
+  private UUID caseId;
+
+  @Column(nullable = false)
   private String name;
 
   @Column(nullable = false)
@@ -37,8 +40,6 @@ public class ScheduledTask {
    more complex IF/ELSE etc
   */
   @Column private ScheduledTaskType scheduledTaskType;
-
   @Column private String packCode;
-
   @Column private ScheduledTaskStatus scheduledTaskStatus;
 }

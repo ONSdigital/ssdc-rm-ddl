@@ -209,6 +209,7 @@
 
     create table scheduled_tasks (
        id uuid not null,
+        case_id uuid not null,
         name varchar(255) not null,
         pack_code varchar(255),
         rm_to_action_date timestamp not null,
