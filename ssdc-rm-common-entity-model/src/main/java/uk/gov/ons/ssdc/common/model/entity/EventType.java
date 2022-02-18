@@ -4,6 +4,7 @@ public enum EventType {
   NEW_CASE,
   RECEIPT,
   REFUSAL,
+  ERASE_DATA,
   EQ_LAUNCH,
   INVALID_CASE,
   UAC_AUTHENTICATION,
