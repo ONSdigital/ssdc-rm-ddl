@@ -7,7 +7,7 @@
 -- ****************************************************************************
 
 ALTER TABLE casev3.fulfilment_to_process
-    ADD COLUMN IF NOT EXISTS message_id uuid NOT NULL;
+    ADD COLUMN IF NOT EXISTS message_id uuid NOT NULL; 
 
 ALTER TABLE casev3.fulfilment_to_process
     DROP CONSTRAINT IF EXISTS UK_oi6eanl9qiyiqi2p0quygsxgy;
