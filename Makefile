@@ -23,6 +23,6 @@ dev-install-common:
 	cd ssdc-rm-common-entity-model && mvn clean install
 
 dev-update-ddl:
-	./build_groundzero_ddl.sh
+	$SAMPLE_VALIDATION_BRANCH=3315-java-pmd-best-practice-usevarargs ./build_groundzero_ddl.sh
 
 dev-build: dev-install-common dev-update-ddl
