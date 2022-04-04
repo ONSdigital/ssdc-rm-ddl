@@ -31,9 +31,9 @@ jobs:
       jdk: openjdk17
 
       before_install:
-        - make format-check-common
         - echo "$GOOGLE_SERVICE_ACCOUNT_KEY" > ~/google-service-account-key.json
         - export GOOGLE_APPLICATION_CREDENTIALS=~/google-service-account-key.json
+        - make format-check-common
 
       install: echo "SKIPPING DEFAULT INSTALL" # Travis has a default maven install. Don't build twice!
 
