@@ -293,10 +293,10 @@ set schema 'casev3';
         primary key (id)
     );
 create index cases_case_ref_idx on cases (case_ref);
-create index scheduled_task_date on scheduled_tasks (rm_to_action_date);
 
     alter table if exists fulfilment_to_process 
        add constraint UK_oi6eanl9qiyiqi2p0quygsxgy unique (message_id);
+create index scheduled_task_date on scheduled_tasks (rm_to_action_date);
 
     alter table if exists user_group 
        add constraint UK_kas9w8ead0ska5n3csefp2bpp unique (name);
