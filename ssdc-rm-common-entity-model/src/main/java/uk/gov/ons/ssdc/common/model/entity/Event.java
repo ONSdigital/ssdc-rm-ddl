@@ -24,6 +24,7 @@ import org.hibernate.annotations.TypeDefs;
 @Entity
 @DynamicUpdate
 public class Event {
+
   @Id private UUID id;
 
   @ManyToOne private UacQidLink uacQidLink;
@@ -63,4 +64,6 @@ public class Event {
   private OffsetDateTime messageTimestamp;
 
   @Column private String createdBy;
+
+  @Column private UUID scheduledTaskId;
 }

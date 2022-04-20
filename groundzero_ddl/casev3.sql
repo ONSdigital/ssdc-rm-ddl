@@ -100,6 +100,7 @@
         message_timestamp Timestamp with time zone not null,
         payload jsonb,
         processed_at timestamp with time zone not null,
+        scheduled_task_id uuid,
         source varchar(255) not null,
         type varchar(255) not null,
         caze_id uuid,
@@ -214,7 +215,6 @@
         name varchar(255) not null,
         pack_code varchar(255),
         rm_to_action_date timestamp not null,
-        scheduled_task_status int4,
         scheduled_task_type int4,
         primary key (id)
     );

@@ -41,5 +41,4 @@ public class ScheduledTask {
   */
   @Column private ScheduledTaskType scheduledTaskType;
   @Column private String packCode;
-  @Column private ScheduledTaskStatus scheduledTaskStatus;
 }
