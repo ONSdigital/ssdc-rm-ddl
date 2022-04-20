@@ -11,7 +11,10 @@ test: check lint
 	pipenv run pytest
 
 format-check-common:
-	cd ssdc-rm-common-entity-model && mvn fmt:check
+	cd ssdc-rm-common-entity-model && mvn fmt:check pmd:check
+
+check-ddl:
+	mvn pmd:check
 
 build-common:
 	cd ssdc-rm-common-entity-model && mvn compile

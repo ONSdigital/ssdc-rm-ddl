@@ -33,6 +33,9 @@ public class FulfilmentToProcess {
   @Column(nullable = false)
   private UUID correlationId;
 
+  @Column(nullable = false, unique = true)
+  private UUID messageId;
+
   @Column private String originatingUser;
 
   @Type(type = "jsonb")

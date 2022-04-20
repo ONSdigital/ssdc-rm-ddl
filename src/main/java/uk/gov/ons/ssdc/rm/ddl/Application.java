@@ -14,6 +14,7 @@ import org.hibernate.dialect.PostgreSQL94Dialect;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.schema.TargetType;
 
+@SuppressWarnings("PMD")
 public class Application {
 
   private static final String OUTPUT_DIRECTORY = "groundzero_ddl";
