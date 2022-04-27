@@ -13,6 +13,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+import src.main.java.uk.gov.ons.ssdc.common.model.entity.ScheduleTemplate;
 import uk.gov.ons.ssdc.common.validation.ColumnValidator;
 
 @ToString(onlyExplicitlyIncluded = true) // Bidirectional relationship causes IDE stackoverflow
@@ -66,5 +67,5 @@ public class Survey {
 
   @Type(type = "jsonb")
   @Column(columnDefinition = "jsonb")
-  private Object scheduleTemplate;
+  private ScheduleTemplate scheduleTemplate;
 }
