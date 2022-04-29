@@ -1,6 +1,7 @@
 package src.main.java.uk.gov.ons.ssdc.common.model.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,5 +13,5 @@ import lombok.ToString;
 @NoArgsConstructor
 public class ScheduleTemplate implements Serializable {
   private String name;
-  private ScheduleTemplateTaskGroup[] scheduleTemplateTaskGroups;
+  private List<ScheduleTemplateTaskGroup> scheduleTemplateTaskGroups;
 }
