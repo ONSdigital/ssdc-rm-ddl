@@ -46,6 +46,7 @@
         refusal_received varchar(255),
         sample jsonb,
         sample_sensitive jsonb,
+        schedule jsonb,
         secret_sequence_number serial,
         collection_exercise_id uuid not null,
         primary key (id)
@@ -99,6 +100,7 @@
         message_timestamp Timestamp with time zone not null,
         payload jsonb,
         processed_at timestamp with time zone not null,
+        scheduled_task_id uuid,
         source varchar(255) not null,
         type varchar(255) not null,
         caze_id uuid,
@@ -207,6 +209,16 @@
         primary key (id)
     );
 
+    create table scheduled_tasks (
+       id uuid not null,
+        case_id uuid not null,
+        name varchar(255) not null,
+        pack_code varchar(255),
+        rm_to_action_date timestamp not null,
+        scheduled_task_type int4,
+        primary key (id)
+    );
+
     create table sms_template (
        pack_code varchar(255) not null,
         description varchar(255) not null,
@@ -224,6 +236,7 @@
         sample_separator char(1) not null,
         sample_validation_rules jsonb not null,
         sample_with_header_row boolean not null,
+        schedule_template jsonb,
         primary key (id)
     );
 
@@ -281,6 +294,7 @@ create index cases_case_ref_idx on cases (case_ref);
 
     alter table if exists fulfilment_to_process 
        add constraint UK_oi6eanl9qiyiqi2p0quygsxgy unique (message_id);
+create index scheduled_task_date on scheduled_tasks (rm_to_action_date);
 
     alter table if exists user_group 
        add constraint UK_kas9w8ead0ska5n3csefp2bpp unique (name);

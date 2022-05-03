@@ -76,4 +76,8 @@ public class Case {
 
   @OneToMany(mappedBy = "caze")
   List<Event> events;
+
+  @Type(type = "jsonb")
+  @Column(columnDefinition = "jsonb")
+  private Object schedule;
 }
