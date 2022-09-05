@@ -14,7 +14,7 @@ do
   echo "\copy casev3.$TABLE_NAME from backup_$TABLE_NAME.txt;" >> copy_in_tables.sql
 done
 
-# Only copy the global permissions from the user_group_permission table, as survey specific permissions will no longer work
+# Only copy the global roles from the user_group_permission table, as survey specific roles will no longer work
 echo "\copy (select * from casev3.user_group_permission where survey_id is null) to backup_user_group_permission.txt;" >> copy_out_tables.sql
 echo "\copy casev3.user_group_permission from backup_user_group_permission.txt;" >> copy_in_tables.sql
 
@@ -37,9 +37,3 @@ done
 
 rm copy_out_tables.sql
 rm copy_in_tables.sql
-
-# Restore database role permissions which are lost when the tables are removed and recreated
-for PERMISSIONS_SCRIPT in ../permissions/*.sql;
-do
-  psql "$PSQL_CONNECT_WRITE_MODE" -f "$PERMISSIONS_SCRIPT"
-done

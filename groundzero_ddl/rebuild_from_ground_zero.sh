@@ -18,3 +18,8 @@ do
   rm copy_$SCHEMA_NAME.sql
   rm header_footer_temp.txt
 done
+
+for GROUP_PERMISSIONS_SCRIPT in groups/*.sql;
+do
+  psql "$PSQL_CONNECT_WRITE_MODE" -f "$GROUP_PERMISSIONS_SCRIPT"
+done

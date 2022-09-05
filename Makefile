@@ -26,3 +26,6 @@ dev-update-ddl:
 	./build_groundzero_ddl.sh
 
 dev-build: dev-install-common dev-update-ddl
+
+shellcheck:
+	shellcheck --shell=bash **/*.sh *.sh

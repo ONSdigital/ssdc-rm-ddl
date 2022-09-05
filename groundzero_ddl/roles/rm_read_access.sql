@@ -1,18 +1,4 @@
--- ********************************************
--- *** MANUAL RM SQL DATABASE UPDATE SCRIPT ***
--- ********************************************
--- *** Purpose: Create and grant            ***
--- *** permissions on rm read only access   ***
--- *** role                                 ***
--- *** Author: Adam Hawtin                  ***
--- ********************************************
-
-DO $$
-BEGIN
 CREATE ROLE rm_read_access;
-EXCEPTION WHEN duplicate_object THEN RAISE NOTICE '%, skipping', SQLERRM USING ERRCODE = SQLSTATE;
-END
-$$;
 
 GRANT CONNECT ON DATABASE rm TO rm_read_access;
 

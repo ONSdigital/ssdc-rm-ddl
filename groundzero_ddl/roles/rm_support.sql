@@ -1,9 +1,4 @@
-DO $$
-BEGIN
 CREATE ROLE rm_support;
-EXCEPTION WHEN duplicate_object THEN RAISE NOTICE '%, skipping', SQLERRM USING ERRCODE = SQLSTATE;
-END
-$$;
 
 GRANT CONNECT ON DATABASE rm TO rm_support;
 
@@ -28,3 +23,10 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA ddl_version GRANT SELECT ON TABLES TO rm_supp
 
 -- For creating/editing/deleting auto quarantine rules
 GRANT SELECT, UPDATE, INSERT, DELETE ON exceptionmanager.auto_quarantine_rule TO rm_support;
+
+-- For creating/editing/deleting RBAC users, roles, roles etc
+GRANT SELECT, UPDATE, INSERT, DELETE ON casev3.users TO rm_support;
+GRANT SELECT, UPDATE, INSERT, DELETE ON casev3.user_group TO rm_support;
+GRANT SELECT, UPDATE, INSERT, DELETE ON casev3.user_group_admin TO rm_support;
+GRANT SELECT, UPDATE, INSERT, DELETE ON casev3.user_group_member TO rm_support;
+GRANT SELECT, UPDATE, INSERT, DELETE ON casev3.user_group_permission TO rm_support;
