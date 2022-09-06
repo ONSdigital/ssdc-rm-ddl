@@ -24,7 +24,7 @@ echo "commit transaction;" >> copy_in_tables.sql
 psql "$PSQL_CONNECT_WRITE_MODE" -f copy_out_tables.sql
 
 # Run the ground zero
-. rebuild_from_ground_zero.sh
+./rebuild_from_ground_zero.sh
 
 # Restore the tables
 psql "$PSQL_CONNECT_WRITE_MODE" -f copy_in_tables.sql

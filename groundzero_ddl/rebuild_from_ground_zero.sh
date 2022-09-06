@@ -7,11 +7,13 @@ psql "$PSQL_CONNECT_WRITE_MODE" -v "ON_ERROR_STOP=1" -f destroy_schemas.sql || e
 
 for SCHEMA_NAME in casev3 uacqid exceptionmanager ddl_version
 do
-  echo "begin transaction;" > "tmp_transaction_$SCHEMA_NAME.sql"
-  echo "create schema if not exists $SCHEMA_NAME;" >> "tmp_transaction_$SCHEMA_NAME.sql"
-  echo "set schema '$SCHEMA_NAME';" >> "tmp_transaction_$SCHEMA_NAME.sql"
-  cat $SCHEMA_NAME.sql >> "tmp_transaction_$SCHEMA_NAME.sql"
-  echo "commit transaction;" >> "tmp_transaction_$SCHEMA_NAME.sql"
+  {
+  echo "begin transaction;"
+  echo "create schema if not exists $SCHEMA_NAME;"
+  echo "set schema '$SCHEMA_NAME';"
+  cat "$SCHEMA_NAME.sql"
+  echo "commit transaction;"
+  } > "tmp_transaction_$SCHEMA_NAME.sql"
 
   psql "$PSQL_CONNECT_WRITE_MODE" -f "tmp_transaction_$SCHEMA_NAME.sql"
   rm "tmp_transaction_$SCHEMA_NAME.sql"
@@ -20,9 +22,11 @@ done
 pushd roles || exit 1
 for ROLE_PERMISSIONS_SCRIPT in *.sql;
 do
-  echo "begin transaction;" > "tmp_transaction_$ROLE_PERMISSIONS_SCRIPT"
-  cat "$ROLE_PERMISSIONS_SCRIPT" >> "tmp_transaction_$ROLE_PERMISSIONS_SCRIPT"
-  echo "commit transaction;" >> "tmp_transaction_$ROLE_PERMISSIONS_SCRIPT"
+  {
+  echo "begin transaction;"
+  cat "$ROLE_PERMISSIONS_SCRIPT"
+  echo "commit transaction;"
+  } > "tmp_transaction_$ROLE_PERMISSIONS_SCRIPT"
 
   psql "$PSQL_CONNECT_WRITE_MODE" -f "tmp_transaction_$ROLE_PERMISSIONS_SCRIPT"
   rm "tmp_transaction_$ROLE_PERMISSIONS_SCRIPT"

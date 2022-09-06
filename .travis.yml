@@ -42,6 +42,11 @@ jobs:
       cache:
         directories:
           - $HOME/.m2
+
+    - language: bash
+      name: "Shell Check"
+      script:
+        - make shellcheck
 branches:
   only:
     - main
