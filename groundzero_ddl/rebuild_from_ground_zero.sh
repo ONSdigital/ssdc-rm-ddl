@@ -3,23 +3,28 @@ cd groundzero_ddl || true
 
 PSQL_CONNECT_WRITE_MODE="sslmode=verify-ca sslrootcert=/root/.postgresql/root.crt sslcert=/root/.postgresql/postgresql.crt sslkey=/root/.postgresql/postgresql.key hostaddr=$DB_HOST user=rmuser password=${DB_PASSWORD:=password} dbname=$DB_NAME"
 
-psql "$PSQL_CONNECT_WRITE_MODE" -f destroy_schemas.sql
+psql "$PSQL_CONNECT_WRITE_MODE" -v "ON_ERROR_STOP=1" -f destroy_schemas.sql || exit 1
 
 for SCHEMA_NAME in casev3 uacqid exceptionmanager ddl_version
 do
-  echo "begin transaction;" > header_footer_temp.txt
-  echo "create schema if not exists $SCHEMA_NAME;" >> header_footer_temp.txt
-  echo "set schema '$SCHEMA_NAME';" >> header_footer_temp.txt
-  cat $SCHEMA_NAME.sql >> header_footer_temp.txt
-  echo "commit transaction;" >> header_footer_temp.txt
-  cat header_footer_temp.txt > "copy_$SCHEMA_NAME.sql"
+  echo "begin transaction;" > "tmp_transaction_$SCHEMA_NAME.sql"
+  echo "create schema if not exists $SCHEMA_NAME;" >> "tmp_transaction_$SCHEMA_NAME.sql"
+  echo "set schema '$SCHEMA_NAME';" >> "tmp_transaction_$SCHEMA_NAME.sql"
+  cat $SCHEMA_NAME.sql >> "tmp_transaction_$SCHEMA_NAME.sql"
+  echo "commit transaction;" >> "tmp_transaction_$SCHEMA_NAME.sql"
 
-  psql "$PSQL_CONNECT_WRITE_MODE" -f copy_$SCHEMA_NAME.sql
-  rm copy_$SCHEMA_NAME.sql
-  rm header_footer_temp.txt
+  psql "$PSQL_CONNECT_WRITE_MODE" -f "tmp_transaction_$SCHEMA_NAME.sql"
+  rm "tmp_transaction_$SCHEMA_NAME.sql"
 done
 
-for GROUP_PERMISSIONS_SCRIPT in groups/*.sql;
+pushd roles || exit 1
+for ROLE_PERMISSIONS_SCRIPT in *.sql;
 do
-  psql "$PSQL_CONNECT_WRITE_MODE" -f "$GROUP_PERMISSIONS_SCRIPT"
+  echo "begin transaction;" > "tmp_transaction_$ROLE_PERMISSIONS_SCRIPT"
+  cat "$ROLE_PERMISSIONS_SCRIPT" >> "tmp_transaction_$ROLE_PERMISSIONS_SCRIPT"
+  echo "commit transaction;" >> "tmp_transaction_$ROLE_PERMISSIONS_SCRIPT"
+
+  psql "$PSQL_CONNECT_WRITE_MODE" -f "tmp_transaction_$ROLE_PERMISSIONS_SCRIPT"
+  rm "tmp_transaction_$ROLE_PERMISSIONS_SCRIPT"
 done
+popd || exit 1

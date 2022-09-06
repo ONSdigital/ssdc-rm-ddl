@@ -27,5 +27,8 @@ dev-update-ddl:
 
 dev-build: dev-install-common dev-update-ddl
 
+docker-build:
+	docker build . -t europe-west2-docker.pkg.dev/ssdc-rm-ci/docker/ssdc-rm-ddl
+
 shellcheck:
 	shellcheck --shell=bash **/*.sh *.sh

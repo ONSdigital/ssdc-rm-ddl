@@ -1,4 +1,9 @@
-CREATE ROLE rm_superuser;
+DO $$
+BEGIN
+    CREATE ROLE rm_superuser;
+    EXCEPTION WHEN duplicate_object THEN RAISE NOTICE '%, re-applying role grants and privileges', SQLERRM USING ERRCODE = SQLSTATE;
+END
+$$;
 
 GRANT CONNECT ON DATABASE rm TO rm_superuser;
 
