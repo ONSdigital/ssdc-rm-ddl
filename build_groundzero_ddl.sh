@@ -6,30 +6,30 @@ rm -rf git_cloned_src
 rm -rf temp_clone
 
 mkdir temp_clone
-cd temp_clone
+pushd temp_clone || exit 1
 
 if [ -z "$SAMPLE_VALIDATION_BRANCH" ]; then
   git clone git@github.com:ONSdigital/ssdc-shared-sample-validation.git
 else
   echo "Cloning Sample Validation branch $SAMPLE_VALIDATION_BRANCH"
-  git clone --branch $SAMPLE_VALIDATION_BRANCH git@github.com:ONSdigital/ssdc-shared-sample-validation.git
+  git clone --branch "$SAMPLE_VALIDATION_BRANCH" git@github.com:ONSdigital/ssdc-shared-sample-validation.git
 fi
 
 if [ -z "$UAC_QID_SERVICE_BRANCH" ]; then
   git clone git@github.com:ONSdigital/ssdc-rm-uac-qid-service.git
 else
   echo "Cloning UAC QID Service branch $UAC_QID_SERVICE_BRANCH"
-  git clone --branch $UAC_QID_SERVICE_BRANCH git@github.com:ONSdigital/ssdc-rm-uac-qid-service.git
+  git clone --branch "$UAC_QID_SERVICE_BRANCH" git@github.com:ONSdigital/ssdc-rm-uac-qid-service.git
 fi
 
 if [ -z "$EXCEPTION_MANAGER_BRANCH" ]; then
   git clone git@github.com:ONSdigital/ssdc-rm-exception-manager.git
 else
   echo "Cloning Exception Manager branch $EXCEPTION_MANAGER_BRANCH"
-  git clone --branch $EXCEPTION_MANAGER_BRANCH git@github.com:ONSdigital/ssdc-rm-exception-manager.git
+  git clone --branch "$EXCEPTION_MANAGER_BRANCH" git@github.com:ONSdigital/ssdc-rm-exception-manager.git
 fi
 
-cd ..
+popd || exit 1
 
 mkdir -p git_cloned_src/uk/gov/ons/ssdc/common/model/entity
 cp ssdc-rm-common-entity-model/src/main/java/uk/gov/ons/ssdc/common/model/entity/* git_cloned_src/uk/gov/ons/ssdc/common/model/entity
@@ -55,6 +55,6 @@ java -jar target/ssdc-rm-ddl-1.0-SNAPSHOT.jar exceptionmanager uk.gov.ons.ssdc.e
 
 ./build_init_script.sh
 
-cd dev-common-postgres-image
+pushd dev-common-postgres-image || exit 1
 docker build . -t europe-west2-docker.pkg.dev/ssdc-rm-ci/docker/ssdc-rm-dev-common-postgres:latest
-cd ..
+popd || exit 1
