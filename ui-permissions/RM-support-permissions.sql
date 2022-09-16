@@ -23,3 +23,5 @@ INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, sur
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('28e30f2e-2d1b-4fa1-92ca-cd8323179c55', 'VIEW_COLLECTION_EXERCISE', 'b19a77bd-6a02-4851-8116-9e915738b700', NULL);
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('26cf0f7a-7f0f-4e5b-8be2-640745be9cdf', 'VIEW_SAMPLE_LOAD_PROGRESS', 'b19a77bd-6a02-4851-8116-9e915738b700', NULL);
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('18c78ba8-17ec-4c09-972d-c1c6c88359d5', 'VIEW_SURVEY', 'b19a77bd-6a02-4851-8116-9e915738b700', NULL);
+
+commit;
