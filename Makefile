@@ -31,10 +31,10 @@ shellcheck:
 	shellcheck -x --shell=bash **/*.sh *.sh
 
 dev-postgres-up:
-	docker compose -f docker-compose-dev-postgres.yml up -d
+	docker-compose -f docker-compose-dev-postgres.yml up -d
 
 dev-postgres-down:
-	docker compose -f docker-compose-dev-postgres.yml down
+	docker-compose -f docker-compose-dev-postgres.yml down
 
 run-test-patches:
 	./test_patches_wait_for_postgres.sh
