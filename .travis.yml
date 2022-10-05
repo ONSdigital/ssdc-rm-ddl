@@ -6,9 +6,11 @@ services:
 jobs:
   include:
     - language: python
-
       python:
-        - "3.9"
+        - "3.10"
+      dist: bionic # The default dist does not yet support python 3.10
+      name: "Python Tests and Checks"
+
 
       install:
         - pip uninstall -y numpy  # Remove the vulnerable Numpy which Travis provides
@@ -27,9 +29,29 @@ jobs:
         global:
           - PIPENV_IGNORE_VIRTUALENVS=1
 
+    - language: python
+      python:
+        - "3.10"
+      dist: bionic # The default dist does not yet support python 3.10
+      sudo: required
+      name: "Test Patches"
+      services:
+        - docker
+      before_install:
+        - docker login -u "${DOCKER_GCP_USERNAME}" -p "${DOCKER_GCP_PASSWORD}" https://europe-west2-docker.pkg.dev;
+        - docker login -u "${DOCKERHUB_USERNAME}" -p "${DOCKERHUB_PASSWORD}";
+
+      install:
+        - pip uninstall -y numpy  # Remove the vulnerable Numpy which Travis provides
+        - pip install -U pipenv
+        - pipenv install --dev --deploy
+
+      script:
+        - make test-patches
+
     - language: java
       jdk: openjdk17
-
+      name: "Java Common Entities"
       before_install:
         - echo "$GOOGLE_SERVICE_ACCOUNT_KEY" > ~/google-service-account-key.json
         - export GOOGLE_APPLICATION_CREDENTIALS=~/google-service-account-key.json
