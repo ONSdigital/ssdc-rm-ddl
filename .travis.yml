@@ -69,6 +69,7 @@ jobs:
       name: "Shell Check"
       script:
         - make shellcheck
+
 branches:
   only:
     - main
