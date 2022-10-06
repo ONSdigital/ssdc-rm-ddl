@@ -1,7 +1,9 @@
 # Motivation and Context
 <!--- Why is this change required? What problem does it solve? -->
 
-* [ ] This PR includes DDL schema changes, bumping to new schema version: <!---Add the new schema version number if it has changes-->
+# Has the DDL schema changed?
+*Pull requests which include schema changes should be labelled with the `schema change` label for visibility
+* [ ] This PR includes DDL schema changes and has been labelled correctly, bumping to new schema version: <!---Add the new schema version number if it has changes-->
 
 # What has changed
 <!--- What code changes has been made -->
