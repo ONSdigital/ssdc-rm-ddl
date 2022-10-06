@@ -37,7 +37,9 @@ dev-postgres-down:
 	docker-compose -f docker-compose-dev-postgres.yml down
 
 run-test-patches:
-	./test_patches_wait_for_postgres.sh
 	DB_PORT=16432 pipenv run python patch_database.py
 
-test-patches: dev-postgres-up run-test-patches dev-postgres-down
+wait-for-docker-postgres:
+	./wait_for_docker_postgres.sh
+
+test-patches: dev-postgres-up wait-for-docker-postgres run-test-patches dev-postgres-down

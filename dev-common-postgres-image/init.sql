@@ -454,6 +454,7 @@ create index cases_case_ref_idx on cases (case_ref);
        add constraint FKep4hjlw1esp4s8p3row2syxjq 
        foreign key (survey_id) 
        references survey;
+
 create schema if not exists uacqid;
 set schema 'uacqid';
 
@@ -463,6 +464,7 @@ set schema 'uacqid';
         unique_number serial,
         primary key (uac)
     );
+
 create schema if not exists ddl_version;
 set schema 'ddl_version';
 CREATE TABLE ddl_version.patches (patch_number integer PRIMARY KEY, applied_timestamp timestamp with time zone NOT NULL);
