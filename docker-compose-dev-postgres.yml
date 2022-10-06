@@ -1,5 +1,5 @@
 services:
-  postgres-case-it:
+  dev-postgres:
     container_name: dev-postgres-ddl
     image: europe-west2-docker.pkg.dev/ssdc-rm-ci/docker/ssdc-rm-dev-common-postgres:latest
     command: ["-c", "shared_buffers=256MB", "-c", "max_connections=500" ]
