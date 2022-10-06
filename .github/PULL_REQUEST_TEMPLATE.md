@@ -1,6 +1,8 @@
 # Motivation and Context
 <!--- Why is this change required? What problem does it solve? -->
 
+* [ ] This PR includes DDL schema changes, bumping to new schema version: <!---Add the new schema version number if it has changes-->
+
 # What has changed
 <!--- What code changes has been made -->
 <!--- Has there been any refactoring -->
