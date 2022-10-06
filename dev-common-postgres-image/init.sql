@@ -454,3 +454,23 @@ create index cases_case_ref_idx on cases (case_ref);
        add constraint FKep4hjlw1esp4s8p3row2syxjq 
        foreign key (survey_id) 
        references survey;
+
+create schema if not exists uacqid;
+set schema 'uacqid';
+
+    create table uac_qid (
+       uac varchar(255) not null,
+        qid varchar(255),
+        unique_number serial,
+        primary key (uac)
+    );
+
+create schema if not exists ddl_version;
+set schema 'ddl_version';
+CREATE TABLE ddl_version.patches (patch_number integer PRIMARY KEY, applied_timestamp timestamp with time zone NOT NULL);
+CREATE TABLE ddl_version.version (version_tag varchar(256) PRIMARY KEY, updated_timestamp timestamp with time zone NOT NULL);
+
+-- Version and patch number for the current ground zero,
+-- NOTE: These must be updated every time the repo is tagged
+INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (900, current_timestamp);
+INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.9.0', current_timestamp);
