@@ -1,6 +1,6 @@
 # ssdc-rm-ddl[![Build Status](https://travis-ci.com/ONSdigital/ssdc-rm-ddl.svg?branch=main)](https://travis-ci.com/ONSdigital/ssdc-rm-ddl)
 
-Contains ground zero scripts to create all the RM database tables, as well as a script to update the DDL from the master
+Contains ground zero scripts to create all the RM database tables, as well as a script to update the DDL from the main
 branch of the RM components.
 
 ## Common Entity Models
