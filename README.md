@@ -35,7 +35,7 @@ the `groundzero_ddl` directory, so that the database is always perfectly in sync
 
 ### UAC QID and Exception Manager Schemas
 
-The UAC QID and Exception Manager services have their own schemas, indepndent of the common entities schema defined in
+The UAC QID and Exception Manager services have their own schemas, independent of the common entities schema defined in
 this repository. This repo also handles generating these schema definitions by pulling the services code and using it's
 hibernate models.
 
@@ -56,6 +56,32 @@ create patch script(s) accordingly.
 The script `patch_database.py` is used by RM to run database patches from a tagged release of this repository. This
 script is invoked from our pipelines and will run in a Kubernetes pod to apply any database patches from files in the
 tagged release version of this repository.
+
+The database schema version number and patch numbers must then be updated in (patch_database.py)[patch_database.py]
+and (ddl_version.sql)[groundzero_ddl/ddl_version.sql], so that the patch script is aware of the current schema version.
+
+### Testing patch scripts
+
+The patch scripts can be tested by running our dev-common-postgres docker image from the latest main branch build, then
+running the database patches against it.
+
+If you have rebuilt the dev-common-postgres image locally it will already be on the updated schema version, and to test
+any local patches you must first pull the main branch build with:
+
+```shell
+make pull-latest-dev-common-postgres
+```
+
+Then you can test running your patches with:
+
+```shell
+make test-patches
+```
+
+And you should see the logs from the patch script indicating it has run the patch script to update the database.
+
+**NOTE:** This test simply verifies that the patches are valid SQL which can run against our schemas, the actual change
+they make and it's consistency with the schema change must still be carefully reviewed.
 
 ## Dev Common Postgres Image
 

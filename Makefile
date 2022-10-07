@@ -30,6 +30,9 @@ dev-build: dev-install-common dev-update-ddl
 shellcheck:
 	shellcheck -x --shell=bash **/*.sh *.sh
 
+pull-latest-dev-postgres:
+	docker pull europe-west2-docker.pkg.dev/ssdc-rm-ci/docker/ssdc-rm-dev-common-postgres:latest
+
 dev-postgres-up:
 	docker-compose -f docker-compose-dev-postgres.yml up -d
 
