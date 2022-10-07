@@ -86,6 +86,6 @@ they make and it's consistency with the schema change must still be carefully re
 
 ## Dev Common Postgres Image
 
-This repo also houses a dockerfile for building our dev postgres image, based on the postgres docker image but
-initialised with our schemas for dev convenience in local testing. This requires it's own, combined init SQL script
-which is also re-generated when you run `make dev-build`, which also locally builds the image.
+This repo also houses a dockerfile for building our [dev postgres image](dev-common-postgres-image), based on the
+postgres docker image but initialised with our schemas for dev convenience in local testing. This requires it's own,
+combined init SQL script which is also re-generated when you run `make dev-build`, which also locally builds the image.
