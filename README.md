@@ -5,7 +5,7 @@ branch of the RM components.
 
 ## Common Entity Models
 
-This project houses a sub repo, (ssdc-rm-common-entity-models)[./ssdc-rm-common-entity-models]. This contains the Java
+This project houses a sub repo, [ssdc-rm-common-entity-models](ssdc-rm-common-entity-model). This contains the Java
 Hibernate ORM models of our database entities, shared by our Java services. This sub repo is built into a JAR artifact
 which is imported by our services.
 
@@ -13,9 +13,9 @@ Our database schema definitions are then generated from these Hibernate models.
 
 #### AFTER EDITING THE JAVA HIBERNATE MODELS, THE DDL _MUST_ BE REGENERATED
 
-Refer to (Building the DDL)[#building-the-ddl], the generated schemas must be regenerated after any changes to the Java
-models. If the schemas have changes, a migration script must also be written, refer to (Patching a
-database)[#patching-a-database].
+Refer to [Building the DDL](#building-the-ddl), the generated schemas must be regenerated after any changes to the Java
+models. If the schemas have changes, a migration script must also be written, refer
+to [Patching a database](#patching-a-database).
 
 ### Versioning and Release Process
 
@@ -31,7 +31,8 @@ make dev-build
 ```
 
 **It's very important that the DDL script to build ground zero is run, instead of manually editing the files in
-the `groundzero_ddl` directory, so that the database is always perfectly in sync with the code on the master branch.**
+the [groundzero_ddl](groundzero_ddl) directory, so that the database is always perfectly in sync with the code on the
+master branch.**
 
 ### UAC QID and Exception Manager Schemas
 
@@ -57,8 +58,8 @@ The script `patch_database.py` is used by RM to run database patches from a tagg
 script is invoked from our pipelines and will run in a Kubernetes pod to apply any database patches from files in the
 tagged release version of this repository.
 
-The database schema version number and patch numbers must then be updated in (patch_database.py)[patch_database.py]
-and (ddl_version.sql)[groundzero_ddl/ddl_version.sql], so that the patch script is aware of the current schema version.
+The database schema version number and patch numbers must then be updated in [patch_database.py](patch_database.py)
+and [ddl_version.sql](groundzero_ddl/ddl_version.sql), so that the patch script is aware of the current schema version.
 
 ### Testing patch scripts
 
