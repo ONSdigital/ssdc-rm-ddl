@@ -1,3 +1,7 @@
+-- THIS FILE IS AUTO-GENERATED
+-- DO NOT EDIT IT DIRECTLY
+-- REFER TO THE README FOR INSTRUCTIONS ON REGENERATING IT
+
 create schema if not exists casev3;
 set schema 'casev3';
 

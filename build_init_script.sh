@@ -1,5 +1,9 @@
 rm dev-common-postgres-image/init.sql || true
 {
+echo "-- THIS FILE IS AUTO-GENERATED"
+echo "-- DO NOT EDIT IT DIRECTLY"
+echo "-- REFER TO THE README FOR INSTRUCTIONS ON REGENERATING IT"
+echo ""
 echo "create schema if not exists casev3;"
 echo "set schema 'casev3';"
 cat groundzero_ddl/casev3.sql
