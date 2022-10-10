@@ -70,7 +70,7 @@ If you have rebuilt the dev-common-postgres image locally it will already be on 
 any local patches you must first pull the main branch build with:
 
 ```shell
-make pull-latest-dev-common-postgres
+make pull-latest-dev-postgres
 ```
 
 Then you can test running your patches with:
