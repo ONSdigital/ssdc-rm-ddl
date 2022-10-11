@@ -18,6 +18,13 @@ cat groundzero_ddl/uacqid.sql
 
 {
 echo ""
+echo "create schema if not exists exceptionmanager;"
+echo "set schema 'uacqid';"
+cat groundzero_ddl/exceptionmanager.sql
+} >> dev-common-postgres-image/init.sql
+
+{
+echo ""
 echo "create schema if not exists ddl_version;"
 echo "set schema 'ddl_version';"
 cat groundzero_ddl/ddl_version.sql
