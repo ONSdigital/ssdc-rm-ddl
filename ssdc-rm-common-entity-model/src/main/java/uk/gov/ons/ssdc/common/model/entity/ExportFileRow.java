@@ -17,7 +17,7 @@ public class ExportFileRow {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  @Column(nullable = false)
+  @Column(nullable = false, length = 5000)
   private String row;
 
   @Column(nullable = false)

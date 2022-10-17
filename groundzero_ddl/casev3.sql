@@ -112,7 +112,7 @@
         batch_quantity int4 not null,
         export_file_destination varchar(255) not null,
         pack_code varchar(255) not null,
-        row varchar(255) not null,
+        row varchar(5000) not null,
         primary key (id)
     );
 
