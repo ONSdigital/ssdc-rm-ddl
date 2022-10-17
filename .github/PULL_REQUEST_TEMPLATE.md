@@ -2,7 +2,7 @@
 <!--- Why is this change required? What problem does it solve? -->
 
 # Has the DDL schema changed?
-*Pull requests which include schema changes should be labelled with the `schema change` label for visibility
+*Pull requests which include schema changes should be labelled with the `schema change` label for visibility*
 * [ ] This PR includes DDL schema changes and has been labelled correctly, bumping to new schema version: <!---Add the new schema version number if it has changes-->
 
 # What has changed
