@@ -34,7 +34,7 @@
   <repositories>
     <repository>
       <id>artifact-registry</id>
-      <url>artifactregistry://europe-west2-maven.pkg.dev/ssdc-rm-ci/rm-snapshots</url>
+      <url>artifactregistry://europe-west2-maven.pkg.dev/ssdc-rm-adamhawtin/test-snapshots</url>
       <releases>
         <enabled>false</enabled>
       </releases>
@@ -44,7 +44,7 @@
     </repository>
     <repository>
       <id>artifact-registry-prod</id>
-      <url>artifactregistry://europe-west2-maven.pkg.dev/ons-ci-rm/rm-releases</url>
+      <url>artifactregistry://europe-west2-maven.pkg.dev/ssdc-rm-adamhawtin/test-releases</url>
       <releases>
         <enabled>true</enabled>
       </releases>
