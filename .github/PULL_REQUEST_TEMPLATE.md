@@ -1,9 +1,16 @@
+# Has the DDL schema changed?
+*Pull requests which include schema changes should be labelled with the `schema change` label for visibility*
+
+*The [common entity model pom.xml](ssdc-rm-common-entity-model/pom.xml) file `project.version` must be bumped
+appropriately if there are any common entity code changes*
+
+* [ ] This PR includes DDL schema changes and has been labelled correctly, bumping to new schema
+  version: <!---Add the new schema version number if it has changes-->
+* [ ] The POM has been updated with an appropriate version bump if required
+
 # Motivation and Context
 <!--- Why is this change required? What problem does it solve? -->
 
-# Has the DDL schema changed?
-*Pull requests which include schema changes should be labelled with the `schema change` label for visibility*
-* [ ] This PR includes DDL schema changes and has been labelled correctly, bumping to new schema version: <!---Add the new schema version number if it has changes-->
 
 # What has changed
 <!--- What code changes has been made -->
