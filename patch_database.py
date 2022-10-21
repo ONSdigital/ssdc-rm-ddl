@@ -38,7 +38,7 @@ def update_patch_version(ddl_version_tag, db_cursor):
 
 def patch_database(patches_directory, ddl_version_tag, db_cursor, db_connection):
     patch_files = [{'file': patch_file, 'number': int(patch_file.name.split('_')[0])} for patch_file in
-                   patches_directory.iterdir()]
+                   patches_directory.glob('*.sql')]
     current_patch = get_current_patch_number(db_cursor)
     patches_to_apply = sorted([patch for patch in patch_files if patch['number'] > current_patch],
                               key=lambda patch: patch['number'])
