@@ -1,10 +1,9 @@
 -- ****************************************************************************
--- RM SQL DATABASE UPDATE SCRIPT
+-- RM SQL DATABASE UPDATE EXAMPLE SCRIPT
 -- ****************************************************************************
--- Number: 600
--- Purpose: Add description to user group table
--- Author: Nick Grant
+-- Number: 0
+-- Purpose: To show example format of SQL patch script
+-- Author: Test
 -- ****************************************************************************
 
-ALTER TABLE casev3.user_group
-    ADD COLUMN IF NOT EXISTS description varchar(255);
+-- SQL GOES HERE
