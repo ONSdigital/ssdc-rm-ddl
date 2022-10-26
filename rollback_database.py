@@ -70,7 +70,7 @@ def check_rollback_version_is_valid(rollback_version: str) -> None:
         raise ValueError('Rollback version {rollback_version} does not match the expected format v*.*.*-rollback.*')
 
 
-def get_rollback_patches(patch_numbers: List[int], rollbacks_directory: Path) -> List[Path]:
+def get_rollback_patches(patch_numbers: Tuple[int], rollbacks_directory: Path) -> List[Path]:
     rollback_patches = []
     for patch_number in patch_numbers:
         matches = tuple(rollbacks_directory.glob(f'{patch_number}_*.sql'))
@@ -81,14 +81,14 @@ def get_rollback_patches(patch_numbers: List[int], rollbacks_directory: Path) ->
     return rollback_patches
 
 
-def fetch_applied_patch_numbers_reverse_order(db_cursor=None) -> List[int]:
+def fetch_applied_patch_numbers_reverse_order(db_cursor=None) -> Tuple:
     db_cursor.execute('SELECT patch_number FROM ddl_version.patches ORDER BY applied_timestamp DESC')
     results: List = db_cursor.fetchall()
-    patch_numbers = [result[0] for result in results]  # Results are nested as the first value of a tuple
+    all_patch_numbers = tuple(result[0] for result in results)  # Results are nested as the first value of a tuple
 
     # The first patch chronologically is the ground zero which cannot be rolled back, ignore it
-    patch_numbers.pop()
-    return patch_numbers
+    applied_patch_numbers = all_patch_numbers[:-1]
+    return applied_patch_numbers
 
 
 def apply_rollback(patch_number: int, rollback_patch: Path, db_cursor=None, db_connection=None) -> None:
@@ -114,12 +114,12 @@ def update_version_record(rollback_version: str, db_cursor=None, db_connection=N
         raise
 
 
-def get_rollback_scripts(patch_numbers: List[int], rollbacks_directory) -> Tuple[Tuple[int, Path]]:
+def get_rollback_scripts(patch_numbers: Tuple[int], rollbacks_directory) -> Tuple[Tuple[int, Path]]:
     # Get the corresponding rollback SQL patch for each given patch number
     return tuple(zip(patch_numbers, get_rollback_patches(patch_numbers, rollbacks_directory)))
 
 
-def get_patch_numbers_to_rollback(applied_patches: List[int], number_of_patches: int) -> List[int]:
+def get_patch_numbers_to_rollback(applied_patches: Tuple[int], number_of_patches: int) -> Tuple[int]:
     if len(applied_patches) < number_of_patches:
         raise ValueError(f'Could not roll back {number_of_patches} patch(es) for this database, '
                          f'the recorded applied patch numbers available to roll back are {applied_patches}')
