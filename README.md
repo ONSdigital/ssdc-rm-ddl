@@ -78,14 +78,10 @@ and [ddl_version.sql](groundzero_ddl/ddl_version.sql), so that the patch script 
 The patch scripts can be tested by running our dev-common-postgres docker image from the latest main branch build, then
 running the database patches against it.
 
-If you have rebuilt the dev-common-postgres image locally it will already be on the updated schema version, and to test
-any local patches you must first pull the main branch build with:
+If you have rebuilt the dev-common-postgres image locally it will already be on the updated schema version, so the tests
+will pull the latest dev common image before running.
 
-```shell
-make pull-latest-dev-postgres
-```
-
-Then you can test running your patches with:
+Test running your patches with:
 
 ```shell
 make test-patches
