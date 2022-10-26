@@ -4,25 +4,27 @@ import psycopg2
 
 from config import Config
 from patch_database import get_current_database_version_tag
-from rollback_database import ROLLBACK_PATCHES_DIRECTORY, rollback_database
+from rollback_database import ROLLBACK_PATCHES_DIRECTORY, fetch_applied_patch_numbers_reverse_order, rollback_database
 
 
 def test_rollbacks():
     """
     This test will attempt to roll back any patches which have been run into the target database
-    (except the groundzero "0" patch record)
+    (except the ground zero patch record)
     """
 
     # Given
-    patches_to_rollback = fetch_all_applied_patch_numbers()
+    patches_to_rollback = fetch_all_patch_numbers_to_rollback()
 
     if not patches_to_rollback:
         print('NO PATCHES FOUND IN DATABASE TO ROLL BACK')
         return
+
+    number_to_rollback = len(patches_to_rollback)
     rollback_version = 'v0.0.1-rollback.1'
 
     # When
-    rollback_database(patches_to_rollback, rollback_version, rollbacks_directory=ROLLBACK_PATCHES_DIRECTORY)
+    rollback_database(number_to_rollback, rollback_version, rollbacks_directory=ROLLBACK_PATCHES_DIRECTORY)
 
     # Then
     version_after_rollback = get_version_after_rollback()
@@ -30,7 +32,7 @@ def test_rollbacks():
                                                         'match the expected rollback version')
 
 
-def fetch_all_applied_patch_numbers() -> List[str]:
+def fetch_all_patch_numbers_to_rollback() -> List[str]:
     with psycopg2.connect(f"dbname='{Config.DB_NAME}' "
                           f"user='{Config.DB_USERNAME}' "
                           f"host='{Config.DB_HOST}' "
@@ -40,11 +42,7 @@ def fetch_all_applied_patch_numbers() -> List[str]:
         db_connection.set_session(autocommit=False)
 
         with db_connection.cursor() as db_cursor:
-            db_cursor.execute('SELECT patch_number FROM ddl_version.patches ORDER BY applied_timestamp')
-            patch_numbers: List = db_cursor.fetchall()
-    patch_numbers = [patch_number[0] for patch_number in
-                     patch_numbers]  # Results are nested as the first value of a tuple
-    patch_numbers.pop(0)  # The first patch recorded is the ground zeroed patch, ignore it
+            patch_numbers = fetch_applied_patch_numbers_reverse_order(db_cursor=db_cursor)
     return patch_numbers
 
 

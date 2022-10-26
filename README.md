@@ -19,8 +19,20 @@ to [Patching a database](#patching-a-database).
 
 ### Versioning and Release Process
 
-[//]: # (TODO)
-TODO
+#### Overall version
+
+The overall version of the DDL is managed automatically by our CI.
+
+#### Schema version
+
+The versioning of the DDL schema must managed manually, and updated in
+the [ddl_version.sql](groundzero_ddl/ddl_version.sql) DDL and the [patch database script](patch_database.py)
+
+#### Common Entity Version
+
+The common entity version must be managed manually, changes to
+the [ssdc-rm-common-entity-model](ssdc-rm-common-entity-model) must also include a version bump to the `project.version`
+in the [pom.xml](ssdc-rm-common-entity-model/pom.xml) file.
 
 ## Building the DDL
 
@@ -83,6 +95,34 @@ And you should see the logs from the patch script indicating it has run the patc
 
 **NOTE:** This test simply verifies that the patches are valid SQL which can run against our schemas, the actual change
 they make and it's consistency with the schema change must still be carefully reviewed.
+
+### Rollbacks
+
+Every patch SQL file in [patches](patches) must be accompanied by a rollback script of the same name which undoes the
+change, located in [patches/rollback](patches/rollback).
+
+#### Running rollbacks
+
+**NOTE:** Rollbacks will likely be destructive, and can only be safely run the window after deploying a database update,
+but before any further activity is allowed in the system. Once the system has been run after applying a patch, rollbacks
+cannot be safely run and any issues must be fixed by new fix patches instead.
+
+A script is included to run database rollbacks: [rollback_database.py](rollback_database.py).
+
+Usage (within the ddl pod):
+
+```shell
+python rollback_database.py -n <NUM_OF_PATCHES_TO_ROLLBACK> -v <ROLLBACK_VERSION>
+```
+
+This will attempt to roll back the given number of patches, and update the ddl version record with the given rollback
+version, which must be in the format `v*.*.*-rollback.*`.
+
+#### Testing rollback scripts
+
+Running `make test-patches` will also attempt to run the rollbacks for any patches it runs. If a rollback script for a
+new patch is missing, it should fail. However, as with the patches, it does not test the results of the rollback, so
+care must still be taken to check the rollback scripts perform the correct action.
 
 ## Dev Common Postgres Image
 

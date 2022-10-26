@@ -1,49 +1,158 @@
 from pathlib import Path
 from unittest.mock import Mock
 
-from rollback_database import get_sorted_rollbacks, run_rollback
+import pytest
+
+import rollback_database
 
 TEST_ROLLBACKS_DIR = Path(__file__).parent.joinpath('patches', 'rollbacks')
 
 
-def test_run_rollback():
+def test_rollback_database():
     # Given
     mock_db_connection = Mock()
     mock_db_cursor = Mock()
     rollback_version = "v0.0.0-rollback.1"
 
-    # return '1' when from the mock as the max applied patch number
-    mock_db_cursor.fetchone.return_value = (1,)
+    # Mock the results of the query to fetch applied database patch numbers
+    mock_db_cursor.fetchall.return_value = [(2,), (1,), (0,)]
 
     # When
-    run_rollback(rollback_version,
-                 [(2, TEST_ROLLBACKS_DIR.joinpath('2_test.sql')), (1, TEST_ROLLBACKS_DIR.joinpath('1_test.sql'))],
-                 db_cursor=mock_db_cursor,
-                 db_connection=mock_db_connection)
+    # Try to rollback the last 2 patches
+    rollback_database.rollback_database(2,
+                                        rollback_version,
+                                        TEST_ROLLBACKS_DIR,
+                                        db_cursor=mock_db_cursor,
+                                        db_connection=mock_db_connection)
 
     # Then
     cursor_execute_calls = mock_db_cursor.execute.call_args_list
-    delete_patch_number_query_template = ('DELETE FROM ddl_version.patches WHERE patch_number = %(patch_number)s')
-    assert cursor_execute_calls[0][0][0] == delete_patch_number_query_template
-    assert cursor_execute_calls[0][0][1]['patch_number'] == 2
-    assert cursor_execute_calls[1][0][0] == '2 TEST ROLLBACK'
+    assert cursor_execute_calls[0][0][0] == ('SELECT patch_number FROM ddl_version.patches'
+                                             ' ORDER BY applied_timestamp DESC')
 
-    assert cursor_execute_calls[2][0][0] == delete_patch_number_query_template
-    assert cursor_execute_calls[2][0][1]['patch_number'] == 1
-    assert cursor_execute_calls[3][0][0] == '1 TEST ROLLBACK'
-    assert cursor_execute_calls[4][0][0] == ("INSERT INTO ddl_version.version (version_tag, updated_timestamp)"
+    delete_patch_number_query_template = ('DELETE FROM ddl_version.patches WHERE patch_number = %(patch_number)s')
+    assert cursor_execute_calls[1][0][0] == delete_patch_number_query_template
+    assert cursor_execute_calls[1][0][1]['patch_number'] == 2
+    assert cursor_execute_calls[2][0][0] == '2 TEST ROLLBACK'
+
+    assert cursor_execute_calls[3][0][0] == delete_patch_number_query_template
+    assert cursor_execute_calls[3][0][1]['patch_number'] == 1
+    assert cursor_execute_calls[4][0][0] == '1 TEST ROLLBACK'
+    assert cursor_execute_calls[5][0][0] == ("INSERT INTO ddl_version.version (version_tag, updated_timestamp)"
                                              " VALUES (%(rollback_version)s, %(updated_timestamp)s)")
-    assert cursor_execute_calls[4][0][1]['rollback_version'] == rollback_version
-    assert len(cursor_execute_calls) == 5
+    assert cursor_execute_calls[5][0][1]['rollback_version'] == rollback_version
+
+    assert len(cursor_execute_calls) == 6
 
     mock_db_connection.commit.assert_called_once()
 
 
-def test_get_sorted_rollbacks():
+def test_rollback_database_bad_number_of_patches():
+    # Given
+    mock_db_connection = Mock()
+    mock_db_cursor = Mock()
+    rollback_version = "v0.0.0-rollback.1"
+
+    # Mock the results of the query to fetch applied database patch numbers, only the ground zero patch
+    mock_db_cursor.fetchall.return_value = [(0,)]
+
+    # When, then raises
+    with pytest.raises(ValueError) as value_error:
+        # Try to roll back when no (non ground zero) patches are recorded
+        rollback_database.rollback_database(1,
+                                            rollback_version,
+                                            TEST_ROLLBACKS_DIR,
+                                            db_cursor=mock_db_cursor,
+                                            db_connection=mock_db_connection)
+
+    assert str(value_error.value) == ('Could not roll back 1 patch(es) for this database, '
+                                      'the recorded applied patch numbers available to roll back are []'), (
+        'The error message should match the expected')
+
+
+def test_rollback_missing_rollback_patch():
+    # Given
+    mock_db_connection = Mock()
+    mock_db_cursor = Mock()
+    rollback_version = "v0.0.0-rollback.1"
+
+    # Mock the results of the query to fetch applied database patch numbers,
+    # with a patch number we don't have a rollback patch script for
+    mock_db_cursor.fetchall.return_value = [(3000,), (0,)]
+
+    # When, then raises
+    with pytest.raises(ValueError) as value_error:
+        # Try to roll back when no (non ground zero) patches are recorded
+        rollback_database.rollback_database(1,
+                                            rollback_version,
+                                            TEST_ROLLBACKS_DIR,
+                                            db_cursor=mock_db_cursor,
+                                            db_connection=mock_db_connection)
+
+    assert str(value_error.value) == ('Bad patch number: 3000. No rollback found for this patch, '
+                                      'is this running the in correct DDL version?'), (
+        'The error message should match the expected')
+
+
+def test_patch_database_fails_gracefully():
+    # Given
+    mock_db_connection = Mock()
+    mock_db_cursor = Mock()
+    rollback_version = "v0.0.0-rollback.1"
+
+    # Mock the results of the query to fetch applied database patch numbers
+    mock_db_cursor.fetchall.return_value = [(2,), (1,), (0,)]
+
+    execute_call_count = 0
+    test_exception_message = 'exception raised by test side effect'
+
+    def run_once_then_raise(*_1, **_2):
+        nonlocal execute_call_count
+        if execute_call_count >= 1:
+            raise Exception(test_exception_message)
+        execute_call_count += 1
+
+    # Raise an exception on the second call to execute
+    mock_db_cursor.execute.side_effect = run_once_then_raise
+
     # When
-    sorted_rollbacks = tuple(get_sorted_rollbacks(['1', '2'], TEST_ROLLBACKS_DIR))
+    with pytest.raises(Exception) as ex:
+        rollback_database.rollback_database(1,
+                                            rollback_version,
+                                            TEST_ROLLBACKS_DIR,
+                                            db_cursor=mock_db_cursor,
+                                            db_connection=mock_db_connection)
 
     # Then
-    assert len(sorted_rollbacks) == 2
-    assert sorted_rollbacks[0] == ('2', TEST_ROLLBACKS_DIR.joinpath('2_test.sql'))
-    assert sorted_rollbacks[1] == ('1', TEST_ROLLBACKS_DIR.joinpath('1_test.sql'))
+    # First call is to check the applied patches, it should raise the exception on the second
+    cursor_execute_calls = mock_db_cursor.execute.call_args_list
+    assert len(cursor_execute_calls) == 2
+
+    assert ex.value.args[0] == test_exception_message
+    mock_db_connection.commit.assert_not_called()
+    mock_db_connection.rollback.assert_called_once()
+
+
+@pytest.mark.parametrize('version', [
+    'v0.0.0-rollback.0',
+    'v123.456.789-rollback.1234567890',
+    'v1.1.1-rollback.1000000000000',
+])
+def test_check_rollback_version_valid(version):
+    # When, then no exception
+    rollback_database.check_rollback_version(version)
+
+
+@pytest.mark.parametrize('version', [
+    'foo',
+    'v1.1.1',
+    'rollback.1',
+    'va.b.c-rollback.1',
+    'v1.1.1-rollback.a',
+])
+def test_check_rollback_version_invalid(version):
+    # When, then raises
+    with pytest.raises(ValueError) as value_error:
+        rollback_database.check_rollback_version(version)
+
+    assert str(value_error.value) == f'Rollback version must be in the format v*.*.*-rollback.*, got: {version}'
