@@ -8,7 +8,7 @@ lint:
 	pipenv run flake8
 
 test: check lint
-	pipenv run pytest ./test
+	pipenv run pytest ./test --cov --cov-report term-missing
 
 format-check-common:
 	cd ssdc-rm-common-entity-model && mvn fmt:check pmd:check
