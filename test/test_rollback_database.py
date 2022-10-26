@@ -27,9 +27,13 @@ def test_rollback_database():
 
     # Then
     cursor_execute_calls = mock_db_cursor.execute.call_args_list
+    assert len(cursor_execute_calls) == 6
+
+    # The applied patch numbers should be fetched first
     assert cursor_execute_calls[0][0][0] == ('SELECT patch_number FROM ddl_version.patches'
                                              ' ORDER BY applied_timestamp DESC')
 
+    # Then the queries to run the rollback patches and update the patches table for each
     delete_patch_number_query_template = ('DELETE FROM ddl_version.patches WHERE patch_number = %(patch_number)s')
     assert cursor_execute_calls[1][0][0] == delete_patch_number_query_template
     assert cursor_execute_calls[1][0][1]['patch_number'] == 2
@@ -38,12 +42,13 @@ def test_rollback_database():
     assert cursor_execute_calls[3][0][0] == delete_patch_number_query_template
     assert cursor_execute_calls[3][0][1]['patch_number'] == 1
     assert cursor_execute_calls[4][0][0] == '1 TEST ROLLBACK'
+
+    # Then the query to update the DDL version record
     assert cursor_execute_calls[5][0][0] == ("INSERT INTO ddl_version.version (version_tag, updated_timestamp)"
                                              " VALUES (%(rollback_version)s, %(updated_timestamp)s)")
     assert cursor_execute_calls[5][0][1]['rollback_version'] == rollback_version
 
-    assert len(cursor_execute_calls) == 6
-
+    # And the updates should be committed once, when everything has run successfully
     mock_db_connection.commit.assert_called_once()
 
 
