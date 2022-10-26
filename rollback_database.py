@@ -7,7 +7,6 @@ from typing import List, Tuple
 import psycopg2
 
 from config import Config
-from patch_database import CURRENT_VERSION
 
 ROLLBACK_PATCHES_DIRECTORY = Path(__file__).parent.joinpath('patches', 'rollback')
 
@@ -29,6 +28,7 @@ def rollback_database(number_of_patches, rollback_version: str, rollbacks_direct
                       db_connection=None):
     if number_of_patches <= 0:
         raise ValueError('Number of patches must be a positive integer')
+    check_rollback_version_format(rollback_version)
     print(f'Attempting to roll back the last {number_of_patches} applied patches, to version {rollback_version}')
 
     # Fetch the list of applied patches in this database, in reverse chronological order
@@ -45,7 +45,6 @@ def rollback_database(number_of_patches, rollback_version: str, rollbacks_direct
 
 def run_rollback(rollback_version: str, rollbacks: Tuple[Tuple[int, Path], ...], db_cursor=None,
                  db_connection=None) -> None:
-    check_rollback_version_is_valid(rollback_version)
     print(f'Will run rollback patches: {tuple(i[1].name for i in rollbacks)}')
     print(f'Rolling back to version: {rollback_version}')
 
@@ -61,13 +60,9 @@ def run_rollback(rollback_version: str, rollbacks: Tuple[Tuple[int, Path], ...],
     print('Rollback successfully applied and committed')
 
 
-def check_rollback_version_is_valid(rollback_version: str) -> None:
-    if rollback_version == CURRENT_VERSION:
-        raise ValueError(
-            f'ERROR: Rollback version {rollback_version} is the current version, it must be a previous version')
-    version_components = rollback_version.split('-')
-    if len(version_components) != 2 or not version_components[1].startswith('rollback.'):
-        raise ValueError('Rollback version {rollback_version} does not match the expected format v*.*.*-rollback.*')
+def check_rollback_version_format(rollback_version: str):
+    if not re.fullmatch(r'v\d+\.\d+\.\d+-rollback\.\d+', rollback_version):
+        raise ValueError(f'Rollback version must be in the format v*.*.*-rollback.*, got: {rollback_version}')
 
 
 def get_rollback_patches(patch_numbers: Tuple[int], rollbacks_directory: Path) -> List[Path]:
@@ -128,11 +123,6 @@ def get_patch_numbers_to_rollback(applied_patches: Tuple[int], number_of_patches
     return patches_to_rollback
 
 
-def check_rollback_version(rollback_version: str):
-    if not re.fullmatch(r'v\d+\.\d+\.\d+-rollback\.\d+', rollback_version):
-        raise ValueError(f'Rollback version must be in the format v*.*.*-rollback.*, got: {rollback_version}')
-
-
 def main():
     args = parse_args()
 
@@ -146,7 +136,6 @@ def main():
         db_connection.set_session(autocommit=False)
 
         with db_connection.cursor() as db_cursor:
-
             rollback_database(args.number_of_patches, args.rollback_version, ROLLBACK_PATCHES_DIRECTORY,
                               db_cursor=db_cursor, db_connection=db_connection)
 

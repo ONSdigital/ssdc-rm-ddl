@@ -66,7 +66,7 @@ def test_rollback_database_bad_number_of_patches():
                                             db_connection=mock_db_connection)
 
     assert str(value_error.value) == ('Could not roll back 1 patch(es) for this database, '
-                                      'the recorded applied patch numbers available to roll back are []'), (
+                                      'the recorded applied patch numbers available to roll back are ()'), (
         'The error message should match the expected')
 
 
@@ -140,7 +140,7 @@ def test_patch_database_fails_gracefully():
 ])
 def test_check_rollback_version_valid(version):
     # When, then no exception
-    rollback_database.check_rollback_version(version)
+    rollback_database.check_rollback_version_format(version)
 
 
 @pytest.mark.parametrize('version', [
@@ -153,6 +153,6 @@ def test_check_rollback_version_valid(version):
 def test_check_rollback_version_invalid(version):
     # When, then raises
     with pytest.raises(ValueError) as value_error:
-        rollback_database.check_rollback_version(version)
+        rollback_database.check_rollback_version_format(version)
 
     assert str(value_error.value) == f'Rollback version must be in the format v*.*.*-rollback.*, got: {version}'
