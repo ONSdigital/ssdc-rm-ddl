@@ -2,7 +2,7 @@ import argparse
 import re
 from datetime import datetime
 from pathlib import Path
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 
 import psycopg2
 
@@ -11,7 +11,7 @@ from config import Config
 ROLLBACK_PATCHES_DIRECTORY = Path(__file__).parent.joinpath('patches', 'rollback')
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='A tool to run database patch rollbacks')
     parser.add_argument('--number-of-patches', '-n',
                         help='The number of patches to attempt to rollback. '
@@ -25,7 +25,7 @@ def parse_args():
 
 
 def rollback_database(number_of_patches: int, rollback_version: str, rollbacks_directory: Path, db_cursor=None,
-                      db_connection=None):
+                      db_connection=None) -> None:
     if number_of_patches <= 0:
         raise ValueError('Number of patches must be a positive integer')
     check_rollback_version_format(rollback_version)
@@ -43,13 +43,13 @@ def rollback_database(number_of_patches: int, rollback_version: str, rollbacks_d
     run_rollback(rollback_version, rollbacks, db_cursor=db_cursor, db_connection=db_connection)
 
 
-def run_rollback(rollback_version: str, rollbacks: Tuple[Tuple[int, Path], ...], db_cursor=None,
+def run_rollback(rollback_version: str, rollbacks: Dict[int, Path], db_cursor=None,
                  db_connection=None) -> None:
-    print(f'Will run rollback patches: {tuple(i[1].name for i in rollbacks)}')
+    print(f'Will run rollback patches: {tuple(rollback.name for rollback in rollbacks.values())}')
     print(f'Rolling back to version: {rollback_version}')
 
     # Run the rollbacks
-    for patch_number, rollback_patch in rollbacks:
+    for patch_number, rollback_patch in rollbacks.items():
         print(f'Running rollback: {patch_number}, file: {rollback_patch}')
         apply_rollback(patch_number, rollback_patch, db_cursor=db_cursor, db_connection=db_connection)
 
@@ -60,20 +60,9 @@ def run_rollback(rollback_version: str, rollbacks: Tuple[Tuple[int, Path], ...],
     print('Rollback successfully applied and committed')
 
 
-def check_rollback_version_format(rollback_version: str):
+def check_rollback_version_format(rollback_version: str) -> None:
     if not re.fullmatch(r'v\d+\.\d+\.\d+-rollback\.\d+', rollback_version):
         raise ValueError(f'Rollback version must be in the format v*.*.*-rollback.*, got: {rollback_version}')
-
-
-def get_rollback_patches(patch_numbers: Tuple[int], rollbacks_directory: Path) -> List[Path]:
-    rollback_patches = []
-    for patch_number in patch_numbers:
-        matches = tuple(rollbacks_directory.glob(f'{patch_number}_*.sql'))
-        if len(matches) != 1:
-            raise ValueError(f'Bad patch number: {patch_number}. No or multiple rollback scripts found for this patch, '
-                             f'is this running the in correct DDL version?')
-        rollback_patches.append(matches[0])
-    return rollback_patches
 
 
 def fetch_applied_patch_numbers_reverse_order(db_cursor=None) -> Tuple:
@@ -109,9 +98,19 @@ def update_version_record(rollback_version: str, db_cursor=None, db_connection=N
         raise
 
 
-def get_rollback_scripts(patch_numbers: Tuple[int], rollbacks_directory) -> Tuple[Tuple[int, Path]]:
+def get_rollback_scripts(patch_numbers: Tuple[int], rollbacks_directory: Path) -> Dict[int, Path]:
     # Get the corresponding rollback SQL patch for each given patch number
-    return tuple(zip(patch_numbers, get_rollback_patches(patch_numbers, rollbacks_directory)))
+    rollback_patches: Dict[int, Path] = {}
+    for patch_number in patch_numbers:
+
+        matches = tuple(rollbacks_directory.glob(f'{patch_number}_*.sql'))
+
+        if len(matches) != 1:
+            raise ValueError(f'Bad patch number: {patch_number}. No or multiple rollback scripts found for this patch, '
+                             f'is this running the in correct DDL version?')
+        rollback_patches[patch_number] = matches[0]  # Relies on the Dict retaining the order of insertion
+
+    return rollback_patches
 
 
 def get_patch_numbers_to_rollback(applied_patches: Tuple[int], number_of_patches: int) -> Tuple[int]:
