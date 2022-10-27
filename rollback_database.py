@@ -37,10 +37,10 @@ def rollback_database(number_of_patches: int, rollback_version: str, rollbacks_d
     print(f'Attempting to roll back the last {number_of_patches} applied patches, to version {rollback_version}')
 
     # Fetch the list of applied patches in this database, in reverse chronological order
-    applied_patch_numbers = fetch_applied_patch_numbers_reverse_order(db_cursor=db_cursor)
+    applied_patches = fetch_applied_patch_numbers_reverse_order(db_cursor=db_cursor)
 
     # Get the patch numbers to rollback from the record of applied patches and the number we want to undo
-    patches_to_rollback = get_patch_numbers_to_rollback(applied_patch_numbers, number_of_patches)
+    patches_to_rollback = get_patch_numbers_to_rollback(applied_patches, number_of_patches)
 
     # Get the rollback scripts to run for each patch
     rollbacks = get_rollback_scripts(patches_to_rollback, rollbacks_directory)
@@ -49,9 +49,9 @@ def rollback_database(number_of_patches: int, rollback_version: str, rollbacks_d
                  db_connection=db_connection)
 
 
-def run_rollback(rollback_version: str, rollbacks: Dict[int, Path], user_confirm=False, db_cursor=None,
+def run_rollback(rollback_version: str, rollbacks: Dict[int, Tuple[Path, datetime]], user_confirm=False, db_cursor=None,
                  db_connection=None) -> None:
-    print(f'Will run rollback patches: {tuple(rollback.name for rollback in rollbacks.values())}')
+    print(f'Will run rollback patches: {tuple(rollback[0].name for rollback in rollbacks.values())}')
 
     if user_confirm:
         user_confirm_rollbacks_to_run(rollbacks)
@@ -59,7 +59,7 @@ def run_rollback(rollback_version: str, rollbacks: Dict[int, Path], user_confirm
     print(f'Rolling back to version: {rollback_version}')
 
     # Run the rollbacks
-    for patch_number, rollback_patch in rollbacks.items():
+    for patch_number, (rollback_patch, _) in rollbacks.items():
         print(f'Running rollback: {patch_number}, file: {rollback_patch}')
         apply_rollback(patch_number, rollback_patch, db_cursor=db_cursor, db_connection=db_connection)
 
@@ -70,21 +70,23 @@ def run_rollback(rollback_version: str, rollbacks: Dict[int, Path], user_confirm
     print('Rollback successfully applied and committed')
 
 
-def user_confirm_rollbacks_to_run(rollbacks: Dict[int, Path]) -> None:
+def user_confirm_rollbacks_to_run(rollbacks: Dict[int, Tuple[Path, datetime]]) -> None:
     print()
     print('Rollback scripts to run, in order:')
-    for idx, (patch_number, rollback_patch) in enumerate(rollbacks.items(), 1):
+    for idx, (patch_number, (rollback_patch, applied_timestamp)) in enumerate(rollbacks.items(), 1):
         print()
-        print(f'{idx}: Patch {patch_number} rollback: {rollback_patch.name}')
-        print(f'Script {rollback_patch.name} Contents:')
+        print(f'{idx}: Patch {patch_number}')
+        print(f'Patch was applied at {applied_timestamp}')
+        print(f'Rollback script: {rollback_patch.name}')
+        print('Rollback script contents:')
         print()
-        print('--------- BEGIN ROLLBACK SCRIPT CONTENTS ---------')
+        print('--------- BEGIN SCRIPT CONTENTS ---------')
         print(rollback_patch.read_text())
-        print('---------- END ROLLBACK SCRIPT CONTENTS ----------')
+        print('---------- END SCRIPT CONTENTS ----------')
 
     print()
 
-    if (response := input('Review the scripts planned to run carefully, '
+    if (response := input('Review the rollback scripts planned to run carefully, '
                           'then confirm you want to run these rollback scripts with "yes": ')) != 'yes':
         raise ValueError(f'Responded "{response}" instead of "yes", aborting...')
 
@@ -97,13 +99,12 @@ def check_rollback_version_format(rollback_version: str) -> None:
 
 
 def fetch_applied_patch_numbers_reverse_order(db_cursor=None) -> Tuple:
-    db_cursor.execute('SELECT patch_number FROM ddl_version.patches ORDER BY applied_timestamp DESC')
+    db_cursor.execute('SELECT patch_number, applied_timestamp FROM ddl_version.patches ORDER BY applied_timestamp DESC')
     results: List = db_cursor.fetchall()
-    all_patch_numbers = tuple(result[0] for result in results)  # Results are nested as the first value of a tuple
 
     # The first patch chronologically is the ground zero which cannot be rolled back, ignore it
-    applied_patch_numbers = all_patch_numbers[:-1]
-    return applied_patch_numbers
+    applied_patches = tuple(results[:-1])
+    return applied_patches
 
 
 def apply_rollback(patch_number: int, rollback_patch: Path, db_cursor=None, db_connection=None) -> None:
@@ -129,22 +130,24 @@ def update_version_record(rollback_version: str, db_cursor=None, db_connection=N
         raise
 
 
-def get_rollback_scripts(patch_numbers: Tuple[int], rollbacks_directory: Path) -> Dict[int, Path]:
+def get_rollback_scripts(patches_to_rollback: Tuple, rollbacks_directory: Path) -> Dict[int, Tuple[Path, datetime]]:
     # Get the corresponding rollback SQL patch for each given patch number
-    rollback_patches: Dict[int, Path] = {}
-    for patch_number in patch_numbers:
+    rollback_patches: Dict[int, Tuple[Path, datetime]] = {}
+    for patch_number, applied_timestamp in patches_to_rollback:
 
         matches = tuple(rollbacks_directory.glob(f'{patch_number}_*.sql'))
 
         if len(matches) != 1:
             raise ValueError(f'Bad patch number: {patch_number}. No or multiple rollback scripts found for this patch, '
                              f'is this running the in correct DDL version?')
-        rollback_patches[patch_number] = matches[0]  # Relies on the Dict retaining the order of insertion
+
+        # Relies on the Dict retaining the order of insertion
+        rollback_patches[patch_number] = (matches[0], applied_timestamp)
 
     return rollback_patches
 
 
-def get_patch_numbers_to_rollback(applied_patches: Tuple[int], number_of_patches: int) -> Tuple[int]:
+def get_patch_numbers_to_rollback(applied_patches: Tuple, number_of_patches: int) -> Tuple[int]:
     if len(applied_patches) < number_of_patches:
         raise ValueError(f'Could not roll back {number_of_patches} patch(es) for this database, '
                          f'the recorded applied patch numbers available to roll back are {applied_patches}')
