@@ -1,7 +1,8 @@
 .java-version
-__pychache__
+__pycache__
 .pytest_cache/*
 .settings/*
+.coverage
 
 ##############################
 ## Java

@@ -19,8 +19,20 @@ to [Patching a database](#patching-a-database).
 
 ### Versioning and Release Process
 
-[//]: # (TODO)
-TODO
+#### Overall version
+
+The overall version of the DDL is managed automatically by our CI.
+
+#### Schema version
+
+The versioning of the DDL schema must managed manually, and updated in
+the [ddl_version.sql](groundzero_ddl/ddl_version.sql) DDL and the [patch database script](patch_database.py)
+
+#### Common Entity Version
+
+The common entity version must be managed manually, changes to
+the [ssdc-rm-common-entity-model](ssdc-rm-common-entity-model) must also include a version bump to the `project.version`
+in the [pom.xml](ssdc-rm-common-entity-model/pom.xml) file.
 
 ## Building the DDL
 
@@ -66,14 +78,10 @@ and [ddl_version.sql](groundzero_ddl/ddl_version.sql), so that the patch script 
 The patch scripts can be tested by running our dev-common-postgres docker image from the latest main branch build, then
 running the database patches against it.
 
-If you have rebuilt the dev-common-postgres image locally it will already be on the updated schema version, and to test
-any local patches you must first pull the main branch build with:
+If you have rebuilt the dev-common-postgres image locally it will already be on the updated schema version, so the tests
+will pull the latest dev common image before running.
 
-```shell
-make pull-latest-dev-postgres
-```
-
-Then you can test running your patches with:
+Test running your patches with:
 
 ```shell
 make test-patches
@@ -83,6 +91,52 @@ And you should see the logs from the patch script indicating it has run the patc
 
 **NOTE:** This test simply verifies that the patches are valid SQL which can run against our schemas, the actual change
 they make and it's consistency with the schema change must still be carefully reviewed.
+
+### Rollbacks
+
+Every patch SQL file in [patches](patches) must be accompanied by a rollback script of the same name which undoes the
+change, located in [patches/rollback](patches/rollback).
+
+#### Running rollbacks
+
+**NOTE:** Rollbacks will likely be destructive, and can only be safely run the window after deploying a database update,
+but before any further activity is allowed in the system. Once the system has been run after applying a patch, rollbacks
+cannot be safely run and any issues must be fixed by new fix patches instead.
+
+A script is included to run database rollbacks: [rollback_database.py](rollback_database.py).
+
+Usage (within the ddl pod):
+
+```shell
+python rollback_database.py -n <NUM_OF_PATCHES_TO_ROLLBACK> -v <ROLLBACK_VERSION>
+```
+
+This will attempt to roll back the given number of patches, and update the ddl version record with the given rollback
+version, which must be in the format `v*.*.*-rollback.*`.
+
+By default, it will display the scripts it plans to run and ask for user confirmation to proceed, this is an opportunity
+to double-check the rollback before it is run and committed so careful attention should be taken to review what it plans
+to run before approving. However, for use in testing or development scripts, this confirmation can be automatically
+bypassed with the `--auto-confirm` flag.
+
+#### Testing rollback scripts
+
+Running `make test-patches` will also attempt to run the rollbacks for any patches it runs. If a rollback script for a
+new patch is missing, it should fail. However, as with the patches, it does not test the results of the rollback, so
+care must still be taken to check the rollback scripts perform the correct action.
+
+If you want to manually test rollbacks locally (to see the user confirmation dialogue, for example), then so long as you
+have some local patches and rollbacks which are not built on main branch, you can do this by running:
+
+```shell
+make dev-postgres-down dev-postgres-up wait-for-docker-postgres run-test-patches
+```
+
+To start up the dev postgres and run the patches into it, then run the rollback script with:
+
+```shell
+DB_PORT=16432 pipenv run python rollback_database.py -n <NUMBER OF PATCHES> -v <ROLLBACK VERSION>
+```
 
 ## Dev Common Postgres Image
 
