@@ -150,7 +150,8 @@ def get_rollback_scripts(patches_to_rollback: Tuple, rollbacks_directory: Path) 
 def get_patch_numbers_to_rollback(applied_patches: Tuple, number_of_patches: int) -> Tuple[int]:
     if len(applied_patches) < number_of_patches:
         raise ValueError(f'Could not roll back {number_of_patches} patch(es) for this database, '
-                         f'the recorded applied patch numbers available to roll back are {applied_patches}')
+                         f'the recorded applied patch numbers available to roll back are '
+                         f'{tuple(patch[0] for patch in applied_patches)}')
 
     patches_to_rollback = applied_patches[:number_of_patches]
     return patches_to_rollback
