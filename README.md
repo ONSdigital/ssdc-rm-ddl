@@ -114,6 +114,11 @@ python rollback_database.py -n <NUM_OF_PATCHES_TO_ROLLBACK> -v <ROLLBACK_VERSION
 This will attempt to roll back the given number of patches, and update the ddl version record with the given rollback
 version, which must be in the format `v*.*.*-rollback.*`.
 
+By default, it will display the scripts it plans to run and ask for user confirmation to proceed, this is an opportunity
+to double-check the rollback before it is run and committed so careful attention should be taken to review what it plans
+to run before approving. However, for use in testing or development scripts, this confirmation can be automatically
+bypassed with the `--auto-confirm` flag.
+
 #### Testing rollback scripts
 
 Running `make test-patches` will also attempt to run the rollbacks for any patches it runs. If a rollback script for a
