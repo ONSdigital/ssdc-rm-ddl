@@ -24,7 +24,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def rollback_database(number_of_patches, rollback_version: str, rollbacks_directory: Path, db_cursor=None,
+def rollback_database(number_of_patches: int, rollback_version: str, rollbacks_directory: Path, db_cursor=None,
                       db_connection=None):
     if number_of_patches <= 0:
         raise ValueError('Number of patches must be a positive integer')
@@ -70,7 +70,7 @@ def get_rollback_patches(patch_numbers: Tuple[int], rollbacks_directory: Path) -
     for patch_number in patch_numbers:
         matches = tuple(rollbacks_directory.glob(f'{patch_number}_*.sql'))
         if len(matches) != 1:
-            raise ValueError(f'Bad patch number: {patch_number}. No rollback found for this patch, '
+            raise ValueError(f'Bad patch number: {patch_number}. No or multiple rollback scripts found for this patch, '
                              f'is this running the in correct DDL version?')
         rollback_patches.append(matches[0])
     return rollback_patches
