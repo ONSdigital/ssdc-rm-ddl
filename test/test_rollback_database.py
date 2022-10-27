@@ -95,7 +95,7 @@ def test_rollback_missing_rollback_patch():
                                             db_cursor=mock_db_cursor,
                                             db_connection=mock_db_connection)
 
-    assert str(value_error.value) == ('Bad patch number: 3000. No rollback found for this patch, '
+    assert str(value_error.value) == ('Bad patch number: 3000. No or multiple rollback scripts found for this patch, '
                                       'is this running the in correct DDL version?'), (
         'The error message should match the expected')
     mock_db_connection.commit.assert_not_called()
