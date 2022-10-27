@@ -44,9 +44,11 @@ dev-postgres-down:
 
 run-test-patches:
 	DB_PORT=16432 pipenv run python patch_database.py
+
+run-test-rollback:
 	DB_PORT=16432 pipenv run pytest -s test_rollback_scripts.py
 
 wait-for-docker-postgres:
 	./wait_for_docker_postgres.sh
 
-test-patches: pull-latest-dev-postgres dev-postgres-down dev-postgres-up wait-for-docker-postgres run-test-patches dev-postgres-down
+test-patches: pull-latest-dev-postgres dev-postgres-down dev-postgres-up wait-for-docker-postgres run-test-patches run-test-rollback dev-postgres-down

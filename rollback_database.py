@@ -21,11 +21,16 @@ def parse_args() -> argparse.Namespace:
                         help='The version to set as the new current version once the rollback has been applied, '
                              'in the format `v*.*.*-rollback.*',
                         type=str, required=True)
+    parser.add_argument('--auto-confirm', help='Skip the user confirmation step and apply the rollback automatically',
+                        default=False, action='store_true')
     return parser.parse_args()
 
 
-def rollback_database(number_of_patches: int, rollback_version: str, rollbacks_directory: Path, db_cursor=None,
+def rollback_database(number_of_patches: int, rollback_version: str, rollbacks_directory: Path, user_confirm=False,
+                      db_cursor=None,
                       db_connection=None) -> None:
+    if not user_confirm:
+        print('AUTO CONFIRM ENABLED: will not wait for user confirmation of rollback scripts')
     if number_of_patches <= 0:
         raise ValueError('Number of patches must be a positive integer')
     check_rollback_version_format(rollback_version)
@@ -40,12 +45,17 @@ def rollback_database(number_of_patches: int, rollback_version: str, rollbacks_d
     # Get the rollback scripts to run for each patch
     rollbacks = get_rollback_scripts(patches_to_rollback, rollbacks_directory)
 
-    run_rollback(rollback_version, rollbacks, db_cursor=db_cursor, db_connection=db_connection)
+    run_rollback(rollback_version, rollbacks, user_confirm=user_confirm, db_cursor=db_cursor,
+                 db_connection=db_connection)
 
 
-def run_rollback(rollback_version: str, rollbacks: Dict[int, Path], db_cursor=None,
+def run_rollback(rollback_version: str, rollbacks: Dict[int, Path], user_confirm=False, db_cursor=None,
                  db_connection=None) -> None:
     print(f'Will run rollback patches: {tuple(rollback.name for rollback in rollbacks.values())}')
+
+    if user_confirm:
+        user_confirm_rollbacks_to_run(rollbacks)
+
     print(f'Rolling back to version: {rollback_version}')
 
     # Run the rollbacks
@@ -58,6 +68,27 @@ def run_rollback(rollback_version: str, rollbacks: Dict[int, Path], db_cursor=No
 
     db_connection.commit()
     print('Rollback successfully applied and committed')
+
+
+def user_confirm_rollbacks_to_run(rollbacks: Dict[int, Path]) -> None:
+    print()
+    print('Rollback scripts to run, in order:')
+    for idx, (patch_number, rollback_patch) in enumerate(rollbacks.items(), 1):
+        print()
+        print(f'{idx}: Patch {patch_number} rollback: {rollback_patch.name}')
+        print(f'Script {rollback_patch.name} Contents:')
+        print()
+        print('--------- BEGIN ROLLBACK SCRIPT CONTENTS ---------')
+        print(rollback_patch.read_text())
+        print('---------- END ROLLBACK SCRIPT CONTENTS ----------')
+
+    print()
+
+    if (response := input('Review the scripts planned to run carefully, '
+                          'then confirm you want to run these rollback scripts with "yes": ')) != 'yes':
+        raise ValueError(f'Responded "{response}" instead of "yes", aborting...')
+
+    print('Confirmed, proceeding with rollback...')
 
 
 def check_rollback_version_format(rollback_version: str) -> None:
@@ -124,6 +155,7 @@ def get_patch_numbers_to_rollback(applied_patches: Tuple[int], number_of_patches
 
 def main():
     args = parse_args()
+    user_confirm = not args.auto_confirm
 
     # Open the DB connection
     with psycopg2.connect(f"dbname='{Config.DB_NAME}' "
@@ -136,6 +168,7 @@ def main():
 
         with db_connection.cursor() as db_cursor:
             rollback_database(args.number_of_patches, args.rollback_version, ROLLBACK_PATCHES_DIRECTORY,
+                              user_confirm=user_confirm,
                               db_cursor=db_cursor, db_connection=db_connection)
 
 

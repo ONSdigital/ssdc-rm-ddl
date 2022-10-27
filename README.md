@@ -120,6 +120,19 @@ Running `make test-patches` will also attempt to run the rollbacks for any patch
 new patch is missing, it should fail. However, as with the patches, it does not test the results of the rollback, so
 care must still be taken to check the rollback scripts perform the correct action.
 
+If you want to manually test rollbacks locally (to see the user confirmation dialogue, for example), then so long as you
+have some local patches and rollbacks which are not built on main branch, you can do this by running:
+
+```shell
+make dev-postgres-down dev-postgres-up wait-for-docker-postgres run-test-patches
+```
+
+To start up the dev postgres and run the patches into it, then run the rollback script with:
+
+```shell
+DB_PORT=16432 pipenv run python rollback_database.py -n <NUMBER OF PATCHES> -v <ROLLBACK VERSION>
+```
+
 ## Dev Common Postgres Image
 
 This repo also houses a dockerfile for building our [dev postgres image](dev-common-postgres-image), based on the

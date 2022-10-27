@@ -1,5 +1,5 @@
 from pathlib import Path
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 import pytest
 
@@ -138,6 +138,72 @@ def test_patch_database_fails_gracefully():
     assert ex.value.args[0] == test_exception_message
     mock_db_connection.commit.assert_not_called()
     mock_db_connection.rollback.assert_called_once()
+
+
+@patch('rollback_database.input')
+def test_user_confirmation(mock_input):
+    # Given
+    mock_db_connection = Mock()
+    mock_db_cursor = Mock()
+    rollback_version = "v0.0.0-rollback.1"
+    mock_input.return_value = 'yes'
+
+    # Mock the results of the query to fetch applied database patch numbers
+    mock_db_cursor.fetchall.return_value = [(1,), (0,)]
+
+    # When
+    # Try to rollback the last 1 patches with user confirmation switched on
+    rollback_database.rollback_database(1,
+                                        rollback_version,
+                                        TEST_ROLLBACKS_DIR,
+                                        db_cursor=mock_db_cursor,
+                                        db_connection=mock_db_connection,
+                                        user_confirm=True)
+
+    # Then
+    # Check the input was called
+    mock_input.assert_called_once()
+
+    # Check it did execute the rollback
+    cursor_execute_calls = mock_db_cursor.execute.call_args_list
+    assert len(cursor_execute_calls) == 4
+    assert cursor_execute_calls[3][0][0] == ("INSERT INTO ddl_version.version (version_tag, updated_timestamp)"
+                                             " VALUES (%(rollback_version)s, %(updated_timestamp)s)")
+    assert cursor_execute_calls[3][0][1]['rollback_version'] == rollback_version
+
+    # And the updates should be committed once, when everything has run successfully
+    mock_db_connection.commit.assert_called_once()
+
+
+@patch('rollback_database.input')
+def test_user_confirmation_abort(mock_input):
+    # Given
+    mock_db_connection = Mock()
+    mock_db_cursor = Mock()
+    rollback_version = "v0.0.0-rollback.1"
+    mock_input.return_value = 'no'
+
+    # Mock the results of the query to fetch applied database patch numbers
+    mock_db_cursor.fetchall.return_value = [(1,), (0,)]
+
+    # When
+    # Try to rollback the last 1 patches with user confirmation switched on, but the mock response is now "no"
+    with pytest.raises(ValueError) as value_error:
+        rollback_database.rollback_database(1,
+                                            rollback_version,
+                                            TEST_ROLLBACKS_DIR,
+                                            db_cursor=mock_db_cursor,
+                                            db_connection=mock_db_connection,
+                                            user_confirm=True)
+
+    # Then
+    # Check the input was called
+    mock_input.assert_called_once()
+    assert str(value_error.value) == 'Responded "no" instead of "yes", aborting...', (
+        'The abort error message should match excepted')
+
+    # Check nothing was committed
+    mock_db_connection.commit.assert_not_called()
 
 
 @pytest.mark.parametrize('version', [
