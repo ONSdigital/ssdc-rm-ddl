@@ -1,2 +1,2 @@
 Makefile
-patches/*.example
+**/*.example
