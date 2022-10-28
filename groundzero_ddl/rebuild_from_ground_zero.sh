@@ -19,6 +19,8 @@ do
   rm "tmp_transaction_$SCHEMA_NAME.sql"
 done
 
+
+
 pushd roles || exit 1
 for ROLE_PERMISSIONS_SCRIPT in *.sql;
 do
@@ -30,5 +32,20 @@ do
 
   psql "$PSQL_CONNECT_WRITE_MODE" -f "tmp_transaction_$ROLE_PERMISSIONS_SCRIPT"
   rm "tmp_transaction_$ROLE_PERMISSIONS_SCRIPT"
+done
+popd || exit 1
+
+
+pushd indexes || exit 1
+for INDEXES_SCRIPT in *.sql;
+do
+  {
+  echo "begin transaction;"
+  cat "$INDEXES_SCRIPT"
+  echo "commit transaction;"
+  } > "tmp_transaction_$INDEXES_SCRIPT"
+
+  psql "$PSQL_CONNECT_WRITE_MODE" -f "tmp_transaction_$INDEXES_PERMISSIONS_SCRIPT"
+  rm "tmp_transaction_$INDEXES_PERMISSIONS_SCRIPT"
 done
 popd || exit 1
