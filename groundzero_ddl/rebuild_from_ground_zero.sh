@@ -35,17 +35,5 @@ do
 done
 popd || exit 1
 
+psql "$PSQL_CONNECT_WRITE_MODE" -f indexes/GIN_indexes_applied_by_groundzero.sql
 
-pushd indexes || exit 1
-for INDEXES_SCRIPT in *.sql;
-do
-  {
-  echo "begin transaction;"
-  cat "$INDEXES_SCRIPT"
-  echo "commit transaction;"
-  } > "tmp_transaction_$INDEXES_SCRIPT"
-
-  psql "$PSQL_CONNECT_WRITE_MODE" -f "tmp_transaction_$INDEXES_PERMISSIONS_SCRIPT"
-  rm "tmp_transaction_$INDEXES_PERMISSIONS_SCRIPT"
-done
-popd || exit 1
