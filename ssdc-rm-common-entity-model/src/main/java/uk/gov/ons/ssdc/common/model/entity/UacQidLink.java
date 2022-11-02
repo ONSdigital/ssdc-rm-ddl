@@ -21,7 +21,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @DynamicUpdate
 @Table(
     name = "uac_qid_link",
-    indexes = {@Index(name = "uac_qid_idx", columnList = "qid")})
+    indexes = {@Index(name = "qid_idx", columnList = "qid")})
 public class UacQidLink {
   @Id private UUID id;
 

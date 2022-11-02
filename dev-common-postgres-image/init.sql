@@ -287,7 +287,7 @@ create index cases_case_ref_idx on cases (case_ref);
 
     alter table if exists fulfilment_to_process 
        add constraint UK_oi6eanl9qiyiqi2p0quygsxgy unique (message_id);
-create index uac_qid_idx on uac_qid_link (qid);
+create index qid_idx on uac_qid_link (qid);
 
     alter table if exists user_group 
        add constraint UK_kas9w8ead0ska5n3csefp2bpp unique (name);
