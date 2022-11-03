@@ -2,7 +2,7 @@ install:
 	pipenv install --dev
 
 check:
-	pipenv check
+	pipenv check -i 51499 -i 51457
 
 lint:
 	pipenv run flake8
