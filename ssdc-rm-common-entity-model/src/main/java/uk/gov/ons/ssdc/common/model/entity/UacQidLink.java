@@ -19,6 +19,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 @TypeDefs({@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)})
 @Entity
 @DynamicUpdate
+@Table(
+    name = "uac_qid_link",
+    indexes = {@Index(name = "qid_idx", columnList = "qid")})
 public class UacQidLink {
   @Id private UUID id;
 

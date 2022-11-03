@@ -287,6 +287,7 @@ create index cases_case_ref_idx on cases (case_ref);
 
     alter table if exists fulfilment_to_process 
        add constraint UK_oi6eanl9qiyiqi2p0quygsxgy unique (message_id);
+create index qid_idx on uac_qid_link (qid);
 
     alter table if exists user_group 
        add constraint UK_kas9w8ead0ska5n3csefp2bpp unique (name);
@@ -504,5 +505,5 @@ CREATE TABLE ddl_version.version (version_tag varchar(256) PRIMARY KEY, updated_
 
 -- Version and patch number for the current ground zero,
 -- NOTE: These must be updated every time the repo is tagged
-INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (0, current_timestamp);
-INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.0.0', current_timestamp);
+INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (100, current_timestamp);
+INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.0.1', current_timestamp);
