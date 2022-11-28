@@ -21,6 +21,7 @@ INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, sur
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('5b34b96b-b813-4cab-af07-ea6e9c3c2d0d', 'LOAD_BULK_UPDATE_SAMPLE_SENSITIVE', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL);
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('6a4dd655-423d-4d56-bc38-604a61e55721', 'LOAD_BULK_INVALID', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL);
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('4b244c4d-d3ca-4841-a396-d03dc200396f', 'LOAD_BULK_UPDATE_SAMPLE', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL);
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('a51fa790-d641-4e06-ae18-f96f4efe713e', 'LOAD_BULK_PHM_UPDATE_SAMPLE', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL);
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('5798a4a2-9ab8-4509-9f88-71fde81e6948', 'DEACTIVATE_UAC', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL);
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('5cfe474a-71f3-46bf-b9fe-fa6388c8c9da', 'CREATE_CASE_REFUSAL', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL);
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('c484fdc8-3bfd-40ad-b608-75b9d94b434e', 'CREATE_CASE_INVALID_CASE', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL);
