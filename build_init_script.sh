@@ -19,4 +19,7 @@ echo ""
 echo "create schema if not exists ddl_version;"
 echo "set schema 'ddl_version';"
 cat groundzero_ddl/ddl_version.sql
+echo ""
+cat ui-permissions/RM-support-action-permissions.sql
+cat ui-permissions/RM-support-permissions.sql
 } > dev-common-postgres-image/init.sql
