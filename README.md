@@ -71,7 +71,7 @@ script is invoked from our pipelines and will run in a Kubernetes pod to apply a
 tagged release version of this repository.
 
 The database schema version number and patch numbers must then be updated in [patch_database.py](patch_database.py)
-and [ddl_version.sql](groundzero_ddl/ddl_version.sql), so that the patch script is aware of the current schema version.
+and [groundzero_ddl/ddl_version.sql](groundzero_ddl/ddl_version.sql), so that the patch script is aware of the current schema version.
 
 ### Testing patch scripts
 
