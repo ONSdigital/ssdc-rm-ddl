@@ -41,10 +41,5 @@ psql "$PSQL_CONNECT_WRITE_MODE" -f indexes/GIN_indexes_applied_by_groundzero.sql
 
 # Create RM Support UI permissions
 pushd ../ui-permissions || exit 1
-for SUPPORT_PERMISSIONS_SCRIPT in RM-support-action-permissions.sql RM-support-permissions.sql;
-do
-  {
-  psql "$PSQL_CONNECT_WRITE_MODE" -f $SUPPORT_PERMISSIONS_SCRIPT
-  }
-done
+psql "$PSQL_CONNECT_WRITE_MODE" -f RM-support-permissions.sql
 popd || exit 1

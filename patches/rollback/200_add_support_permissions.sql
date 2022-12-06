@@ -65,3 +65,8 @@ DELETE FROM casev3.user_group_permission WHERE id = '26cf0f7a-7f0f-4e5b-8be2-640
 DELETE FROM casev3.user_group_permission WHERE id = '18c78ba8-17ec-4c09-972d-c1c6c88359d5';
 
 DELETE FROM casev3.user_group WHERE id = 'b19a77bd-6a02-4851-8116-9e915738b700';
+
+-- support
+DELETE FROM casev3.user_group_permission WHERE id = 'c469377e-680e-4cb1-92a0-5217be2b3a52';
+
+DELETE FROM casev3.user_group WHERE id = '8269d75c-bfa1-4930-aca2-10dd9c6a2b42';
