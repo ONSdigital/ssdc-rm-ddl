@@ -44,7 +44,7 @@ pushd ../ui-permissions || exit 1
 for SUPPORT_PERMISSIONS_SCRIPT in RM-support-action-permissions.sql RM-support-permissions.sql;
 do
   {
-  "$PSQL_CONNECT_WRITE_MODE" -f $SUPPORT_PERMISSIONS_SCRIPT
+  psql "$PSQL_CONNECT_WRITE_MODE" -f $SUPPORT_PERMISSIONS_SCRIPT
   }
 done
 popd || exit 1
