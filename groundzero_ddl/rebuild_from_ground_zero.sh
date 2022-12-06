@@ -40,8 +40,7 @@ popd || exit 1
 psql "$PSQL_CONNECT_WRITE_MODE" -f indexes/GIN_indexes_applied_by_groundzero.sql
 
 # Create RM Support UI permissions
-popd || exit 1
-pushd ui-permissions || exit 1
+pushd ../ui-permissions || exit 1
 for SUPPORT_PERMISSIONS_SCRIPT in RM-support-action-permissions.sql RM-support-permissions.sql;
 do
   {
@@ -49,5 +48,3 @@ do
   }
 done
 popd || exit 1
-
-pushd groundzero_ddl || true
