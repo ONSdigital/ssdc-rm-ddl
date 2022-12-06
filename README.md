@@ -144,4 +144,4 @@ This repo also houses a dockerfile for building our [dev postgres image](dev-com
 postgres docker image but initialised with our schemas for dev convenience in local testing. This requires it's own,
 combined init SQL script which is also re-generated when you run `make dev-build`, which also locally builds the image.
 
-This image comes with seeded data for Support Tool UI groups
+This image comes with seeded data for Support Tool UI groups.
