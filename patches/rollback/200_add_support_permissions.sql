@@ -33,8 +33,6 @@ DELETE FROM casev3.user_group_permission WHERE id = '5cfe474a-71f3-46bf-b9fe-fa6
 DELETE FROM casev3.user_group_permission WHERE id = 'c484fdc8-3bfd-40ad-b608-75b9d94b434e';
 DELETE FROM casev3.user_group_permission WHERE id = '336002f6-b98b-40dc-acf6-6490b6348d8e';
 DELETE FROM casev3.user_group_permission WHERE id = '20348a51-352f-4f2d-98d3-d6549110b9bf';
-DELETE FROM casev3.user_group_permission WHERE id = '07d11c99-a41b-4039-b1e2-90d13b190783';
-DELETE FROM casev3.user_group_permission WHERE id = '96dfd6f3-3692-4c03-8989-f19156854d36';
 
 DELETE FROM casev3.user_group WHERE id = 'a25c7f99-d2ce-4267-aea4-0a133028f793';
 
