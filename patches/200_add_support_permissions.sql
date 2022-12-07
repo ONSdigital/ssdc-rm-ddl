@@ -2,8 +2,8 @@
 -- RM SQL DATABASE INSERT SCRIPT
 -- ****************************************************************************
 -- Number: 200
--- Purpose: Will create Support Tool UI permissions 'RM SUPPORT ACTIONS' and
---         'RM SUPPORT'. Will fail gracefully if they already exist by pkey
+-- Purpose: Will create Support Tool UI permissions 'RM SUPPORT ACTIONS',
+--         'RM SUPPORT' and 'super'. Will fail gracefully if they already exist by pkey
 -- Author: Liam Toozer
 -- ****************************************************************************
 
