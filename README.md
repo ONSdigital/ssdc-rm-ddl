@@ -71,7 +71,7 @@ script is invoked from our pipelines and will run in a Kubernetes pod to apply a
 tagged release version of this repository.
 
 The database schema version number and patch numbers must then be updated in [patch_database.py](patch_database.py)
-and [ddl_version.sql](groundzero_ddl/ddl_version.sql), so that the patch script is aware of the current schema version.
+and [groundzero_ddl/ddl_version.sql](groundzero_ddl/ddl_version.sql), so that the patch script is aware of the current schema version.
 
 ### Testing patch scripts
 
@@ -143,3 +143,5 @@ DB_PORT=16432 pipenv run python rollback_database.py -n <NUMBER OF PATCHES> -v <
 This repo also houses a dockerfile for building our [dev postgres image](dev-common-postgres-image), based on the
 postgres docker image but initialised with our schemas for dev convenience in local testing. This requires it's own,
 combined init SQL script which is also re-generated when you run `make dev-build`, which also locally builds the image.
+
+This image comes with seeded data for Support Tool UI groups.

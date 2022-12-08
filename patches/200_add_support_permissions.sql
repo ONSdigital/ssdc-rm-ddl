@@ -1,4 +1,11 @@
-BEGIN;
+-- ****************************************************************************
+-- RM SQL DATABASE INSERT SCRIPT
+-- ****************************************************************************
+-- Number: 200
+-- Purpose: Will create Support Tool UI permissions 'RM SUPPORT ACTIONS',
+--         'RM SUPPORT' and 'super'. Will fail gracefully if they already exist by pkey
+-- Author: Liam Toozer
+-- ****************************************************************************
 
 -- RM SUPPORT ACTIONS
 INSERT INTO casev3.user_group (id, description, name) VALUES ('a25c7f99-d2ce-4267-aea4-0a133028f793', 'Group to temporarily move into to get all Action permissions except create Users or Groups', 'RM SUPPORT ACTIONS') ON CONFLICT DO NOTHING;
@@ -61,5 +68,3 @@ INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, sur
 INSERT INTO casev3.user_group (id, description, name) VALUES ('8269d75c-bfa1-4930-aca2-10dd9c6a2b42', 'Super user - full permissions', 'super') ON CONFLICT DO NOTHING;;
 
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('c469377e-680e-4cb1-92a0-5217be2b3a52', 'SUPER_USER', '8269d75c-bfa1-4930-aca2-10dd9c6a2b42', NULL) ON CONFLICT DO NOTHING;
-
-COMMIT;

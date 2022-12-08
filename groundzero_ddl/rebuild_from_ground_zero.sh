@@ -5,6 +5,7 @@ PSQL_CONNECT_WRITE_MODE="sslmode=verify-ca sslrootcert=/root/.postgresql/root.cr
 
 psql "$PSQL_CONNECT_WRITE_MODE" -v "ON_ERROR_STOP=1" -f destroy_schemas.sql || exit 1
 
+# Create schema
 for SCHEMA_NAME in casev3 uacqid exceptionmanager ddl_version
 do
   {
@@ -20,7 +21,7 @@ do
 done
 
 
-
+# Create roles
 pushd roles || exit 1
 for ROLE_PERMISSIONS_SCRIPT in *.sql;
 do
@@ -35,5 +36,10 @@ do
 done
 popd || exit 1
 
+# Create indexes
 psql "$PSQL_CONNECT_WRITE_MODE" -f indexes/GIN_indexes_applied_by_groundzero.sql
 
+# Create RM Support UI permissions
+pushd ../ui-permissions || exit 1
+psql "$PSQL_CONNECT_WRITE_MODE" -f RM-support-permissions.sql
+popd || exit 1
