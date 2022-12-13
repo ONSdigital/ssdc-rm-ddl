@@ -11,17 +11,17 @@ public class CollectionInstrumentSelectionRule implements Serializable {
   private final int priority;
   private final String spelExpression;
   private final String collectionInstrumentUrl;
-  private final EqLaunchSettings eqLaunchSettings;
+  private final EqLaunchSettings[] eqLaunchSettings;
 
   @JsonCreator
   public CollectionInstrumentSelectionRule(
       @JsonProperty("priority") int priority,
       @JsonProperty("spelExpression") String spelExpression,
       @JsonProperty("collectionInstrumentUrl") String collectionInstrumentUrl,
-      @JsonProperty("eqLaunchSettings") EqLaunchSettings EqLaunchSettings) {
+      @JsonProperty("eqLaunchSettings") EqLaunchSettings[] EqLaunchSettings) {
     this.priority = priority;
     this.spelExpression = spelExpression;
     this.collectionInstrumentUrl = collectionInstrumentUrl;
-    this.eqLaunchSettings = EqLaunchSettings;
+    this.eqLaunchSettings = EqLaunchSettings.clone();
   }
 }
