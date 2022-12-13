@@ -18,10 +18,15 @@ public class CollectionInstrumentSelectionRule implements Serializable {
       @JsonProperty("priority") int priority,
       @JsonProperty("spelExpression") String spelExpression,
       @JsonProperty("collectionInstrumentUrl") String collectionInstrumentUrl,
-      @JsonProperty("eqLaunchSettings") EqLaunchSettings[] EqLaunchSettings) {
+      @JsonProperty("eqLaunchSettings") EqLaunchSettings[] eqLaunchSettings) {
     this.priority = priority;
     this.spelExpression = spelExpression;
     this.collectionInstrumentUrl = collectionInstrumentUrl;
-    this.eqLaunchSettings = EqLaunchSettings.clone();
+
+    if (eqLaunchSettings != null) {
+      this.eqLaunchSettings = eqLaunchSettings.clone();
+    } else {
+      this.eqLaunchSettings = new EqLaunchSettings[0];
+    }
   }
 }
