@@ -6,5 +6,6 @@ public enum ActionRuleType {
   FACE_TO_FACE,
   DEACTIVATE_UAC,
   SMS,
-  EMAIL
+  EMAIL,
+  EQ_FLUSH
 }
