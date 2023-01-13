@@ -39,7 +39,12 @@ popd || exit 1
 # Create indexes
 psql "$PSQL_CONNECT_WRITE_MODE" -f indexes/GIN_indexes_applied_by_groundzero.sql
 
+# Seed the packcode templates
+psql "$PSQL_CONNECT_WRITE_MODE" -f packcode_templates/export_file_templates.sql
+psql "$PSQL_CONNECT_WRITE_MODE" -f packcode_templates/email_templates.sql
+
 # Create RM Support UI permissions
 pushd ../ui-permissions || exit 1
 psql "$PSQL_CONNECT_WRITE_MODE" -f RM-support-permissions.sql
 popd || exit 1
+

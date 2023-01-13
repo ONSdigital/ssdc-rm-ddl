@@ -20,6 +20,13 @@ echo "create schema if not exists ddl_version;"
 echo "set schema 'ddl_version';"
 cat groundzero_ddl/ddl_version.sql
 echo ""
-echo "-- Seeded Support Tool UI permissions"
+echo "-- Seed Support Tool UI permissions"
 cat ui-permissions/RM-support-permissions.sql
+echo ""
+echo "-- Seed packcode templates"
+echo "-- Export File Templates"
+cat groundzero_ddl/packcode_templates/export_file_templates.sql
+echo ""
+echo "-- Email Template"
+cat groundzero_ddl/packcode_templates/email_templates.sql
 } > dev-common-postgres-image/init.sql
