@@ -30,6 +30,9 @@ INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, sur
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('c484fdc8-3bfd-40ad-b608-75b9d94b434e', 'CREATE_CASE_INVALID_CASE', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL) ON CONFLICT DO NOTHING;
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('336002f6-b98b-40dc-acf6-6490b6348d8e', 'UPDATE_SAMPLE', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL) ON CONFLICT DO NOTHING;
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('20348a51-352f-4f2d-98d3-d6549110b9bf', 'UPDATE_SAMPLE_SENSITIVE', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL) ON CONFLICT DO NOTHING;
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('dddfd81d-a184-4c71-a639-df64acf47b37', 'CREATE_CASE_EXPORT_FILE_FULFILMENT', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL) ON CONFLICT DO NOTHING;
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('ccc4e85f-ecb9-467d-be11-715ab605cf02', 'CREATE_CASE_SMS_FULFILMENT', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL) ON CONFLICT DO NOTHING;
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('4990e4de-42aa-4fd7-a654-554e440def38', 'CREATE_CASE_EMAIL_FULFILMENT', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL) ON CONFLICT DO NOTHING;
 
 -- RM SUPPORT
 INSERT INTO casev3.user_group VALUES ('b19a77bd-6a02-4851-8116-9e915738b700', 'RM Support - Read only', 'RM SUPPORT') ON CONFLICT DO NOTHING;
