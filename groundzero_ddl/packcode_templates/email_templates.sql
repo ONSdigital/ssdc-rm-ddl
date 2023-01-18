@@ -1,4 +1,4 @@
-INSERT INTO casev3.export_file_template (pack_code, description, notify_template_id, metadata, template) VALUES
+INSERT INTO casev3.email_template (pack_code, description, notify_template_id, metadata, template) VALUES
 ('NE_EN_Q_PHM', 'Notification Email questionnaire only - English', 'e32ee6a1-b21c-40a2-89b3-c58ad5bedf8f', null ,'["__uac__","PARTICIPANT_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.MIDDLE_NAME","__sensitive__.LAST_NAME"]'),
 ('NE_CY_Q_PHM', 'Notification Email questionnaire only- Welsh', 'c101b2a8-8ce9-4274-bfae-46c1b461c8a4', null ,'["__uac__","PARTICIPANT_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.MIDDLE_NAME","__sensitive__.LAST_NAME"]'),
 ('NE_EN_T_PHM', 'Notification Email for test participants - English', '4564483a-36ae-4c79-9898-e5d361a81dc6', null ,'["__uac__","PARTICIPANT_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.MIDDLE_NAME","__sensitive__.LAST_NAME"]'),
