@@ -1,7 +1,7 @@
 -- ****************************************************************************
 -- RM SQL DATABASE INSERT ROLLBACK SCRIPT
 -- ****************************************************************************
--- Number: 400
+-- Number: 500
 -- Purpose: Rollback adding case fulfilment permissions to RM Support group
 -- Author: Gavin Edwards
 -- ****************************************************************************
