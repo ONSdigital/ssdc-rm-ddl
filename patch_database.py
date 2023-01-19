@@ -7,7 +7,7 @@ from config import Config
 
 PATCHES_DIRECTORY = Path(__file__).parent.joinpath('patches')
 
-# current_version should match the version in the ddl_version.sql file
+# CURRENT_VERSION must match the version in the ddl_version.sql file
 CURRENT_VERSION = 'v1.0.4'
 
 
