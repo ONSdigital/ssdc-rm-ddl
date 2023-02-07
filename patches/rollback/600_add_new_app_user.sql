@@ -8,3 +8,7 @@
 
 REVOKE rm_app_user FROM appuser;
 GRANT cloudsqlsuperuser TO appuser;
+ALTER ROLE appuser WITH CREATEDB;
+ALTER ROLE appuser WITH CREATEROLE;
+
+DROP ROLE rm_app_user;
