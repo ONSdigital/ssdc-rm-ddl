@@ -11,10 +11,12 @@ jobs:
       dist: bionic # The default dist does not yet support python 3.10
       name: "Python Tests and Checks"
 
+      before_install:
+        - deactivate # Deactivate the virtualenv Travis dumps us in, so that we can fix out of date global dependencies
+        - pyenv global 3.10 # Ensure the right global python version is being used
+        - pip install --upgrade pip pipenv setuptools wheel
 
       install:
-        - pip uninstall -y numpy  # Remove the vulnerable Numpy which Travis provides
-        - pip install -U pipenv
         - pipenv install --dev --deploy
 
       script:
@@ -41,9 +43,11 @@ jobs:
         - docker login -u "${DOCKER_GCP_USERNAME}" -p "${GOOGLE_SERVICE_ACCOUNT_KEY}" https://europe-west2-docker.pkg.dev;
         - docker login -u "${DOCKERHUB_USERNAME}" -p "${DOCKERHUB_PASSWORD}";
 
+        - deactivate # Deactivate the virtualenv Travis dumps us in, so that we can fix out of date global dependencies
+        - pyenv global 3.10 # Ensure the right global python version is being used
+        - pip install --upgrade pip pipenv setuptools wheel
+
       install:
-        - pip uninstall -y numpy  # Remove the vulnerable Numpy which Travis provides
-        - pip install -U pipenv
         - pipenv install --dev --deploy
 
       script:
