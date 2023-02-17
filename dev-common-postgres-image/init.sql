@@ -2,6 +2,19 @@
 -- DO NOT EDIT IT DIRECTLY
 -- REFER TO THE README FOR INSTRUCTIONS ON REGENERATING IT
 
+-- The following statements are required to allow the patch 600 to run against a local dev postgres container
+DO $$
+BEGIN
+    CREATE USER appuser;
+    EXCEPTION WHEN duplicate_object THEN RAISE NOTICE '%', SQLERRM USING ERRCODE = SQLSTATE;
+END
+$$;
+ALTER ROLE appuser WITH PASSWORD 'postgres';
+CREATE ROLE cloudsqlsuperuser;
+GRANT cloudsqlsuperuser TO appuser;
+ALTER ROLE appuser WITH CREATEDB;
+ALTER ROLE appuser WITH CREATEROLE;
+
 create schema if not exists casev3;
 set schema 'casev3';
 
@@ -471,7 +484,7 @@ set schema 'uacqid';
     );
 
 create schema if not exists exceptionmanager;
-set schema 'uacqid';
+set schema 'exceptionmanager';
 
     create table auto_quarantine_rule (
        id uuid not null,
@@ -504,6 +517,7 @@ CREATE TABLE ddl_version.patches (patch_number integer PRIMARY KEY, applied_time
 CREATE TABLE ddl_version.version (version_tag varchar(256) PRIMARY KEY, updated_timestamp timestamp with time zone NOT NULL);
 
 -- Version and patch number for the current ground zero,
+-- NOTE: These must be updated every time the repo is tagged
 -- NOTE: the CURRENT_VERSION in /patch_database.py must also be updated to match this version_tag
 INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (500, current_timestamp);
 INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.0.5', current_timestamp);
