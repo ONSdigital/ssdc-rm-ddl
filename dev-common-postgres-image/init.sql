@@ -2,6 +2,20 @@
 -- DO NOT EDIT IT DIRECTLY
 -- REFER TO THE README FOR INSTRUCTIONS ON REGENERATING IT
 
+-- The following statements are required to allow the patch 600 to run against a local dev postgres container
+DO $$
+BEGIN
+    CREATE USER appuser;
+    EXCEPTION WHEN duplicate_object THEN RAISE NOTICE '%', SQLERRM USING ERRCODE = SQLSTATE;
+END
+$$;
+ALTER ROLE appuser WITH PASSWORD 'postgres';
+CREATE ROLE cloudsqlsuperuser;
+GRANT cloudsqlsuperuser TO appuser;
+ALTER ROLE appuser WITH CREATEDB;
+ALTER ROLE appuser WITH CREATEROLE;
+
+
 create schema if not exists casev3;
 set schema 'casev3';
 
@@ -471,7 +485,7 @@ set schema 'uacqid';
     );
 
 create schema if not exists exceptionmanager;
-set schema 'uacqid';
+set schema 'exceptionmanager';
 
     create table auto_quarantine_rule (
        id uuid not null,
