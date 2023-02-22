@@ -46,10 +46,6 @@ jobs:
         - pyenv global 3.10 # Ensure the right global python version is being used
         - pip install --upgrade pip pipenv setuptools wheel
 
-        - deactivate # Deactivate the virtualenv Travis dumps us in, so that we can fix out of date global dependencies
-        - pyenv global 3.10 # Ensure the right global python version is being used
-        - pip install --upgrade pip pipenv setuptools wheel
-
       install:
         - pipenv install --dev --deploy
 
