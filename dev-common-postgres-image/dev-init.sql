@@ -11,4 +11,3 @@ CREATE ROLE cloudsqlsuperuser;
 GRANT cloudsqlsuperuser TO appuser;
 ALTER ROLE appuser WITH CREATEDB;
 ALTER ROLE appuser WITH CREATEROLE;
-

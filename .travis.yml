@@ -42,6 +42,9 @@ jobs:
       before_install:
         - docker login -u "${DOCKER_GCP_USERNAME}" -p "${GOOGLE_SERVICE_ACCOUNT_KEY}" https://europe-west2-docker.pkg.dev;
         - docker login -u "${DOCKERHUB_USERNAME}" -p "${DOCKERHUB_PASSWORD}";
+        - deactivate # Deactivate the virtualenv Travis dumps us in, so that we can fix out of date global dependencies
+        - pyenv global 3.10 # Ensure the right global python version is being used
+        - pip install --upgrade pip pipenv setuptools wheel
 
         - deactivate # Deactivate the virtualenv Travis dumps us in, so that we can fix out of date global dependencies
         - pyenv global 3.10 # Ensure the right global python version is being used
