@@ -595,20 +595,18 @@ COMMIT;
 -- Seed packcode templates
 -- Export File Templates
 INSERT INTO casev3.export_file_template (pack_code, description, export_file_destination, metadata, template) VALUES
-('NL_EN_ST_PHM', 'Notification Letter - English', 'internal_reprographics', null ,'["PARTICIPANT_ID","ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__sensitive__.LAST_NAME","__sensitive__.MIDDLE_NAME","FIRST_NAME","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]'),
-('NL_CY_ST_PHM', 'Notification Letter - Welsh', 'internal_reprographics', null ,'["PARTICIPANT_ID","ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__sensitive__.LAST_NAME","__sensitive__.MIDDLE_NAME","FIRST_NAME","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]'),
-('NL_EN_LP_PHM', 'Notification Letter - English - Large Print', 'internal_reprographics', null ,'["PARTICIPANT_ID","ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__sensitive__.LAST_NAME","__sensitive__.MIDDLE_NAME","FIRST_NAME","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]'),
-('NL_CY_LP_PHM', 'Notification Letter - Welsh - Large Print', 'internal_reprographics', null ,'["PARTICIPANT_ID","ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__sensitive__.LAST_NAME","__sensitive__.MIDDLE_NAME","FIRST_NAME","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]')
+('NL_EN_ST_CRIS', 'Notification Letter - English', 'internal_reprographics', null ,'["PORTAL_ID","ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__sensitive__.LAST_NAME","FIRST_NAME","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]'),
+('NL_CY_ST_CRIS', 'Notification Letter - Welsh', 'internal_reprographics', null , '["PORTAL_ID","ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__sensitive__.LAST_NAME","FIRST_NAME","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]'),
+('NL_EN_LP_CRIS', 'Notification Letter - English - Large Print', 'internal_reprographics', null ,'["PORTAL_ID","ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__sensitive__.LAST_NAME","FIRST_NAME","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]'),
+('NL_CY_LP_CRIS', 'Notification Letter - Welsh - Large Print', 'internal_reprographics', null ,'["PORTAL_ID","ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__sensitive__.LAST_NAME","FIRST_NAME","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]')
 ON CONFLICT (pack_code) DO UPDATE SET (description, export_file_destination, metadata, template) = (EXCLUDED.description, EXCLUDED.export_file_destination, EXCLUDED.metadata, EXCLUDED.template);
 
 -- Email Template
 INSERT INTO casev3.email_template (pack_code, description, notify_template_id, metadata, template) VALUES
-('NE_EN_Q_PHM', 'Notification Email questionnaire only - English', 'e32ee6a1-b21c-40a2-89b3-c58ad5bedf8f', null ,'["__uac__","PARTICIPANT_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.MIDDLE_NAME","__sensitive__.LAST_NAME"]'),
-('NE_CY_Q_PHM', 'Notification Email questionnaire only - Welsh', 'c101b2a8-8ce9-4274-bfae-46c1b461c8a4', null ,'["__uac__","PARTICIPANT_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.MIDDLE_NAME","__sensitive__.LAST_NAME"]'),
-('NE_EN_T_PHM', 'Notification Email for test participants - English', '4564483a-36ae-4c79-9898-e5d361a81dc6', null ,'["__uac__","PARTICIPANT_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.MIDDLE_NAME","__sensitive__.LAST_NAME"]'),
-('NE_CY_T_PHM', 'Notification Email for test participants - Welsh', '1d284812-9af6-4e1f-a707-5acfc192797b', null ,'["__uac__","PARTICIPANT_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.MIDDLE_NAME","__sensitive__.LAST_NAME"]'),
-('RE_EN_PHM', 'Reminder Email - English', '7ae006fa-1917-4299-ad7c-c8f8d0ecd2d4', null ,'["PARTICIPANT_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.MIDDLE_NAME","__sensitive__.LAST_NAME"]'),
-('RE_CY_PHM', 'Reminder Email - Welsh', 'f782df1a-0204-4e95-a7e0-e64ac8c7270d', null ,'["PARTICIPANT_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.MIDDLE_NAME","__sensitive__.LAST_NAME"]'),
-('UR_EN_PHM', 'UAC Replacement Email - English', '239e0ef7-3e1d-4f73-96b7-ac06ce6b7fc4', null ,'["__uac__","FIRST_NAME","__sensitive__.MIDDLE_NAME","__sensitive__.LAST_NAME"]'),
-('UR_CY_PHM', 'UAC Replacement Email - Welsh', 'e928f6f1-dd04-4d2c-a780-97db65866643', null ,'["__uac__","FIRST_NAME","__sensitive__.MIDDLE_NAME","__sensitive__.LAST_NAME"]')
+('NE_EN_CRIS', 'Notification- English', '55c23289-6331-47f2-89b9-5b88bcfc3f41', null ,'["__uac__","PORTAL_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.LAST_NAME"]'),
+('NE_CY_CRIS', 'Notification - bilingual', 'acd97184-b282-4ff9-98cf-ba14bf74c2f8', null ,'["__uac__","PORTAL_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.LAST_NAME"]'),
+('RE_EN_CRIS', 'Reminder - English', '8cf30001-0c06-4da4-b49d-1df975a1123a', null ,'["PORTAL_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.LAST_NAME"]'),
+('RE_CY_CRIS', 'Reminder - bilingual', '42af756c-7239-4486-b67d-ce2c6c4a7f9b', null ,'["PORTAL_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.LAST_NAME"]'),
+('UR_EN_CRIS', 'UAC Replacement - English', '3543bcf5-6986-4d8d-80ab-79fba4d3f050', null ,'["__uac__","FIRST_NAME","__sensitive__.LAST_NAME"]'),
+('UR_CY_CRIS', 'UAC Replacement - bilingual', 'cfe91e5d-19a9-4325-8e4f-0bcbd1dcacff', null ,'["__uac__","FIRST_NAME","__sensitive__.LAST_NAME"]')
 ON CONFLICT (pack_code) DO UPDATE SET (description, notify_template_id, metadata, template) = (EXCLUDED.description, EXCLUDED.notify_template_id, EXCLUDED.metadata, EXCLUDED.template);
