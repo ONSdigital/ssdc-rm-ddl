@@ -1,17 +1,10 @@
 -- ****************************************************************************
--- RM SQL DATABASE DELETE AND INSERT SCRIPT
+-- RM SQL DATABASE INSERT SCRIPT
 -- ****************************************************************************
 -- Number: 800
--- Purpose: Delete PHM pack codes and insert CRIS pack codes
+-- Purpose: Insert CRIS pack codes
 -- Author: Liam Toozer
 -- ****************************************************************************
-
-DELETE FROM casev3.export_file_template
-WHERE pack_code IN ('NL_EN_ST_PHM', 'NL_CY_ST_PHM', 'NL_EN_LP_PHM', 'NL_CY_LP_PHM');
-
-DELETE FROM casev3.email_template
-WHERE pack_code IN ('NE_EN_Q_PHM', 'NE_CY_Q_PHM', 'NE_EN_T_PHM', 'NE_CY_T_PHM', 'RE_EN_PHM', 'RE_CY_PHM', 'UR_EN_PHM', 'UR_CY_PHM');
-
 
 INSERT INTO casev3.export_file_template (pack_code, description, export_file_destination, metadata, template)
 VALUES
