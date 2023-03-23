@@ -71,7 +71,26 @@ script is invoked from our pipelines and will run in a Kubernetes pod to apply a
 tagged release version of this repository.
 
 The database schema version number and patch numbers must then be updated in [patch_database.py](patch_database.py)
-and [groundzero_ddl/ddl_version.sql](groundzero_ddl/ddl_version.sql), so that the patch script is aware of the current schema version.
+and [groundzero_ddl/ddl_version.sql](groundzero_ddl/ddl_version.sql), so that the patch script is aware of the current
+schema version.
+
+### Writing patches
+
+**Patch scripts need to be very carefully considered and tested**; bear in mind they will be automatically run against a
+production database during a release. They must be carefully manually tested with data, the unit tests are there to
+prove they can run, but provide no assurance that they are safe for the data. `DELETE` statements must be avoided, and
+row `UPDATE`s must be **very** carefully considered.
+
+Data patches are better suited to running manually, so that they can be tested in a transaction and rolled back if the
+result is not as expected. Breaking changes, such as adding a new mandatory column must be done in stages, for example,
+add a new column without constraints, run manual data patches to populate it as required, then deploy another patch to
+apply the required constraints once the data will already satisfy them.
+
+#### Seeded data
+
+We use the DDL to seed certain bits of data that we wish to always be set up consistently in our environments, such as
+export file and email templates and permission groups. Whereever these rows are inserted, care must be taken to ensure
+conflicts are handled for example by using the `ON CONFLICT DO UPDATE SET` syntax to update conflicting rows in place.
 
 ### Testing patch scripts
 
