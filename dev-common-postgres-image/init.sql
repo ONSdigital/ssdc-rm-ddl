@@ -519,8 +519,8 @@ CREATE TABLE ddl_version.version (version_tag varchar(256) PRIMARY KEY, updated_
 -- Version and patch number for the current ground zero,
 -- NOTE: These must be updated every time the repo is tagged
 -- NOTE: the CURRENT_VERSION in /patch_database.py must also be updated to match this version_tag
-INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (800, current_timestamp);
-INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.0.8', current_timestamp);
+INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (900, current_timestamp);
+INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.0.9', current_timestamp);
 
 -- Seed Support Tool UI permissions
 BEGIN;
@@ -538,6 +538,7 @@ INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, sur
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('ce7c2e7e-8b0f-483a-b80c-1dbc3e6a91ba', 'ALLOW_EXPORT_FILE_TEMPLATE_ON_ACTION_RULE', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL) ON CONFLICT DO NOTHING;
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('0f24d3c2-d625-41f8-b1a6-9f42f4de60a9', 'ALLOW_SMS_TEMPLATE_ON_ACTION_RULE', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL) ON CONFLICT DO NOTHING;
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('d57bc0aa-e98b-4f7e-85b5-5c9bcfa284db', 'ALLOW_EMAIL_TEMPLATE_ON_ACTION_RULE', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL) ON CONFLICT DO NOTHING;
+INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('558ec090-d44b-401b-abbb-7352e11aafbe', 'ALLOW_EMAIL_TEMPLATE_ON_FULFILMENT', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL) ON CONFLICT DO NOTHING;
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('c6424f68-87a5-417d-9ea1-2969795ee01a', 'CREATE_EXPORT_FILE_ACTION_RULE', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL) ON CONFLICT DO NOTHING;
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('b87d94b9-f916-420f-90cc-52705fc415b8', 'CREATE_FACE_TO_FACE_ACTION_RULE', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL) ON CONFLICT DO NOTHING;
 INSERT INTO casev3.user_group_permission (id, authorised_activity, group_id, survey_id) VALUES ('1b5219ca-9e56-4b49-9208-95edc6ead0d3', 'CREATE_OUTBOUND_PHONE_ACTION_RULE', 'a25c7f99-d2ce-4267-aea4-0a133028f793', NULL) ON CONFLICT DO NOTHING;
