@@ -519,8 +519,8 @@ CREATE TABLE ddl_version.version (version_tag varchar(256) PRIMARY KEY, updated_
 -- Version and patch number for the current ground zero,
 -- NOTE: These must be updated every time the repo is tagged
 -- NOTE: the CURRENT_VERSION in /patch_database.py must also be updated to match this version_tag
-INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (900, current_timestamp);
-INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.0.9', current_timestamp);
+INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (1000, current_timestamp);
+INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.0.10', current_timestamp);
 
 -- Seed Support Tool UI permissions
 BEGIN;
@@ -596,10 +596,10 @@ COMMIT;
 -- Seed packcode templates
 -- Export File Templates
 INSERT INTO casev3.export_file_template (pack_code, description, export_file_destination, metadata, template) VALUES
-('NL_EN_ST_CRIS', 'CRIS Notification Letter - English', 'internal_reprographics', null ,'["PORTAL_ID","ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__sensitive__.LAST_NAME","FIRST_NAME","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]'),
-('NL_CY_ST_CRIS', 'CRIS Notification Letter - Bilingual Welsh', 'internal_reprographics', null , '["PORTAL_ID","ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__sensitive__.LAST_NAME","FIRST_NAME","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]'),
-('NL_EN_LP_CRIS', 'CRIS Notification Letter - English - Large Print', 'internal_reprographics', null ,'["PORTAL_ID","ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__sensitive__.LAST_NAME","FIRST_NAME","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]'),
-('NL_CY_LP_CRIS', 'CRIS Notification Letter - Bilingual Welsh - Large Print', 'internal_reprographics', null ,'["PORTAL_ID","ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__sensitive__.LAST_NAME","FIRST_NAME","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]')
+('NL_EN_ST_CRIS', 'CRIS Notification Letter - English', 'internal_reprographics', null ,'["PORTAL_ID","__sensitive__.ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]'),
+('NL_CY_ST_CRIS', 'CRIS Notification Letter - Bilingual Welsh', 'internal_reprographics', null , '["PORTAL_ID","__sensitive__.ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]'),
+('NL_EN_LP_CRIS', 'CRIS Notification Letter - English - Large Print', 'internal_reprographics', null ,'["PORTAL_ID","__sensitive__.ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]'),
+('NL_CY_LP_CRIS', 'CRIS Notification Letter - Bilingual Welsh - Large Print', 'internal_reprographics', null ,'["PORTAL_ID","__sensitive__.ADDRESS_LINE_1","ADDRESS_LINE_2","ADDRESS_LINE_3","TOWN_NAME","POSTCODE","__uac__","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE"]')
 ON CONFLICT (pack_code) DO UPDATE SET (description, export_file_destination, metadata, template) = (EXCLUDED.description, EXCLUDED.export_file_destination, EXCLUDED.metadata, EXCLUDED.template);
 
 -- Email Template
