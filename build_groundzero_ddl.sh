@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 rm groundzero_ddl/casev3.sql
 rm groundzero_ddl/uacqid.sql
 rm groundzero_ddl/exceptionmanager.sql

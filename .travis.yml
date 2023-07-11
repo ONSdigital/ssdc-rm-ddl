@@ -31,6 +31,12 @@ jobs:
         global:
           - PIPENV_IGNORE_VIRTUALENVS=1
 
+    - language: generic
+      name: "Check SQL files exist"
+
+      script:
+        - ./check_sql_files_exist.sh
+
     - language: python
       python:
         - "3.10"

@@ -1,4 +1,5 @@
 rm dev-common-postgres-image/init.sql || true
+set -e
 {
 echo "-- THIS FILE IS AUTO-GENERATED"
 echo "-- DO NOT EDIT IT DIRECTLY"
