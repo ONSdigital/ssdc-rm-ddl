@@ -68,6 +68,18 @@ jobs:
         directories:
           - $HOME/.m2
 
+    - language: java
+      jdk: openjdk17
+      name: "Java dev build"
+
+      install: echo "SKIPPING DEFAULT INSTALL" # Travis has a default maven install. Don't build twice!
+
+      script: travis_wait make dev-build
+
+      cache:
+        directories:
+          - $HOME/.m2
+
     - language: bash
       name: "Shell Check"
       script:
