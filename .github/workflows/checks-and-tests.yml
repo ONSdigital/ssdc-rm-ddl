@@ -131,7 +131,7 @@ jobs:
           cache: maven
 
       - name: Maven Checks
-        run: make check
+        run: make format-check
 
       - name: Run Build
         run: make build
