@@ -30,9 +30,6 @@ dev-update-ddl:
 
 dev-build: dev-install-common dev-update-ddl build-ddl-docker
 
-check-for-unbuilt-ddl-changes:
-	./check-for-unbuilt-ddl-changes.sh
-
 shellcheck:
 	shellcheck -x --shell=bash **/*.sh *.sh
 
