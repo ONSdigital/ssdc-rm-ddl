@@ -3,6 +3,7 @@ __pycache__
 .pytest_cache/*
 .settings/*
 .coverage
+coverage.xml
 
 ##############################
 ## Java
