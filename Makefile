@@ -8,22 +8,22 @@ lint:
 	pipenv run flake8
 
 test: check lint
-	pipenv run pytest ./test --cov --cov-report term-missing
-
-format-check-common:
-	cd ssdc-rm-common-entity-model && mvn fmt:check pmd:check
-
-check-ddl:
-	mvn pmd:check
-
-build-common:
-	cd ssdc-rm-common-entity-model && mvn compile
+	pipenv run pytest ./test --cov --cov-report term-missing --cov-report xml
 
 build-ddl-docker:
 	docker build . -t europe-west2-docker.pkg.dev/ssdc-rm-ci/docker/ssdc-rm-ddl:latest
 
+check-ddl:
+	mvn pmd:check
+
+format-check-common:
+	$(MAKE) -C ssdc-rm-common-entity-model format-check
+
+build-common:
+	$(MAKE) -C ssdc-rm-common-entity-model build
+
 dev-install-common:
-	cd ssdc-rm-common-entity-model && mvn clean install
+	$(MAKE) -C ssdc-rm-common-entity-model dev-install
 
 dev-update-ddl:
 	./build_groundzero_ddl.sh
