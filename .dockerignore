@@ -1,2 +1,10 @@
-Makefile
-**/*.example
+# Ignore everything...
+*
+# ... exept for:
+!groundzero_ddl/
+!patches/
+!ui-persmissions/
+!build_groundzero_dll.sh
+!patch-database.py
+!rollback_database.py
+!Pipfile*
