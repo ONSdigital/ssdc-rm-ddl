@@ -3,7 +3,7 @@
 # ... exept for:
 !groundzero_ddl/
 !patches/
-!ui-persmissions/
+!ui-permissions/
 !build_groundzero_ddl.sh
 !patch_database.py
 !rollback_database.py
