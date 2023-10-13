@@ -1,4 +1,11 @@
--- WCIS EMAIL TEMPLATES
+-- ****************************************************************************
+-- RM SQL DATABASE ROLLBACK INSERT SCRIPT
+-- ****************************************************************************
+-- Number: 1400
+-- Purpose: Add WCIS email templates
+-- Author: Adam Hawtin
+-- ****************************************************************************
+
 INSERT INTO casev3.email_template (pack_code, description, notify_template_id, metadata, template) VALUES
 ('MNE_EN_WCIS', 'WCIS Main Notification Email - English', '6ff6a02f-f4ee-49ca-ba6c-4cabb1e72688', null ,'["__uac__","PORTAL_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.LAST_NAME"]'),
 ('MR1_EN_WCIS', 'WCIS Main Reminder Email 1 - English', '179b306c-ac35-4736-8804-94e8daaef511', null ,'["__uac__","PORTAL_ID","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.LAST_NAME"]'),
