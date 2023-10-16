@@ -2,7 +2,7 @@
 -- RM SQL DATABASE ROLLBACK INSERT SCRIPT
 -- ****************************************************************************
 -- Number: 1400
--- Purpose: Add WCIS email templates
+-- Purpose: Delete WCIS email templates
 -- Author: Adam Hawtin
 -- ****************************************************************************
 
