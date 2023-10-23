@@ -7,4 +7,4 @@
 -- ****************************************************************************
 
 DELETE FROM casev3.email_template
-WHERE pack_code IN ('MNE_EN_WCIS', 'MR1_EN_WCIS', 'MR2_EN_WCIS', 'FNE_EN_WCIS', 'FRE_EN_WCIS');
+WHERE pack_code IN ('MNE_EN_WCIS', 'MRE_EN_WCIS', 'FNE_EN_WCIS', 'FRE_EN_WCIS');
