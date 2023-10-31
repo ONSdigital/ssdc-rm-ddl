@@ -100,21 +100,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # Authenticating with Dockerhub ensures image pulls are authenticated, so not as severely rate limited
-      - name: Log in to Dockerhub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      # Also log docker in to GCP artifact registry, to allow image pulls from our private registries
-      - name: Log in to Google Docker Artifact Registry
-        uses: docker/login-action@v2
-        with:
-          registry: europe-west2-docker.pkg.dev
-          username: _json_key
-          password: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
-
       - name: Set up Python "3.10"
         uses: actions/setup-python@v4
         with:
