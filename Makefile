@@ -51,4 +51,9 @@ run-test-rollback:
 wait-for-docker-postgres:
 	./wait_for_docker_postgres.sh
 
-test-patches: build-ddl-docker dev-postgres-down dev-postgres-up wait-for-docker-postgres run-test-patches run-test-rollback dev-postgres-down
+test-patches: pull-latest-dev-postgres dev-postgres-down dev-postgres-up wait-for-docker-postgres run-test-patches run-test-rollback dev-postgres-down
+
+build-dev-postgres-image:
+	docker build ./dev-common-postgres-image -t europe-west2-docker.pkg.dev/ssdc-rm-ci/dockerssdc-rm-dev-common-postgres:latest
+
+test-dev-common-postgres: build-dev-postgres-image dev-postgres-up wait-for-docker-postgres run-test-patches run-test-rollback dev-postgres-down
