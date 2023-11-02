@@ -92,8 +92,8 @@ jobs:
       - name: Run Tests and Checks
         run: make test-patches
 
-  dev-common-tests:
-    name: Test Dev Common Postgres
+  dev-postgres-tests:
+    name: Test Dev Postgres
     runs-on: ubuntu-latest
     steps:
 
@@ -111,7 +111,7 @@ jobs:
           pipenv install --dev --deploy
 
       - name: Run Tests and Checks
-        run: make test-dev-common-postgres
+        run: make test-dev-postgres
 
   ddl-java-checks:
     name: DDL Java Checks
