@@ -92,6 +92,16 @@ jobs:
       - name: Run Tests and Checks
         run: make test-patches
 
+  dev-postgres-tests:
+    name: Test Dev Postgres
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Run Tests and Checks
+        run: make test-dev-postgres
 
   ddl-java-checks:
     name: DDL Java Checks
