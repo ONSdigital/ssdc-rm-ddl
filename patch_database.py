@@ -53,6 +53,7 @@ def patch_database(patches_directory, ddl_version_tag, db_cursor, db_connection)
         return
     print(f'NO PATCHES TO APPLY AT VERSION: {ddl_version_tag}')
 
+
 def get_current_database_version_tag(db_cursor):
     db_cursor.execute('SELECT version_tag FROM ddl_version.version ORDER BY updated_timestamp DESC LIMIT 1')
     return db_cursor.fetchone()[0]
