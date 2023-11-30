@@ -521,8 +521,8 @@ CREATE TABLE ddl_version.version (version_tag varchar(256) PRIMARY KEY, updated_
 -- Version and patch number for the current ground zero,
 -- NOTE: These must be updated every time the repo is tagged
 -- NOTE: the CURRENT_VERSION in /patch_database.py must also be updated to match this version_tag
-INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (1400, current_timestamp);
-INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.0.14', current_timestamp);
+INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (1600, current_timestamp);
+INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.0.15', current_timestamp);
 
 -- Seed Support Tool UI permissions
 BEGIN;
@@ -601,8 +601,8 @@ COMMIT;
 -- Email Template
 -- WCIS EMAIL TEMPLATES
 INSERT INTO casev3.email_template (pack_code, description, notify_template_id, metadata, template, notify_service_ref) VALUES
-('MNE_EN_WCIS', 'WCIS Main Notification Email - English', '6ff6a02f-f4ee-49ca-ba6c-4cabb1e72688', null ,'["__uac__","PORTAL_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.LAST_NAME"]','wcis-service'),
-('MRE_EN_WCIS', 'WCIS Main Reminder Email - English', '179b306c-ac35-4736-8804-94e8daaef511', null ,'["__uac__","PORTAL_ID","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.LAST_NAME"]','wcis-service'),
-('FNE_EN_WCIS', 'WCIS Follow-up Notification Email - English', 'cdf7b57a-46d9-47cc-aea9-a6aaa3c153ba', null ,'["__uac__","PORTAL_ID","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.LAST_NAME"]','wcis-service'),
-('FRE_EN_WCIS', 'WCIS Follow-up Reminder Email - English', 'd66911c6-7323-4362-8eca-e5d2bee4d9f2', null ,'["__uac__","PORTAL_ID","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.LAST_NAME"]','wcis-service')
-ON CONFLICT (pack_code) DO UPDATE SET (description, notify_template_id, metadata, template) = (EXCLUDED.description, EXCLUDED.notify_template_id, EXCLUDED.metadata, EXCLUDED.template);
+('MNE_EN_WCIS', 'WCIS Main Notification Email - English', '6ff6a02f-f4ee-49ca-ba6c-4cabb1e72688', null ,'["__uac__","PORTAL_ID","COLLEX_OPEN_DATE","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.LAST_NAME"]','Office_for_National_Statistics_surveys_UKHSA'),
+('MRE_EN_WCIS', 'WCIS Main Reminder Email - English', '179b306c-ac35-4736-8804-94e8daaef511', null ,'["__uac__","PORTAL_ID","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.LAST_NAME"]','Office_for_National_Statistics_surveys_UKHSA'),
+('FNE_EN_WCIS', 'WCIS Follow-up Notification Email - English', 'cdf7b57a-46d9-47cc-aea9-a6aaa3c153ba', null ,'["__uac__","PORTAL_ID","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.LAST_NAME"]','Office_for_National_Statistics_surveys_UKHSA'),
+('FRE_EN_WCIS', 'WCIS Follow-up Reminder Email - English', 'd66911c6-7323-4362-8eca-e5d2bee4d9f2', null ,'["__uac__","PORTAL_ID","COLLEX_CLOSE_DATE","FIRST_NAME","__sensitive__.LAST_NAME"]','Office_for_National_Statistics_surveys_UKHSA')
+ON CONFLICT (pack_code) DO UPDATE SET (description, notify_template_id, metadata, template, notify_service_ref) = (EXCLUDED.description, EXCLUDED.notify_template_id, EXCLUDED.metadata, EXCLUDED.template, EXCLUDED.notify_service_ref);

@@ -8,7 +8,7 @@ from config import Config
 PATCHES_DIRECTORY = Path(__file__).parent.joinpath('patches')
 
 # CURRENT_VERSION must match the version in the ddl_version.sql file
-CURRENT_VERSION = 'v1.0.14'
+CURRENT_VERSION = 'v1.0.15'
 
 
 def get_current_patch_number(db_cursor):
@@ -52,7 +52,6 @@ def patch_database(patches_directory, ddl_version_tag, db_cursor, db_connection)
         print(f'Successfully patched to version {ddl_version_tag}')
         return
     print(f'NO PATCHES TO APPLY AT VERSION: {ddl_version_tag}')
-
 
 def get_current_database_version_tag(db_cursor):
     db_cursor.execute('SELECT version_tag FROM ddl_version.version ORDER BY updated_timestamp DESC LIMIT 1')
