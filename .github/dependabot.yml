@@ -14,3 +14,10 @@ updates:
     labels:
       - "patch"
       - "dependencies"
+  - package-ecosystem: "maven"
+    directory: "/ssdc-rm-common-entity-model"
+    schedule:
+      interval: "daily"
+    labels:
+      - "patch"
+      - "dependencies"
