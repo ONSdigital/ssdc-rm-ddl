@@ -6,8 +6,8 @@
 -- Author: Adam Hawtin
 -- ****************************************************************************
 
-ALTER TABLE casev3.email_template ADD notify_service_ref VARCHAR(100);
-ALTER TABLE casev3.sms_template ADD notify_service_ref VARCHAR(100);
+ALTER TABLE casev3.email_template ADD notify_service_ref VARCHAR(255);
+ALTER TABLE casev3.sms_template ADD notify_service_ref VARCHAR(255);
 
 UPDATE casev3.email_template SET notify_service_ref = 'Office_for_National_Statistics_surveys_UKHSA';
 UPDATE casev3.sms_template SET notify_service_ref = 'Office_for_National_Statistics_surveys_UKHSA';
