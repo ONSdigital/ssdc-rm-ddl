@@ -28,6 +28,9 @@ public class SmsTemplate {
   @Column(nullable = false)
   private String description;
 
+  @Column(nullable = false)
+  private String notifyServiceRef;
+
   @Type(type = "jsonb")
   @Column(columnDefinition = "jsonb")
   private Object metadata;

@@ -83,6 +83,7 @@
        pack_code varchar(255) not null,
         description varchar(255) not null,
         metadata jsonb,
+        notify_service_ref varchar(255) not null,
         notify_template_id uuid not null,
         template jsonb not null,
         primary key (pack_code)
@@ -211,6 +212,7 @@
        pack_code varchar(255) not null,
         description varchar(255) not null,
         metadata jsonb,
+        notify_service_ref varchar(255) not null,
         notify_template_id uuid not null,
         template jsonb not null,
         primary key (pack_code)
