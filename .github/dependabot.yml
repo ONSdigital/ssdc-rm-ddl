@@ -4,6 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    ignore:
+      - dependency-name: "*"
+        update-types: [ "version-update:semver-patch" ]
     labels:
       - "patch"
       - "dependencies"
@@ -11,6 +14,9 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    ignore:
+      - dependency-name: "*"
+        update-types: [ "version-update:semver-patch" ]
     labels:
       - "patch"
       - "dependencies"
@@ -18,6 +24,9 @@ updates:
     directory: "/ssdc-rm-common-entity-model"
     schedule:
       interval: "daily"
+    ignore:
+      - dependency-name: "*"
+        update-types: [ "version-update:semver-patch" ]
     labels:
       - "patch"
       - "dependencies"
