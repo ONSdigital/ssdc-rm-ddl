@@ -1,11 +1,11 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import java.util.List;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;

@@ -1,19 +1,16 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import jakarta.persistence.*;
 import java.util.Map;
 import java.util.UUID;
-import javax.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @DynamicUpdate
 @Data
-@TypeDefs({@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)})
 public class FulfilmentToProcess {
 
   @Id
@@ -38,11 +35,11 @@ public class FulfilmentToProcess {
 
   @Column private String originatingUser;
 
-  @Type(type = "jsonb")
+  @JdbcTypeCode(SqlTypes.JSON)
   @Column(columnDefinition = "jsonb")
   private Object uacMetadata;
 
-  @Type(type = "jsonb")
+  @JdbcTypeCode(SqlTypes.JSON)
   @Column(columnDefinition = "jsonb")
   private Map<String, String> personalisation;
 }

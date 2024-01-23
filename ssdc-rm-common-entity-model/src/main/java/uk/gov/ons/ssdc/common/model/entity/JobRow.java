@@ -1,32 +1,29 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import java.util.Map;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Data
 @Entity
 @DynamicUpdate
-@TypeDefs({@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)})
 public class JobRow {
   @Id private UUID id;
 
   @ManyToOne(optional = false)
   private Job job;
 
-  @Type(type = "jsonb")
+  @JdbcTypeCode(SqlTypes.JSON)
   @Column(columnDefinition = "jsonb")
   private Map<String, String> rowData;
 
@@ -41,7 +38,7 @@ public class JobRow {
   private JobRowStatus jobRowStatus;
 
   @Lob
-  @Type(type = "org.hibernate.type.BinaryType")
+  @JdbcTypeCode(SqlTypes.VARBINARY)
   @Column
   private byte[] validationErrorDescriptions;
 
