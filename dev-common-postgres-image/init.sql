@@ -19,14 +19,14 @@ create schema if not exists casev3;
 set schema 'casev3';
 
     create table action_rule (
-       id uuid not null,
+        id uuid not null,
         classifiers bytea,
         created_by varchar(255) not null,
         email_column varchar(255),
         has_triggered BOOLEAN DEFAULT false not null,
         phone_number_column varchar(255),
         trigger_date_time timestamp with time zone not null,
-        type varchar(255) not null,
+        type varchar(255) not null check (type in ('EXPORT_FILE','OUTBOUND_TELEPHONE','FACE_TO_FACE','DEACTIVATE_UAC','SMS','EMAIL','EQ_FLUSH')),
         uac_metadata jsonb,
         collection_exercise_id uuid not null,
         email_template_pack_code varchar(255),
@@ -36,33 +36,33 @@ set schema 'casev3';
     );
 
     create table action_rule_survey_email_template (
-       id uuid not null,
+        id uuid not null,
         email_template_pack_code varchar(255) not null,
         survey_id uuid not null,
         primary key (id)
     );
 
     create table action_rule_survey_export_file_template (
-       id uuid not null,
+        id uuid not null,
         export_file_template_pack_code varchar(255) not null,
         survey_id uuid not null,
         primary key (id)
     );
 
     create table action_rule_survey_sms_template (
-       id uuid not null,
+        id uuid not null,
         sms_template_pack_code varchar(255) not null,
         survey_id uuid not null,
         primary key (id)
     );
 
     create table cases (
-       id uuid not null,
-        case_ref int8,
+        id uuid not null,
+        case_ref bigint,
         created_at timestamp with time zone,
         invalid BOOLEAN DEFAULT false not null,
         last_updated_at timestamp with time zone,
-        refusal_received varchar(255),
+        refusal_received varchar(255) check (refusal_received in ('HARD_REFUSAL','EXTRAORDINARY_REFUSAL','SOFT_REFUSAL','WITHDRAWAL_REFUSAL')),
         sample jsonb,
         sample_sensitive jsonb,
         secret_sequence_number serial,
@@ -71,23 +71,23 @@ set schema 'casev3';
     );
 
     create table case_to_process (
-       id  bigserial not null,
+        id bigserial not null,
         batch_id uuid not null,
-        batch_quantity int4 not null,
+        batch_quantity integer not null,
         action_rule_id uuid not null,
         caze_id uuid not null,
         primary key (id)
     );
 
     create table cluster_leader (
-       id uuid not null,
+        id uuid not null,
         host_last_seen_alive_at timestamp with time zone not null,
         host_name varchar(255) not null,
         primary key (id)
     );
 
     create table collection_exercise (
-       id uuid not null,
+        id uuid not null,
         collection_instrument_selection_rules jsonb not null,
         end_date timestamp with time zone not null,
         metadata jsonb,
@@ -99,7 +99,7 @@ set schema 'casev3';
     );
 
     create table email_template (
-       pack_code varchar(255) not null,
+        pack_code varchar(255) not null,
         description varchar(255) not null,
         metadata jsonb,
         notify_service_ref varchar(255) not null,
@@ -109,7 +109,7 @@ set schema 'casev3';
     );
 
     create table event (
-       id uuid not null,
+        id uuid not null,
         channel varchar(255) not null,
         correlation_id uuid not null,
         created_by varchar(255),
@@ -120,16 +120,16 @@ set schema 'casev3';
         payload jsonb,
         processed_at timestamp with time zone not null,
         source varchar(255) not null,
-        type varchar(255) not null,
+        type varchar(255) not null check (type in ('NEW_CASE','RECEIPT','REFUSAL','ERASE_DATA','EQ_LAUNCH','INVALID_CASE','UAC_AUTHENTICATION','TELEPHONE_CAPTURE','PRINT_FULFILMENT','EXPORT_FILE','DEACTIVATE_UAC','UPDATE_SAMPLE','UPDATE_SAMPLE_SENSITIVE','SMS_FULFILMENT','ACTION_RULE_SMS_REQUEST','EMAIL_FULFILMENT','ACTION_RULE_EMAIL_REQUEST','ACTION_RULE_SMS_CONFIRMATION','ACTION_RULE_EMAIL_CONFIRMATION')),
         caze_id uuid,
         uac_qid_link_id uuid,
         primary key (id)
     );
 
     create table export_file_row (
-       id  bigserial not null,
+        id bigserial not null,
         batch_id uuid not null,
-        batch_quantity int4 not null,
+        batch_quantity integer not null,
         export_file_destination varchar(255) not null,
         pack_code varchar(255) not null,
         row varchar(5000) not null,
@@ -137,7 +137,7 @@ set schema 'casev3';
     );
 
     create table export_file_template (
-       pack_code varchar(255) not null,
+        pack_code varchar(255) not null,
         description varchar(255) not null,
         export_file_destination varchar(255) not null,
         metadata jsonb,
@@ -146,38 +146,38 @@ set schema 'casev3';
     );
 
     create table fulfilment_next_trigger (
-       id uuid not null,
+        id uuid not null,
         trigger_date_time timestamp with time zone not null,
         primary key (id)
     );
 
     create table fulfilment_survey_email_template (
-       id uuid not null,
+        id uuid not null,
         email_template_pack_code varchar(255) not null,
         survey_id uuid not null,
         primary key (id)
     );
 
     create table fulfilment_survey_export_file_template (
-       id uuid not null,
+        id uuid not null,
         export_file_template_pack_code varchar(255) not null,
         survey_id uuid not null,
         primary key (id)
     );
 
     create table fulfilment_survey_sms_template (
-       id uuid not null,
+        id uuid not null,
         sms_template_pack_code varchar(255) not null,
         survey_id uuid not null,
         primary key (id)
     );
 
     create table fulfilment_to_process (
-       id  bigserial not null,
+        id bigserial not null,
         batch_id uuid,
-        batch_quantity int4,
+        batch_quantity integer,
         correlation_id uuid not null,
-        message_id uuid not null,
+        message_id uuid not null unique,
         originating_user varchar(255),
         personalisation jsonb,
         uac_metadata jsonb,
@@ -187,33 +187,33 @@ set schema 'casev3';
     );
 
     create table job (
-       id uuid not null,
+        id uuid not null,
         cancelled_at timestamp with time zone,
         cancelled_by varchar(255),
         created_at timestamp with time zone,
         created_by varchar(255) not null,
-        error_row_count int4 not null,
+        error_row_count integer not null,
         fatal_error_description varchar(255),
         file_id uuid not null,
         file_name varchar(255) not null,
-        file_row_count int4 not null,
-        job_status varchar(255) not null,
-        job_type varchar(255) not null,
+        file_row_count integer not null,
+        job_status varchar(255) not null check (job_status in ('FILE_UPLOADED','STAGING_IN_PROGRESS','VALIDATION_IN_PROGRESS','VALIDATED_OK','VALIDATED_WITH_ERRORS','VALIDATED_TOTAL_FAILURE','PROCESSING_IN_PROGRESS','PROCESSED','CANCELLED')),
+        job_type varchar(255) not null check (job_type in ('SAMPLE','BULK_REFUSAL','BULK_UPDATE_SAMPLE_SENSITIVE','BULK_INVALID','BULK_UPDATE_SAMPLE')),
         last_updated_at timestamp with time zone,
         processed_at timestamp with time zone,
         processed_by varchar(255),
-        processing_row_number int4 not null,
-        staging_row_number int4 not null,
-        validating_row_number int4 not null,
+        processing_row_number integer not null,
+        staging_row_number integer not null,
+        validating_row_number integer not null,
         collection_exercise_id uuid not null,
         primary key (id)
     );
 
     create table job_row (
-       id uuid not null,
-        job_row_status varchar(255) not null,
+        id uuid not null,
+        job_row_status varchar(255) not null check (job_row_status in ('STAGED','VALIDATED_OK','VALIDATED_ERROR','PROCESSED')),
         original_row_data bytea not null,
-        original_row_line_number int4 not null,
+        original_row_line_number integer not null,
         row_data jsonb,
         validation_error_descriptions bytea,
         job_id uuid not null,
@@ -221,14 +221,14 @@ set schema 'casev3';
     );
 
     create table message_to_send (
-       id uuid not null,
+        id uuid not null,
         destination_topic varchar(255) not null,
         message_body bytea not null,
         primary key (id)
     );
 
     create table sms_template (
-       pack_code varchar(255) not null,
+        pack_code varchar(255) not null,
         description varchar(255) not null,
         metadata jsonb,
         notify_service_ref varchar(255) not null,
@@ -238,18 +238,18 @@ set schema 'casev3';
     );
 
     create table survey (
-       id uuid not null,
+        id uuid not null,
         metadata jsonb,
         name varchar(255) not null,
         sample_definition_url varchar(255) not null,
-        sample_separator char(1) not null,
+        sample_separator char(255) not null,
         sample_validation_rules jsonb not null,
         sample_with_header_row boolean not null,
         primary key (id)
     );
 
     create table uac_qid_link (
-       id uuid not null,
+        id uuid not null,
         active BOOLEAN DEFAULT true not null,
         collection_instrument_url varchar(255) not null,
         created_at timestamp with time zone,
@@ -265,50 +265,46 @@ set schema 'casev3';
     );
 
     create table user_group (
-       id uuid not null,
+        id uuid not null,
         description varchar(255),
-        name varchar(255) not null,
+        name varchar(255) not null unique,
         primary key (id)
     );
 
     create table user_group_admin (
-       id uuid not null,
+        id uuid not null,
         group_id uuid not null,
         user_id uuid not null,
         primary key (id)
     );
 
     create table user_group_member (
-       id uuid not null,
+        id uuid not null,
         group_id uuid not null,
         user_id uuid not null,
         primary key (id)
     );
 
     create table user_group_permission (
-       id uuid not null,
-        authorised_activity varchar(255),
+        id uuid not null,
+        authorised_activity varchar(255) check (authorised_activity in ('SUPER_USER','LIST_SURVEYS','VIEW_SURVEY','CREATE_SURVEY','CREATE_EXPORT_FILE_TEMPLATE','CREATE_SMS_TEMPLATE','CREATE_EMAIL_TEMPLATE','LIST_COLLECTION_EXERCISES','VIEW_COLLECTION_EXERCISE','CREATE_COLLECTION_EXERCISE','ALLOW_EXPORT_FILE_TEMPLATE_ON_ACTION_RULE','LIST_ALLOWED_EXPORT_FILE_TEMPLATES_ON_ACTION_RULES','ALLOW_SMS_TEMPLATE_ON_ACTION_RULE','LIST_ALLOWED_SMS_TEMPLATES_ON_ACTION_RULES','ALLOW_EMAIL_TEMPLATE_ON_ACTION_RULE','LIST_ALLOWED_EMAIL_TEMPLATES_ON_ACTION_RULES','ALLOW_EXPORT_FILE_TEMPLATE_ON_FULFILMENT','LIST_ALLOWED_EXPORT_FILE_TEMPLATES_ON_FULFILMENTS','ALLOW_SMS_TEMPLATE_ON_FULFILMENT','LIST_ALLOWED_SMS_TEMPLATES_ON_FULFILMENTS','ALLOW_EMAIL_TEMPLATE_ON_FULFILMENT','LIST_ALLOWED_EMAIL_TEMPLATES_ON_FULFILMENTS','SEARCH_CASES','VIEW_CASE_DETAILS','LIST_ACTION_RULES','CREATE_EXPORT_FILE_ACTION_RULE','CREATE_FACE_TO_FACE_ACTION_RULE','CREATE_OUTBOUND_PHONE_ACTION_RULE','CREATE_DEACTIVATE_UAC_ACTION_RULE','CREATE_SMS_ACTION_RULE','CREATE_EMAIL_ACTION_RULE','CREATE_EQ_FLUSH_ACTION_RULE','LOAD_SAMPLE','VIEW_SAMPLE_LOAD_PROGRESS','LOAD_BULK_REFUSAL','VIEW_BULK_REFUSAL_PROGRESS','LOAD_BULK_UPDATE_SAMPLE_SENSITIVE','LOAD_BULK_INVALID','LOAD_BULK_UPDATE_SAMPLE','VIEW_BULK_UPDATE_SAMPLE_SENSITIVE_PROGRESS','VIEW_BULK_INVALID_PROGRESS','VIEW_BULK_UPDATE_SAMPLE_PROGRESS','DEACTIVATE_UAC','CREATE_CASE_REFUSAL','CREATE_CASE_INVALID_CASE','CREATE_CASE_EXPORT_FILE_FULFILMENT','CREATE_CASE_SMS_FULFILMENT','CREATE_CASE_EMAIL_FULFILMENT','UPDATE_SAMPLE','UPDATE_SAMPLE_SENSITIVE','LIST_EXPORT_FILE_TEMPLATES','LIST_EXPORT_FILE_DESTINATIONS','LIST_SMS_TEMPLATES','LIST_EMAIL_TEMPLATES','CONFIGURE_FULFILMENT_TRIGGER','EXCEPTION_MANAGER_VIEWER','EXCEPTION_MANAGER_PEEK','EXCEPTION_MANAGER_QUARANTINE','LIST_USERS')),
         group_id uuid not null,
         survey_id uuid,
         primary key (id)
     );
 
     create table users (
-       id uuid not null,
+        id uuid not null,
         email varchar(255) not null,
-        primary key (id)
+        primary key (id),
+        constraint users_email_idx unique (email)
     );
-create index cases_case_ref_idx on cases (case_ref);
 
-    alter table if exists fulfilment_to_process 
-       add constraint UK_oi6eanl9qiyiqi2p0quygsxgy unique (message_id);
-create index qid_idx on uac_qid_link (qid);
+    create index cases_case_ref_idx 
+       on cases (case_ref);
 
-    alter table if exists user_group 
-       add constraint UK_kas9w8ead0ska5n3csefp2bpp unique (name);
-
-    alter table if exists users 
-       add constraint users_email_idx unique (email);
+    create index qid_idx 
+       on uac_qid_link (qid);
 
     alter table if exists action_rule 
        add constraint FK6twtf1ksysh99e4g2ejmoy6c1 
@@ -479,7 +475,7 @@ create schema if not exists uacqid;
 set schema 'uacqid';
 
     create table uac_qid (
-       uac varchar(255) not null,
+        uac varchar(255) not null,
         qid varchar(255),
         unique_number serial,
         primary key (uac)
@@ -489,7 +485,7 @@ create schema if not exists exceptionmanager;
 set schema 'exceptionmanager';
 
     create table auto_quarantine_rule (
-       id uuid not null,
+        id uuid not null,
         expression varchar(255),
         quarantine BOOLEAN DEFAULT false not null,
         rule_expiry_date_time timestamp with time zone,
@@ -499,7 +495,7 @@ set schema 'exceptionmanager';
     );
 
     create table quarantined_message (
-       id uuid not null,
+        id uuid not null,
         content_type varchar(255),
         error_reports jsonb,
         headers jsonb,

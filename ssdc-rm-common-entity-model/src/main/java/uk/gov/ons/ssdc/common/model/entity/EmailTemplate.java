@@ -1,13 +1,13 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
+import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import java.util.UUID;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
+import org.hibernate.annotations.Type;
 
 @Data
 @Entity
@@ -15,7 +15,7 @@ import org.hibernate.type.SqlTypes;
 public class EmailTemplate {
   @Id private String packCode;
 
-  @JdbcTypeCode(SqlTypes.JSON)
+  @Type(JsonBinaryType.class)
   @Column(columnDefinition = "jsonb", nullable = false)
   private String[] template;
 
@@ -28,7 +28,7 @@ public class EmailTemplate {
   @Column(nullable = false)
   private String notifyServiceRef;
 
-  @JdbcTypeCode(SqlTypes.JSON)
+  @Type(JsonBinaryType.class)
   @Column(columnDefinition = "jsonb")
   private Object metadata;
 }

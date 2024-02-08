@@ -1,5 +1,6 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
+import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -12,6 +13,7 @@ import java.util.UUID;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
 import org.hibernate.type.SqlTypes;
 
 @Data
@@ -23,11 +25,12 @@ public class JobRow {
   @ManyToOne(optional = false)
   private Job job;
 
-  @JdbcTypeCode(SqlTypes.JSON)
+  @Type(JsonBinaryType.class)
   @Column(columnDefinition = "jsonb")
   private Map<String, String> rowData;
 
-  @Column(nullable = false)
+  @Type(JsonBinaryType.class)
+  @Column(nullable = false, columnDefinition = "bytea")
   private String[] originalRowData;
 
   @Column(nullable = false)

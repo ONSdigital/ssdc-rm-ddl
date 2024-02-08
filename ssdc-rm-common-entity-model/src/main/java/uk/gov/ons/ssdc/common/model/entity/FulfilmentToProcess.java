@@ -1,12 +1,12 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
+import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.*;
 import java.util.Map;
 import java.util.UUID;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
+import org.hibernate.annotations.Type;
 
 @Entity
 @DynamicUpdate
@@ -35,11 +35,11 @@ public class FulfilmentToProcess {
 
   @Column private String originatingUser;
 
-  @JdbcTypeCode(SqlTypes.JSON)
+  @Type(JsonBinaryType.class)
   @Column(columnDefinition = "jsonb")
   private Object uacMetadata;
 
-  @JdbcTypeCode(SqlTypes.JSON)
+  @Type(JsonBinaryType.class)
   @Column(columnDefinition = "jsonb")
   private Map<String, String> personalisation;
 }

@@ -1,5 +1,6 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
+import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,8 +12,7 @@ import java.util.UUID;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
+import org.hibernate.annotations.Type;
 
 // The bidirectional relationships with other entities can cause stack overflows with the default
 // toString
@@ -52,7 +52,7 @@ public class Event {
   @Column(nullable = false)
   private UUID correlationId;
 
-  @JdbcTypeCode(SqlTypes.JSON)
+  @Type(JsonBinaryType.class)
   @Column(columnDefinition = "jsonb")
   private String payload;
 
