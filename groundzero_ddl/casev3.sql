@@ -193,7 +193,7 @@
     create table job_row (
         id uuid not null,
         job_row_status varchar(255) not null check (job_row_status in ('STAGED','VALIDATED_OK','VALIDATED_ERROR','PROCESSED')),
-        original_row_data jsonb not null,
+        original_row_data bytea not null,
         original_row_line_number integer not null,
         row_data jsonb,
         validation_error_descriptions bytea,

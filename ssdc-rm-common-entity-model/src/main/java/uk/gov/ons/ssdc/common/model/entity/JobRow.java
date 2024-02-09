@@ -1,13 +1,10 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
 import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
+import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 import lombok.Data;
@@ -29,9 +26,10 @@ public class JobRow {
   @Column(columnDefinition = "jsonb")
   private Map<String, String> rowData;
 
-  @Type(JsonBinaryType.class)
-  @Column(nullable = false, columnDefinition = "jsonb")
-  private String[] originalRowData;
+  @Lob
+  @JdbcTypeCode(SqlTypes.VARBINARY)
+  @Column(nullable = false)
+  private byte[] originalRowData;
 
   @Column(nullable = false)
   private int originalRowLineNumber;
@@ -59,5 +57,13 @@ public class JobRow {
     }
 
     return new String(validationErrorDescriptions);
+  }
+
+  public String[] getOriginalRowData() {
+    return new String[]{Arrays.toString(this.originalRowData)};
+  }
+
+  public void setOriginalRowData(String[] originalRowDataStr) {
+    this.originalRowData = Arrays.toString(originalRowDataStr).getBytes();
   }
 }
