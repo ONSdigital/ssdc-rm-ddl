@@ -30,7 +30,7 @@ public class JobRow {
   private Map<String, String> rowData;
 
   @Type(JsonBinaryType.class)
-  @Column(nullable = false, columnDefinition = "bytea")
+  @Column(nullable = false, columnDefinition = "jsonb")
   private String[] originalRowData;
 
   @Column(nullable = false)
