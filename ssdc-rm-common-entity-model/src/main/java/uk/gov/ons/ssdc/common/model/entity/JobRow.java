@@ -78,7 +78,7 @@ public class JobRow {
     byte[][] data = new byte[strings.length][];
     for (int i = 0; i < strings.length; i++) {
       String string = strings[i];
-      data[i] = string.getBytes(Charset.defaultCharset()); // you can chose charset
+      data[i] = string.getBytes(Charset.defaultCharset());
     }
     return data;
   }
