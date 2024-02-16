@@ -23,8 +23,6 @@ public class JobRow {
   @Column(columnDefinition = "jsonb")
   private Map<String, String> rowData;
 
-  @Lob
-  @JdbcTypeCode(SqlTypes.JSON)
   @Column(nullable = false)
   private byte[] originalRowData;
 
