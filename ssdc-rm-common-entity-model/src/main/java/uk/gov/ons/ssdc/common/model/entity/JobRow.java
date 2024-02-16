@@ -2,7 +2,6 @@ package uk.gov.ons.ssdc.common.model.entity;
 
 import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.*;
-import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.UUID;
 import lombok.Data;
@@ -25,9 +24,9 @@ public class JobRow {
   private Map<String, String> rowData;
 
   @Lob
-  @JdbcTypeCode(SqlTypes.VARBINARY)
+  @JdbcTypeCode(SqlTypes.JSON)
   @Column(nullable = false)
-  private byte[][] originalRowData;
+  private byte[] originalRowData;
 
   @Column(nullable = false)
   private int originalRowLineNumber;
@@ -58,28 +57,11 @@ public class JobRow {
   }
 
   public String[] getOriginalRowData() {
-
-    return convertToStrings(originalRowData);
+    return new String(this.originalRowData).split(",");
   }
 
   public void setOriginalRowData(String[] originalRowDataStr) {
-    originalRowData = convertToBytes(originalRowDataStr);
-  }
-
-  private static String[] convertToStrings(byte[][] byteStrings) {
-    String[] data = new String[byteStrings.length];
-    for (int i = 0; i < byteStrings.length; i++) {
-      data[i] = new String(byteStrings[i], Charset.defaultCharset());
-    }
-    return data;
-  }
-
-  private static byte[][] convertToBytes(String[] strings) {
-    byte[][] data = new byte[strings.length][];
-    for (int i = 0; i < strings.length; i++) {
-      String string = strings[i];
-      data[i] = string.getBytes(Charset.defaultCharset());
-    }
-    return data;
+    String ord = String.join(",", originalRowDataStr);
+    originalRowData = ord.getBytes();
   }
 }
