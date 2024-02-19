@@ -16,7 +16,12 @@ import java.util.Map;
 import java.util.UUID;
 import lombok.Data;
 import lombok.ToString;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @ToString(onlyExplicitlyIncluded = true) // Bidirectional relationship causes IDE stackoverflow
 @Data
