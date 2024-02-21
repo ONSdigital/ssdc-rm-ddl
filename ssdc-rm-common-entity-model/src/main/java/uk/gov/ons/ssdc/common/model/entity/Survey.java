@@ -37,7 +37,7 @@ public class Survey {
   @Column(nullable = false)
   private boolean sampleWithHeaderRow;
 
-  @Column(nullable = false)
+  @Column(nullable = false, length = 1)
   private char sampleSeparator;
 
   @OneToMany(mappedBy = "survey")

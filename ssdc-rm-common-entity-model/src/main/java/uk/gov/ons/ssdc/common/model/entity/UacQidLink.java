@@ -1,16 +1,13 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
 import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Index;
-
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-
+import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
