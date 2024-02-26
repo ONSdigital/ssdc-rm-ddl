@@ -1,27 +1,26 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import java.time.OffsetDateTime;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
+import org.hibernate.type.SqlTypes;
 
 @ToString(onlyExplicitlyIncluded = true) // Bidirectional relationship causes IDE stackoverflow
 @Data
 @Entity
 @DynamicUpdate
-@TypeDefs({@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)})
 public class ActionRule {
 
   @Id private UUID id;
@@ -37,7 +36,7 @@ public class ActionRule {
   private boolean hasTriggered;
 
   @Lob
-  @Type(type = "org.hibernate.type.BinaryType")
+  @JdbcTypeCode(SqlTypes.VARBINARY)
   @Column
   private byte[] classifiers;
 
@@ -57,7 +56,7 @@ public class ActionRule {
   @ManyToOne(optional = false)
   private CollectionExercise collectionExercise;
 
-  @Type(type = "jsonb")
+  @Type(JsonBinaryType.class)
   @Column(columnDefinition = "jsonb")
   private Object uacMetadata;
 

@@ -10,7 +10,7 @@ import java.util.jar.JarInputStream;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.boot.spi.MetadataImplementor;
-import org.hibernate.dialect.PostgreSQL94Dialect;
+import org.hibernate.dialect.PostgreSQLDialect;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.schema.TargetType;
 
@@ -21,7 +21,7 @@ public class Application {
 
   public static void main(String[] args) {
     try {
-      generate(PostgreSQL94Dialect.class, args[0], args[1]);
+      generate(PostgreSQLDialect.class, args[0], args[1]);
     } catch (Exception e) {
       e.printStackTrace();
     }

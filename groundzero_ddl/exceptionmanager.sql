@@ -1,6 +1,6 @@
 
     create table auto_quarantine_rule (
-       id uuid not null,
+        id uuid not null,
         expression varchar(255),
         quarantine BOOLEAN DEFAULT false not null,
         rule_expiry_date_time timestamp with time zone,
@@ -10,7 +10,7 @@
     );
 
     create table quarantined_message (
-       id uuid not null,
+        id uuid not null,
         content_type varchar(255),
         error_reports jsonb,
         headers jsonb,

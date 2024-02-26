@@ -1,24 +1,21 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
 
 @ToString(onlyExplicitlyIncluded = true) // Bidirectional relationship causes IDE stackoverflow
 @Data
-@TypeDefs({@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)})
 @Entity
 @DynamicUpdate
 public class CollectionExercise {
@@ -48,11 +45,11 @@ public class CollectionExercise {
   @Column(nullable = false, columnDefinition = "timestamp with time zone")
   private OffsetDateTime endDate;
 
-  @Type(type = "jsonb")
+  @Type(JsonBinaryType.class)
   @Column(columnDefinition = "jsonb")
   private Object metadata;
 
-  @Type(type = "jsonb")
+  @Type(JsonBinaryType.class)
   @Column(nullable = false, columnDefinition = "jsonb")
   private CollectionInstrumentSelectionRule[] collectionInstrumentSelectionRules;
 }

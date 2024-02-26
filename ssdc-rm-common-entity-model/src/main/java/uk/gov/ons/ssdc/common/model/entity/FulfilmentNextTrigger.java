@@ -1,8 +1,8 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
+import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.UUID;
-import javax.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 

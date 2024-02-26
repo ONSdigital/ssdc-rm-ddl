@@ -1,13 +1,14 @@
 package uk.gov.ons.ssdc.common.model.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Data
 @Entity
@@ -19,7 +20,7 @@ public class MessageToSend {
   private String destinationTopic;
 
   @Lob
-  @Type(type = "org.hibernate.type.BinaryType")
+  @JdbcTypeCode(SqlTypes.VARBINARY)
   @Column(nullable = false)
   private byte[] messageBody;
 
