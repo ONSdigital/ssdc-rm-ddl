@@ -74,6 +74,12 @@ jobs:
   patches-tests:
     name: Test DDL Patches
     runs-on: ubuntu-latest
+
+    # Add "id-token" with the required permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     steps:
 
       - name: Checkout
@@ -152,6 +158,12 @@ jobs:
     defaults:
       run:
         working-directory: ssdc-rm-common-entity-model
+
+    # Add "id-token" with the required permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     steps:
 
       - name: Checkout
