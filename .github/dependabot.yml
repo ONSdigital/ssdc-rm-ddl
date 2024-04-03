@@ -3,30 +3,30 @@ updates:
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     ignore:
       - dependency-name: "*"
-        update-types: [ "version-update:semver-patch" ]
+        update-types: [ "version-update:semver-major" ]
     labels:
       - "patch"
       - "dependencies"
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     ignore:
       - dependency-name: "*"
-        update-types: [ "version-update:semver-patch" ]
+        update-types: [ "version-update:semver-major" ]
     labels:
       - "patch"
       - "dependencies"
   - package-ecosystem: "maven"
     directory: "/ssdc-rm-common-entity-model"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     ignore:
       - dependency-name: "*"
-        update-types: [ "version-update:semver-patch" ]
+        update-types: [ "version-update:semver-major" ]
     labels:
       - "patch"
       - "dependencies"
