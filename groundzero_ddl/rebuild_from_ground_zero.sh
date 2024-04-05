@@ -48,7 +48,7 @@ pushd ../ui-permissions || exit 1
 psql "$PSQL_CONNECT_WRITE_MODE" -f RM-support-permissions.sql
 
 # Create the ATs UI user entry if an email is specified
-if [ -n $ACCEPTANCE_TESTS_EMAIL ]; then
+if [ -n "$ACCEPTANCE_TESTS_EMAIL" ]; then
   sed -e "s/\<ACCEPTANCE_TESTS_EMAIL>/$ACCEPTANCE_TESTS_EMAIL/" acceptance-tests-service-account.sql > tmp_acceptance-tests-service-account.sql
   psql "$PSQL_CONNECT_WRITE_MODE" -f tmp_acceptance-tests-service-account.sql
 fi
