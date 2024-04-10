@@ -1,5 +1,6 @@
 -- Add the ATs user row (note the placeholder "$ACCEPTANCE_TESTS_EMAIL" needs to be substituted in)
 -- Relies on RM-support-permissions.sql
+BEGIN;
 INSERT INTO casev3.users (id, email)
 VALUES ('7f51c6f0-bf65-454c-ae9f-6d59c47a0bb8', -- user ID
         '$ACCEPTANCE_TESTS_EMAIL');             -- AT user email
