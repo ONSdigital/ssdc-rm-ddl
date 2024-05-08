@@ -1,14 +1,9 @@
 -- ****************************************************************************
--- RM SQL DATABASE ROLLBACK EXAMPLE
+-- RM SQL DATABASE INSERT SCRIPT
 -- ****************************************************************************
 -- Number: 100
--- Purpose: Rollback script for indexes
--- Author: Luke Loze
+-- Purpose: Add Selected Case Count column to action_rule table to store number of cases selected against the action rule
+-- Author: Kieran Wardle
 -- ****************************************************************************
 
-
-DROP INDEX IF EXISTS casev3.case_sample_idx;
-
-DROP INDEX IF EXISTS casev3.uac_metadata_idx;
-
-DROP INDEX IF EXISTS casev3.qid_idx;
+ALTER TABLE casev3.action_rule ADD selected_case_count INTEGER;

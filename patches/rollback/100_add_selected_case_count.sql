@@ -1,10 +1,9 @@
 -- ****************************************************************************
 -- RM SQL DATABASE ROLLBACK INSERT SCRIPT
 -- ****************************************************************************
--- Number: 1600
--- Purpose: Rollback add NOT NULL constraint to notify_service_ref columns
--- Author: Adam Hawtin
+-- Number: 100
+-- Purpose: Rollback add Selected Case Count column to action_rule table to store number of cases selected against the action rule
+-- Author: Kieran Wardle
 -- ****************************************************************************
 
-ALTER TABLE casev3.email_template ALTER COLUMN notify_service_ref DROP NOT NULL;
-ALTER TABLE casev3.sms_template ALTER COLUMN notify_service_ref DROP NOT NULL;
+ALTER TABLE casev3.action_rule DROP COLUMN selected_case_count;
