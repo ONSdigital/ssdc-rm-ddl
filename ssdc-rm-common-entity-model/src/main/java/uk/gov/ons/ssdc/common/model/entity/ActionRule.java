@@ -60,6 +60,8 @@ public class ActionRule {
   @Column(columnDefinition = "jsonb")
   private Object uacMetadata;
 
+  @Column private int selectedCaseCount;
+
   public void setClassifiers(String classifierClauseStr) {
     if (classifierClauseStr == null) {
       classifiers = null;
