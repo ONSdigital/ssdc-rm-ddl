@@ -25,6 +25,7 @@ set schema 'casev3';
         email_column varchar(255),
         has_triggered BOOLEAN DEFAULT false not null,
         phone_number_column varchar(255),
+        selected_case_count integer,
         trigger_date_time timestamp with time zone not null,
         type varchar(255) not null check (type in ('EXPORT_FILE','OUTBOUND_TELEPHONE','FACE_TO_FACE','DEACTIVATE_UAC','SMS','EMAIL','EQ_FLUSH')),
         uac_metadata jsonb,
@@ -517,8 +518,8 @@ CREATE TABLE ddl_version.version (version_tag varchar(256) PRIMARY KEY, updated_
 -- Version and patch number for the current ground zero,
 -- NOTE: These must be updated every time the repo is tagged
 -- NOTE: the CURRENT_VERSION in /patch_database.py must also be updated to match this version_tag
-INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (0, current_timestamp);
-INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.0.0', current_timestamp);
+INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (100, current_timestamp);
+INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.1.0', current_timestamp);
 
 -- Seed Support Tool UI permissions
 BEGIN;
