@@ -1,4 +1,4 @@
-FROM postgres:13-buster
+FROM postgres:15
 
 ENV POSTGRES_USER appuser
 ENV POSTGRES_PASSWORD postgres
