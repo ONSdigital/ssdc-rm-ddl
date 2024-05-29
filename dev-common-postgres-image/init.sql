@@ -20,6 +20,7 @@ set schema 'casev3';
 
     create table action_rule (
         id uuid not null,
+        action_rule_status varchar(255) check (action_rule_status in ('SCHEDULED','SELECTING_CASES','PROCESSING_CASES','COMPLETED','ERRORED')),
         classifiers bytea,
         created_by varchar(255) not null,
         email_column varchar(255),
@@ -596,7 +597,8 @@ COMMIT;
 -- Export File Templates
 
 -- Email Template
--- HMS Email Template
+-- HMS EMAIL TEMPLATE
+
 INSERT INTO casev3.email_template (pack_code, description, notify_template_id, notify_service_ref, metadata, template) VALUES
 ('MNE_EN_HMS', 'Main Notification Email', '883cee97-7a41-4fdb-8a09-0972c86b9375', 'Office_for_National_Statistics_surveys_NHS', null, '["__uac__", "PORTAL_ID", "COLLEX_OPEN_DATE", "COLLEX_CLOSE_DATE", "FIRST_NAME", "__sensitive__.LAST_NAME"]'),
 ('MRE_EN_HMS', 'Main Reminder Email', '1b46b5e1-e247-48b3-b3b3-bf949efd79cb', 'Office_for_National_Statistics_surveys_NHS', null, '["__uac__", "PORTAL_ID", "COLLEX_OPEN_DATE", "COLLEX_CLOSE_DATE", "FIRST_NAME", "__sensitive__.LAST_NAME"]')
