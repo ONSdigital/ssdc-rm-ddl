@@ -6,7 +6,7 @@
 
   <groupId>uk.gov.ons.ssdc</groupId>
   <artifactId>ssdc-rm-common-entity-model</artifactId>
-  <version>4.21.0-action-rule-status-prototype</version>
+  <version>4.21.0-action-rule-status-prototype-SNAPSHOT</version>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
