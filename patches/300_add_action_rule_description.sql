@@ -6,4 +6,4 @@
 -- Author: Kacper Prywata
 -- ****************************************************************************
 
-ALTER TABLE casev3.action_rule ADD selected_case_count VARCHAR(50);
+ALTER TABLE casev3.action_rule ADD description VARCHAR(50);
