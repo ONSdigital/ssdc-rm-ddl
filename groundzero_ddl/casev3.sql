@@ -3,6 +3,7 @@
         id uuid not null,
         classifiers bytea,
         created_by varchar(255) not null,
+        description varchar(50),
         email_column varchar(255),
         has_triggered BOOLEAN DEFAULT false not null,
         phone_number_column varchar(255),
