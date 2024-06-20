@@ -23,6 +23,7 @@ set schema 'casev3';
         action_rule_status varchar(255) check (action_rule_status in ('SCHEDULED','SELECTING_CASES','PROCESSING_CASES','COMPLETED','ERRORED')),
         classifiers bytea,
         created_by varchar(255) not null,
+        description varchar(50),
         email_column varchar(255),
         has_triggered BOOLEAN DEFAULT false not null,
         phone_number_column varchar(255),
@@ -519,8 +520,8 @@ CREATE TABLE ddl_version.version (version_tag varchar(256) PRIMARY KEY, updated_
 -- Version and patch number for the current ground zero,
 -- NOTE: These must be updated every time the repo is tagged
 -- NOTE: the CURRENT_VERSION in /patch_database.py must also be updated to match this version_tag
-INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (200, current_timestamp);
-INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.1.1', current_timestamp);
+INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (300, current_timestamp);
+INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.2.1', current_timestamp);
 
 -- Seed Support Tool UI permissions
 BEGIN;

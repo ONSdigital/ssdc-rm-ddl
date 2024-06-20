@@ -33,6 +33,9 @@ public class ActionRule {
   @Column(nullable = false)
   private ActionRuleType type;
 
+  @Column(length = 50)
+  private String description;
+
   @Column(nullable = false, columnDefinition = "timestamp with time zone")
   private OffsetDateTime triggerDateTime;
 

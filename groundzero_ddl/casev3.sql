@@ -4,6 +4,7 @@
         action_rule_status varchar(255) check (action_rule_status in ('SCHEDULED','SELECTING_CASES','PROCESSING_CASES','COMPLETED','ERRORED')),
         classifiers bytea,
         created_by varchar(255) not null,
+        description varchar(50),
         email_column varchar(255),
         has_triggered BOOLEAN DEFAULT false not null,
         phone_number_column varchar(255),
