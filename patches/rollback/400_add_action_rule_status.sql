@@ -6,4 +6,4 @@
 -- Author: Kacper Prywata
 -- ****************************************************************************
 
-ALTER TABLE casev3.action_rule DROP COLUMN status;
+ALTER TABLE casev3.action_rule DROP COLUMN action_rule_status;
