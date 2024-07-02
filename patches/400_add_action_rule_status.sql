@@ -9,10 +9,10 @@
 ALTER TABLE casev3.action_rule ADD action_rule_status VARCHAR(255)
 CHECK (action_rule_status in ('SCHEDULED','SELECTING_CASES','PROCESSING_CASES','COMPLETED','ERRORED'));
 
-ALTER casev3.action_rule 
-SET status = "SCHEDULED"
-WHERE hasTriggered = 'false';
+UPDATE casev3.action_rule
+SET action_rule_status = 'SCHEDULED'
+WHERE has_triggered = 'false';
 
-ALTER casev3.action_rule 
-SET status = "COMPLETED"
-WHERE hasTriggered = 'true';
+UPDATE casev3.action_rule
+SET action_rule_status = 'COMPLETED'
+WHERE has_triggered = 'true';
