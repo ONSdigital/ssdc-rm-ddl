@@ -20,6 +20,7 @@ set schema 'casev3';
 
     create table action_rule (
         id uuid not null,
+        action_rule_status varchar(255) check (action_rule_status in ('SCHEDULED','SELECTING_CASES','PROCESSING_CASES','COMPLETED','ERRORED')),
         classifiers bytea,
         created_by varchar(255) not null,
         description varchar(50),
