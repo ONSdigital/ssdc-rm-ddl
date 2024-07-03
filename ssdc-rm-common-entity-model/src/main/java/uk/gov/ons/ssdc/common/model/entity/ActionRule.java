@@ -26,7 +26,7 @@ public class ActionRule {
   @Id private UUID id;
 
   @Enumerated(EnumType.STRING)
-  @Column(nullable = true) // TODO should be non nullable, this is for the first stage of migration
+  @Column(nullable = false)
   private ActionRuleStatus actionRuleStatus;
 
   @Enumerated(EnumType.STRING)
