@@ -240,7 +240,7 @@
         eq_launched BOOLEAN DEFAULT false not null,
         last_updated_at timestamp with time zone,
         metadata jsonb,
-        qid varchar(255) not null,
+        qid varchar(255) not null unique,
         receipt_received BOOLEAN DEFAULT false not null,
         uac varchar(255) not null,
         uac_hash varchar(255) not null,

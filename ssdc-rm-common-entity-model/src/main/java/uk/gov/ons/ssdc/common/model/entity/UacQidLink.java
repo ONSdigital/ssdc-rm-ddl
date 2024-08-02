@@ -25,7 +25,10 @@ import org.hibernate.annotations.*;
 public class UacQidLink {
   @Id private UUID id;
 
-  @Column(nullable = false, name = "qid") // "name" annotation required for index on column to work
+  @Column(
+      nullable = false,
+      name = "qid", // "name" annotation required for index on column to work
+      unique = true)
   private String qid;
 
   @Column(nullable = false)

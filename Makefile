@@ -37,10 +37,10 @@ pull-latest-dev-postgres:
 	docker pull europe-west2-docker.pkg.dev/ssdc-rm-ci/docker/ssdc-rm-dev-common-postgres:latest
 
 dev-postgres-up:
-	docker-compose -f docker-compose-dev-postgres.yml up -d
+	docker compose -f docker-compose-dev-postgres.yml up -d
 
 dev-postgres-down:
-	docker-compose -f docker-compose-dev-postgres.yml down
+	docker compose -f docker-compose-dev-postgres.yml down
 
 run-test-patches:
 	DB_PORT=16432 pipenv run python patch_database.py
