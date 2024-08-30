@@ -1,3 +1,5 @@
+#!/bin/sh
+
 set -e
 
 echo "Running SQL file: $SQL_FILE"
