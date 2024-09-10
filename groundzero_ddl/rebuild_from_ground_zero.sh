@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Make sure we're working in the right directory
 cd groundzero_ddl || true
 

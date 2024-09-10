@@ -1,3 +1,5 @@
+#!/bin/sh
+
 rm dev-common-postgres-image/init.sql || true
 set -e
 {

@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Note: The building of the 'copy_in_tables.sql' file must be built for tables in the following order to avoid primary key conflicts
 #       when re-inserting data:
 #           1. users

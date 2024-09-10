@@ -11,7 +11,7 @@ which is imported by our services.
 
 Our database schema definitions are then generated from these Hibernate models.
 
-#### AFTER EDITING THE JAVA HIBERNATE MODELS, THE DDL _MUST_ BE REGENERATED
+**AFTER EDITING THE JAVA HIBERNATE MODELS, THE DDL _MUST_ BE REGENERATED**
 
 Refer to [Building the DDL](#building-the-ddl), the generated schemas must be regenerated after any changes to the Java
 models. If the schemas have changes, a migration script must also be written, refer
