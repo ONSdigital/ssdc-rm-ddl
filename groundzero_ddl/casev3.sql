@@ -10,7 +10,7 @@
         phone_number_column varchar(255),
         selected_case_count integer,
         trigger_date_time timestamp with time zone not null,
-        type varchar(255) not null check (type in ('EXPORT_FILE','OUTBOUND_TELEPHONE','FACE_TO_FACE','DEACTIVATE_UAC','SMS','EMAIL','EQ_FLUSH')),
+        type varchar(255) not null check (type in ('EXPORT_FILE','OUTBOUND_TELEPHONE','FACE_TO_FACE','DEACTIVATE_UAC','SMS','EMAIL','EQ_FLUSH','REMOVE_PERSONAL_DATA')),
         uac_metadata jsonb,
         collection_exercise_id uuid not null,
         email_template_pack_code varchar(255),

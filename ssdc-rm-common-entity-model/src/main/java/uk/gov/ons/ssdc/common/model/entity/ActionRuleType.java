@@ -7,5 +7,6 @@ public enum ActionRuleType {
   DEACTIVATE_UAC,
   SMS,
   EMAIL,
-  EQ_FLUSH
+  EQ_FLUSH,
+  REMOVE_PERSONAL_DATA
 }
