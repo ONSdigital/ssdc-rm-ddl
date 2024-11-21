@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ssdc-rm-python-common-entity-model"
+version = "0.0.1"
+description = "Common entity model for SRM"
+requires-python = ">=3.10"
+
+[project.urls]
+Homepage = "https://github.com/ONSdigital/ssdc-rm-ddl"
