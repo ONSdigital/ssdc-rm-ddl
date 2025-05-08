@@ -8,6 +8,7 @@ END
 $$;
 ALTER ROLE appuser WITH PASSWORD 'postgres';
 CREATE ROLE cloudsqlsuperuser;
+CREATE ROLE rm_app_user;
 GRANT cloudsqlsuperuser TO appuser;
 ALTER ROLE appuser WITH CREATEDB;
 ALTER ROLE appuser WITH CREATEROLE;
