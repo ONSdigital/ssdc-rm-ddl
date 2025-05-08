@@ -1,4 +1,4 @@
-FROM python:3.11.7-slim@sha256:89c610d12fe12b3e06f35d070f79e57cf14e2bd89c071435ee3678419b691603
+FROM python:3.12.10-slim@sha256:bae1a061b657f403aaacb1069a7f67d91f7ef5725ab17ca36abc5f1b2797ff92
 
 RUN pip3 install pipenv
 RUN apt-get update -y && apt-get install -y curl git postgresql-client
