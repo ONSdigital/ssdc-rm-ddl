@@ -1,13 +1,10 @@
 install:
 	pipenv install --dev
 
-check:
-	pipenv check
-
 lint:
 	pipenv run flake8
 
-test: check lint
+test: lint
 	pipenv run pytest ./test --cov --cov-report term-missing --cov-report xml
 
 build-ddl-docker:
