@@ -21,7 +21,10 @@ import org.hibernate.annotations.*;
 @DynamicUpdate
 @Table(
     name = "uac_qid_link",
-    indexes = {@Index(name = "qid_idx", columnList = "qid")})
+    indexes = {
+      @Index(name = "qid_idx", columnList = "qid"),
+      @Index(name = "uac_qid_caseid_idx", columnList = "caze_id")
+    })
 public class UacQidLink {
   @Id private UUID id;
 
