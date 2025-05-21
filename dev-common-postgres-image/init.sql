@@ -310,9 +310,6 @@ set schema 'casev3';
     create index qid_idx 
        on uac_qid_link (qid);
 
-    create index uac_qid_caseid_idx 
-       on uac_qid_link (caze_id);
-
     alter table if exists action_rule 
        add constraint FK6twtf1ksysh99e4g2ejmoy6c1 
        foreign key (collection_exercise_id) 
