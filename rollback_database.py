@@ -123,7 +123,7 @@ def update_version_record(rollback_version: str, db_cursor=None, db_connection=N
         db_cursor.execute("INSERT INTO ddl_version.version (version_tag, updated_timestamp)"
                           " VALUES (%(rollback_version)s, %(updated_timestamp)s)",
                           {'rollback_version': rollback_version,
-                           'updated_timestamp': f'{datetime.now(timezone.utc).isoformat()}Z'})
+                           'updated_timestamp': f'{datetime.now(timezone.utc).replace(tzinfo=None).isoformat()}Z'})
     except Exception:
         db_connection.rollback()
         print(f'ERROR: Failed to add rollback version to ddl_version.version table: {rollback_version}')

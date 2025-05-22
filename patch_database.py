@@ -22,7 +22,7 @@ def apply_patch(patch_file, patch_number, db_cursor, db_connection):
         db_cursor.execute("INSERT INTO ddl_version.patches (patch_number, applied_timestamp)"
                           " VALUES (%(patch_number)s, %(applied_timestamp)s)",
                           {'patch_number': patch_number,
-                           'applied_timestamp': f'{datetime.now(timezone.utc).isoformat()}Z'})
+                           'applied_timestamp': f'{datetime.now(timezone.utc).replace(tzinfo=None).isoformat()}Z'})
     except Exception:
         db_connection.rollback()
         print(f"FAILED ON PATCH: {patch_file.name}")
@@ -33,7 +33,7 @@ def update_patch_version(ddl_version_tag, db_cursor):
     db_cursor.execute("INSERT INTO ddl_version.version (version_tag, updated_timestamp)"
                       " VALUES (%(version)s, %(updated_timestamp)s)",
                       {'version': ddl_version_tag,
-                       'updated_timestamp': f'{datetime.now(timezone.utc).isoformat()}Z'})
+                       'updated_timestamp': f'{datetime.now(timezone.utc).replace(tzinfo=None).isoformat()}Z'})
 
 
 def patch_database(patches_directory, ddl_version_tag, db_cursor, db_connection):

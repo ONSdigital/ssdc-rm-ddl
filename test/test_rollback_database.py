@@ -16,9 +16,9 @@ def test_rollback_database():
     rollback_version = "v0.0.0-rollback.1"
 
     # Mock the results of the query to fetch applied database patch numbers
-    mock_db_cursor.fetchall.return_value = [(2, datetime.now(timezone.utc)),
-                                            (1, datetime.now(timezone.utc)),
-                                            (0, datetime.now(timezone.utc))]
+    mock_db_cursor.fetchall.return_value = [(2, datetime.now(timezone.utc).replace(tzinfo=None)),
+                                            (1, datetime.now(timezone.utc).replace(tzinfo=None)),
+                                            (0, datetime.now(timezone.utc).replace(tzinfo=None))]
 
     # When
     # Try to rollback the last 2 patches
@@ -87,8 +87,8 @@ def test_rollback_missing_rollback_patch():
 
     # Mock the results of the query to fetch applied database patch numbers,
     # with a patch number we don't have a rollback patch script for
-    mock_db_cursor.fetchall.return_value = [(3000, datetime.now(timezone.utc)),
-                                            (0, datetime.now(timezone.utc))]
+    mock_db_cursor.fetchall.return_value = [(3000, datetime.now(timezone.utc).replace(tzinfo=None)),
+                                            (0, datetime.now(timezone.utc).replace(tzinfo=None))]
 
     # When, then raises
     with pytest.raises(ValueError) as value_error:
@@ -112,9 +112,9 @@ def test_patch_database_fails_gracefully():
     rollback_version = "v0.0.0-rollback.1"
 
     # Mock the results of the query to fetch applied database patch numbers
-    mock_db_cursor.fetchall.return_value = [(2, datetime.now(timezone.utc)),
-                                            (1, datetime.now(timezone.utc)),
-                                            (0, datetime.now(timezone.utc))]
+    mock_db_cursor.fetchall.return_value = [(2, datetime.now(timezone.utc).replace(tzinfo=None)),
+                                            (1, datetime.now(timezone.utc).replace(tzinfo=None)),
+                                            (0, datetime.now(timezone.utc).replace(tzinfo=None))]
 
     execute_call_count = 0
     test_exception_message = 'exception raised by test side effect'
@@ -155,8 +155,8 @@ def test_user_confirmation(mock_input):
     mock_input.return_value = 'yes'
 
     # Mock the results of the query to fetch applied database patch numbers
-    mock_db_cursor.fetchall.return_value = [(1, datetime.now(timezone.utc)),
-                                            (0, datetime.now(timezone.utc))]
+    mock_db_cursor.fetchall.return_value = [(1, datetime.now(timezone.utc).replace(tzinfo=None)),
+                                            (0, datetime.now(timezone.utc).replace(tzinfo=None))]
 
     # When
     # Try to rollback the last 1 patches with user confirmation switched on
@@ -191,8 +191,8 @@ def test_user_confirmation_abort(mock_input):
     mock_input.return_value = 'no'
 
     # Mock the results of the query to fetch applied database patch numbers
-    mock_db_cursor.fetchall.return_value = [(1, datetime.now(timezone.utc)),
-                                            (0, datetime.now(timezone.utc))]
+    mock_db_cursor.fetchall.return_value = [(1, datetime.now(timezone.utc).replace(tzinfo=None)),
+                                            (0, datetime.now(timezone.utc).replace(tzinfo=None))]
 
     # When
     # Try to rollback the last 1 patches with user confirmation switched on, but the mock response is now "no"
