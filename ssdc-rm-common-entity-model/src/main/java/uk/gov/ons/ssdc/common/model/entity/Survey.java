@@ -40,6 +40,9 @@ public class Survey {
   @Column(nullable = false, length = 1)
   private char sampleSeparator;
 
+  @Column(nullable = true, length = 25)
+  private String sampleValidationName;
+
   @OneToMany(mappedBy = "survey")
   private List<CollectionExercise> collectionExercises;
 

@@ -227,6 +227,7 @@
         name varchar(255) not null,
         sample_definition_url varchar(255) not null,
         sample_separator char(1) not null,
+        sample_validation_name varchar(25),
         sample_validation_rules jsonb not null,
         sample_with_header_row boolean not null,
         primary key (id)
