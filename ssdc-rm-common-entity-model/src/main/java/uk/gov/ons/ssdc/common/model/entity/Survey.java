@@ -43,6 +43,9 @@ public class Survey {
   @Column(nullable = true, length = 25)
   private String sampleValidationName;
 
+  @Column(nullable = true, length = 10)
+  private String surveyAbbreviation;
+
   @OneToMany(mappedBy = "survey")
   private List<CollectionExercise> collectionExercises;
 

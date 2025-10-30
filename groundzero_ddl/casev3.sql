@@ -230,6 +230,7 @@
         sample_validation_name varchar(25),
         sample_validation_rules jsonb not null,
         sample_with_header_row boolean not null,
+        survey_abbreviation varchar(10),
         primary key (id)
     );
 
