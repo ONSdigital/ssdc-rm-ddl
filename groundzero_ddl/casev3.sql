@@ -289,6 +289,9 @@
     create index cases_case_ref_idx 
        on cases (case_ref);
 
+    create index case_idx 
+       on event (caze_id);
+
     create index qid_idx 
        on uac_qid_link (qid);
 
