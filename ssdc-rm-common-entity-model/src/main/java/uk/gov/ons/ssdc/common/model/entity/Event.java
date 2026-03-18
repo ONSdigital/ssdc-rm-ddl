@@ -6,7 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 import lombok.Data;
@@ -20,6 +22,9 @@ import org.hibernate.annotations.Type;
 @Data
 @Entity
 @DynamicUpdate
+@Table(
+    name = "event",
+    indexes = {@Index(name = "case_idx", columnList = "caze_id")})
 public class Event {
   @Id private UUID id;
 
