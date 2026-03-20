@@ -309,6 +309,9 @@ set schema 'casev3';
     create index cases_case_ref_idx 
        on cases (case_ref);
 
+    create index cases_collex_id_idx 
+       on cases (collection_exercise_id);
+
     create index case_idx 
        on event (caze_id);
 
@@ -529,8 +532,8 @@ CREATE TABLE ddl_version.version (version_tag varchar(256) PRIMARY KEY, updated_
 -- Version and patch number for the current ground zero,
 -- NOTE: These must be updated every time the repo is tagged
 -- NOTE: the CURRENT_VERSION in /patch_database.py must also be updated to match this version_tag
-INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (1100, current_timestamp);
-INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.3.7', current_timestamp);
+INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (1200, current_timestamp);
+INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.3.8', current_timestamp);
 
 -- Seed Support Tool UI permissions
 BEGIN;

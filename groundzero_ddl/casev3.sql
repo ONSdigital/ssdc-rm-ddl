@@ -289,6 +289,9 @@
     create index cases_case_ref_idx 
        on cases (case_ref);
 
+    create index cases_collex_id_idx 
+       on cases (collection_exercise_id);
+
     create index case_idx 
        on event (caze_id);
 
