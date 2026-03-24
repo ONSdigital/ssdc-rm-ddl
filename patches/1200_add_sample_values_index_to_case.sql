@@ -35,7 +35,7 @@ CREATE INDEX IF NOT EXISTS cases_collex_sample_idx ON casev3.cases
               )
     WITH (fastupdate = off);
 
--- Drop unused GIN indices.
+-- Drop unused GIN indexes.
 -- The operators that can use them (@>, <@, ?, ?|, ?&) are not used anywhere in the RM and self-service tools.
 DROP INDEX IF EXISTS casev3.case_sample_idx;
 DROP INDEX IF EXISTS casev3.uac_metadata_idx;
