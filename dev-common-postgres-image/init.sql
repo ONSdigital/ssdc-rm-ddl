@@ -309,9 +309,6 @@ set schema 'casev3';
     create index cases_case_ref_idx 
        on cases (case_ref);
 
-    create index cases_collex_id_idx 
-       on cases (collection_exercise_id);
-
     create index case_idx 
        on event (caze_id);
 
@@ -616,3 +613,38 @@ INSERT INTO casev3.email_template (pack_code, description, notify_template_id, n
 ('MNE_EN_HMS', 'Main Notification Email', '883cee97-7a41-4fdb-8a09-0972c86b9375', 'Office_for_National_Statistics_surveys_NHS', null, '["__uac__", "PORTAL_ID", "COLLEX_OPEN_DATE", "COLLEX_CLOSE_DATE", "FIRST_NAME", "__sensitive__.LAST_NAME"]'),
 ('MRE_EN_HMS', 'Main Reminder Email', '1b46b5e1-e247-48b3-b3b3-bf949efd79cb', 'Office_for_National_Statistics_surveys_NHS', null, '["__uac__", "PORTAL_ID", "COLLEX_OPEN_DATE", "COLLEX_CLOSE_DATE", "FIRST_NAME", "__sensitive__.LAST_NAME"]')
 ON CONFLICT (pack_code) DO UPDATE SET (description, notify_template_id, metadata, template) = (EXCLUDED.description, EXCLUDED.notify_template_id, EXCLUDED.metadata, EXCLUDED.template);
+-- GIN indexes
+-- As Hibernate supports only simple B-tree indexes, more complex indexes are
+-- created manually in this file.
+BEGIN;
+
+-- This extension allows indexing arbitrary substrings.
+CREATE EXTENSION IF NOT EXISTS pg_trgm SCHEMA public;
+-- This extension allows a GIN index on collection_exercise.
+CREATE EXTENSION IF NOT EXISTS btree_gin SCHEMA public;
+
+-- Helper function returning all values in sample and sample_sensitive, separated by 0x1
+CREATE OR REPLACE FUNCTION casev3.flatten_sample_for_search(sample jsonb, sample_sensitive jsonb)
+  RETURNS TEXT IMMUTABLE LANGUAGE sql AS $$
+    SELECT LOWER(REPLACE(
+      string_agg(val, E'\x1F'), -- values separated by a nonprintable character
+      ' ', ''                   -- spaces stripped so search is not sensitive to them
+    ))
+    FROM jsonb_each_text(
+      COALESCE(sample, '{}'::jsonb) || COALESCE(sample_sensitive, '{}'::jsonb)
+    ) AS x(ky, val)
+  $$;
+
+-- Add an index on collex_id and the flattened sample.
+-- fastupdate must be off, otherwise the planner won't pick it. Inserts are still fast.
+CREATE INDEX IF NOT EXISTS cases_collex_sample_idx ON casev3.cases
+    USING GIN (
+               collection_exercise_id,
+               casev3.flatten_sample_for_search(
+                       sample,
+                       sample_sensitive
+               ) public.gin_trgm_ops
+              )
+    WITH (fastupdate = off);
+
+COMMIT;

@@ -29,10 +29,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @DynamicUpdate
 @Table(
     name = "cases",
-    indexes = {
-      @Index(name = "cases_case_ref_idx", columnList = "case_ref"),
-      @Index(name = "cases_collex_id_idx", columnList = "collection_exercise_id")
-    })
+    indexes = {@Index(name = "cases_case_ref_idx", columnList = "case_ref")})
 public class Case {
 
   @Id private UUID id;
