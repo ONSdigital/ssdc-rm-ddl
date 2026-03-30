@@ -31,7 +31,4 @@ CREATE INDEX IF NOT EXISTS cases_collex_sample_idx ON casev3.cases
               )
     WITH (fastupdate = off);
 
--- Update planner statistics for the new index.
-ANALYZE casev3.cases;
-
 COMMIT;
