@@ -39,7 +39,7 @@ done
 popd || exit 1
 
 # Create indexes
-psql "$PSQL_CONNECT_WRITE_MODE" -f indexes/GIN_indexes_applied_by_groundzero.sql
+psql "$PSQL_CONNECT_WRITE_MODE" -f indexes/GIN_indexes.sql
 
 # Seed the packcode templates
 psql "$PSQL_CONNECT_WRITE_MODE" -f packcode_templates/export_file_templates.sql

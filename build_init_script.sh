@@ -33,4 +33,7 @@ cat groundzero_ddl/packcode_templates/export_file_templates.sql
 echo ""
 echo "-- Email Template"
 cat groundzero_ddl/packcode_templates/email_templates.sql
+echo ""
+echo "-- GIN indexes"
+cat groundzero_ddl/indexes/GIN_indexes.sql
 } > dev-common-postgres-image/init.sql
