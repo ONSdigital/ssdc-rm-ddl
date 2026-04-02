@@ -24,7 +24,10 @@ import org.hibernate.annotations.Type;
 @DynamicUpdate
 @Table(
     name = "event",
-    indexes = {@Index(name = "case_idx", columnList = "caze_id")})
+    indexes = {
+      @Index(name = "case_idx", columnList = "caze_id"),
+      @Index(name = "event_uac_qid_link_id_idx", columnList = "uac_qid_link_id")
+    })
 public class Event {
   @Id private UUID id;
 
