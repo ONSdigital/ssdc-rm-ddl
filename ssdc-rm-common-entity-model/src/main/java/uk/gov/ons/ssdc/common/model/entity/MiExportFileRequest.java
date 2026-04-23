@@ -27,7 +27,8 @@ public class MiExportFileRequest {
   @ManyToOne(optional = false)
   private CollectionExercise collectionExercise;
 
-  // Not a FK to ExportFileTemplate - MI rows are historical snapshots and must survive template deletion
+  // Not a FK to ExportFileTemplate - MI rows are historical snapshots and must survive template
+  // deletion
   @Column(nullable = false)
   private String packCode;
 

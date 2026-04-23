@@ -29,10 +29,11 @@ public class Application {
 
   private static void generate(Class dialect, String schemaName, String... packagesName) {
 
-    MetadataSources metadata = new MetadataSources(
-        new StandardServiceRegistryBuilder()
-            .applySetting("hibernate.dialect", dialect.getName())
-            .build());
+    MetadataSources metadata =
+        new MetadataSources(
+            new StandardServiceRegistryBuilder()
+                .applySetting("hibernate.dialect", dialect.getName())
+                .build());
 
     for (String packageName : packagesName) {
       System.out.println("packageName: " + packageName);
@@ -50,7 +51,7 @@ public class Application {
     export.setOutputFile(filename);
     export.setFormat(true);
 
-    //can change the output here
+    // can change the output here
     EnumSet<TargetType> enumSet = EnumSet.of(TargetType.SCRIPT);
     export.execute(enumSet, SchemaExport.Action.CREATE, metadataImplementor);
   }
@@ -58,9 +59,8 @@ public class Application {
   public static final List<Class<?>> getClasses(String packageName) {
     String path = packageName.replaceAll("\\.", File.separator);
     List<Class<?>> classes = new ArrayList<>();
-    String[] classPathEntries = System.getProperty("java.class.path").split(
-        System.getProperty("path.separator")
-    );
+    String[] classPathEntries =
+        System.getProperty("java.class.path").split(System.getProperty("path.separator"));
 
     String name;
     for (String classpathEntry : classPathEntries) {
