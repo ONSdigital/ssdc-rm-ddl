@@ -231,6 +231,42 @@ set schema 'casev3';
         primary key (id)
     );
 
+    create table mi_email_request (
+        id bigserial not null,
+        created_at timestamp with time zone not null,
+        daily_email_requests integer not null,
+        pack_code varchar(255) not null,
+        snapshot_date date not null,
+        total_email_requests integer not null,
+        collection_exercise_id uuid not null,
+        primary key (id),
+        constraint uq_mi_email_request unique (collection_exercise_id, pack_code, snapshot_date)
+    );
+
+    create table mi_export_file_request (
+        id bigserial not null,
+        created_at timestamp with time zone not null,
+        daily_export_file_requests integer not null,
+        pack_code varchar(255) not null,
+        snapshot_date date not null,
+        total_export_file_requests integer not null,
+        collection_exercise_id uuid not null,
+        primary key (id),
+        constraint uq_mi_export_file_request unique (collection_exercise_id, pack_code, snapshot_date)
+    );
+
+    create table mi_response_rate (
+        id bigserial not null,
+        created_at timestamp with time zone not null,
+        launched_count integer not null,
+        receipted_count integer not null,
+        snapshot_date date not null,
+        total_case_count integer not null,
+        collection_exercise_id uuid not null,
+        primary key (id),
+        constraint uq_mi_response_rate unique (collection_exercise_id, snapshot_date)
+    );
+
     create table sms_template (
         pack_code varchar(255) not null,
         description varchar(255) not null,
@@ -451,6 +487,21 @@ set schema 'casev3';
        foreign key (job_id) 
        references job;
 
+    alter table if exists mi_email_request 
+       add constraint FKsxiygxf780dbpd8pri18f9s17 
+       foreign key (collection_exercise_id) 
+       references collection_exercise;
+
+    alter table if exists mi_export_file_request 
+       add constraint FKmxeys20naitne09r6pnh40vqx 
+       foreign key (collection_exercise_id) 
+       references collection_exercise;
+
+    alter table if exists mi_response_rate 
+       add constraint FKpwdd5j7bbj9dl1ow02nwlw8hw 
+       foreign key (collection_exercise_id) 
+       references collection_exercise;
+
     alter table if exists uac_qid_link 
        add constraint FKngo7bm72f0focdujjma78t4nk 
        foreign key (caze_id) 
@@ -532,8 +583,8 @@ CREATE TABLE ddl_version.version (version_tag varchar(256) PRIMARY KEY, updated_
 -- Version and patch number for the current ground zero,
 -- NOTE: These must be updated every time the repo is tagged
 -- NOTE: the CURRENT_VERSION in /patch_database.py must also be updated to match this version_tag
-INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (1300, current_timestamp);
-INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.3.9', current_timestamp);
+INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (1400, current_timestamp);
+INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.4.0', current_timestamp);
 
 -- Seed Support Tool UI permissions
 BEGIN;
