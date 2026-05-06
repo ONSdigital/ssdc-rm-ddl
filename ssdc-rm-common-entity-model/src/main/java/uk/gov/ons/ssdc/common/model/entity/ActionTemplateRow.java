@@ -30,7 +30,7 @@ public class ActionTemplateRow {
 
   @Column private Integer cohort;
 
-  @Column private Integer offset;
+  @Column private Integer timeOffset;
 
   @Column private OffsetDateTime triggerTime;
 }

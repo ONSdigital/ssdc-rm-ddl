@@ -72,7 +72,7 @@ set schema 'casev3';
         id uuid not null,
         action_type varchar(255) not null check (action_type in ('EXPORT_FILE','OUTBOUND_TELEPHONE','FACE_TO_FACE','DEACTIVATE_UAC','SMS','EMAIL','EQ_FLUSH')),
         cohort integer,
-        offset integer,
+        time_offset integer,
         trigger_time timestamp(6) with time zone,
         action_template_id uuid not null,
         email_template_pack_code varchar(255),

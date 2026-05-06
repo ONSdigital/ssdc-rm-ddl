@@ -17,7 +17,7 @@ CREATE TABLE casev3.action_template_row (
     id uuid NOT NULL,
     action_type varchar(255) NOT NULL CHECK (action_type IN ('EXPORT_FILE','OUTBOUND_TELEPHONE','FACE_TO_FACE','DEACTIVATE_UAC','SMS','EMAIL','EQ_FLUSH')),
     cohort integer,
-    offset integer,
+    time_offset integer,
     trigger_time timestamp(6) with time zone,
     action_template_id uuid NOT NULL,
     email_template_pack_code varchar(255),
