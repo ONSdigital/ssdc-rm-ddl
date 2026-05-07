@@ -1,6 +1,6 @@
 -- RM SQL DATABASE UPDATE SCRIPT
 -- ****************************************************************************
--- Number: 1500
+-- Number: 1600
 -- Purpose: Create Action Template tables and link to Collection Exercise
 -- Author: Serena Crocker
 -- ****************************************************************************
