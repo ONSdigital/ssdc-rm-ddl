@@ -40,6 +40,9 @@ GRANT SELECT, INSERT ON casev3.user_group TO rm_app_user;
 GRANT SELECT, INSERT, DELETE ON casev3.user_group_admin TO rm_app_user;
 GRANT SELECT, INSERT, DELETE ON casev3.user_group_member TO rm_app_user;
 GRANT SELECT, INSERT, DELETE ON casev3.user_group_permission TO rm_app_user;
+GRANT SELECT, INSERT ON casev3.mi_response_rate TO rm_app_user;
+GRANT SELECT, INSERT ON casev3.mi_email_request TO rm_app_user;
+GRANT SELECT, INSERT ON casev3.mi_export_file_request TO rm_app_user;
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON exceptionmanager.quarantined_message TO rm_app_user;
 GRANT SELECT, UPDATE, INSERT, DELETE ON exceptionmanager.auto_quarantine_rule TO rm_app_user;
