@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
+# Set the container runtime based on architecture, default to docker for amd64 and podman for arm64
+DOCKER=$(if [ "$(uname -m)" = "arm64" ]; then echo podman; else echo docker; fi)
+
 POSTGRES_CONTAINER=dev-postgres-ddl
+
 echo "Waiting for [$POSTGRES_CONTAINER] to be ready"
 
 while true; do
-  response=$(docker inspect $POSTGRES_CONTAINER -f "{{ .State.Health.Status }}")
+  response=$($DOCKER inspect $POSTGRES_CONTAINER -f "{{ .State.Health.Status }}")
   if [[ "$response" == "healthy" ]]; then
     echo "[$POSTGRES_CONTAINER] is ready"
     break
