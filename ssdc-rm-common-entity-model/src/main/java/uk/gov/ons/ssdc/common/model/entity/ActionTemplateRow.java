@@ -6,7 +6,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.util.UUID;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
@@ -32,5 +32,5 @@ public class ActionTemplateRow {
 
   @Column private Integer timeOffset;
 
-  @Column private OffsetDateTime triggerTime;
+  @Column private OffsetTime triggerTime;
 }

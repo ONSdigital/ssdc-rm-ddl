@@ -26,5 +26,8 @@ CREATE TABLE casev3.action_template_row (
     CONSTRAINT fk_action_template_row_email_template FOREIGN KEY (email_template_pack_code) REFERENCES casev3.email_template (pack_code)
 );
 
+GRANT SELECT, INSERT, UPDATE, DELETE ON casev3.action_template TO rm_app_user;
+GRANT SELECT, INSERT, UPDATE, DELETE ON casev3.action_template_row TO rm_app_user;
+
 ALTER TABLE IF EXISTS casev3.collection_exercise ADD COLUMN template_id uuid;
 ALTER TABLE IF EXISTS casev3.collection_exercise ADD CONSTRAINT fk_collection_exercise_action_template FOREIGN KEY (template_id) REFERENCES casev3.action_template (id);
