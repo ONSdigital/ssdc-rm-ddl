@@ -10,7 +10,8 @@ CREATE TABLE casev3.action_template (
     name varchar(255) NOT NULL,
     survey_id uuid NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT uq_action_template_name UNIQUE (name)
+    CONSTRAINT uq_action_template_name UNIQUE (name),
+    CONSTRAINT fk_action_template_survey FOREIGN KEY (survey_id) REFERENCES casev3.survey (id)
 );
 
 CREATE TABLE casev3.action_template_row (
@@ -18,7 +19,7 @@ CREATE TABLE casev3.action_template_row (
     action_type varchar(255) NOT NULL CHECK (action_type IN ('EXPORT_FILE','OUTBOUND_TELEPHONE','FACE_TO_FACE','DEACTIVATE_UAC','SMS','EMAIL','EQ_FLUSH')),
     cohort integer,
     time_offset integer,
-    trigger_time timestamp(6) with time zone,
+    trigger_time time(6),
     action_template_id uuid NOT NULL,
     email_template_pack_code varchar(255),
     PRIMARY KEY (id),
