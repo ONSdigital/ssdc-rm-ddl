@@ -52,4 +52,7 @@ public class CollectionExercise {
   @Type(JsonBinaryType.class)
   @Column(nullable = false, columnDefinition = "jsonb")
   private CollectionInstrumentSelectionRule[] collectionInstrumentSelectionRules;
+
+  @ManyToOne(optional = true)
+  private ActionTemplate template;
 }
