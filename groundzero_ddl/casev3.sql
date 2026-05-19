@@ -40,6 +40,25 @@
         primary key (id)
     );
 
+    create table action_template (
+        id uuid not null,
+        name varchar(255) not null,
+        survey_id uuid not null,
+        primary key (id),
+        constraint uq_action_template_name unique (name)
+    );
+
+    create table action_template_row (
+        id uuid not null,
+        action_type varchar(255) not null check (action_type in ('EXPORT_FILE','OUTBOUND_TELEPHONE','FACE_TO_FACE','DEACTIVATE_UAC','SMS','EMAIL','EQ_FLUSH')),
+        cohort integer,
+        day_offset integer,
+        trigger_time time(6),
+        action_template_id uuid not null,
+        email_template_pack_code varchar(255),
+        primary key (id)
+    );
+
     create table cases (
         id uuid not null,
         case_ref bigint,
@@ -79,6 +98,7 @@
         reference varchar(255) not null,
         start_date timestamp with time zone not null,
         survey_id uuid not null,
+        template_id uuid,
         primary key (id)
     );
 
@@ -387,6 +407,21 @@
        foreign key (survey_id) 
        references survey;
 
+    alter table if exists action_template 
+       add constraint FKhtru1j506xjphlgh83rr3jde0 
+       foreign key (survey_id) 
+       references survey;
+
+    alter table if exists action_template_row 
+       add constraint FKgk9mlsqoh0roecv2majo845kc 
+       foreign key (action_template_id) 
+       references action_template;
+
+    alter table if exists action_template_row 
+       add constraint FKne10vl0etmam7ribajea2jxh8 
+       foreign key (email_template_pack_code) 
+       references email_template;
+
     alter table if exists cases 
        add constraint FKrl77p02uu7a253tn2ro5mitv5 
        foreign key (collection_exercise_id) 
@@ -406,6 +441,11 @@
        add constraint FKrv1ksptm37exmrbj0yutm6fla 
        foreign key (survey_id) 
        references survey;
+
+    alter table if exists collection_exercise 
+       add constraint FKbma6aj4791ueintch54omx32a 
+       foreign key (template_id) 
+       references action_template;
 
     alter table if exists event 
        add constraint FKhgvw8xq5panw486l3varef7pk 
