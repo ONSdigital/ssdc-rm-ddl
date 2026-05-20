@@ -91,3 +91,6 @@ nb-configuration.xml
 
 # Megalinter reports
 megalinter-reports/
+
+# Podman secrets
+podman-build-secret*

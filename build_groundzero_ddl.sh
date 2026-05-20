@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Set the container runtime based on architecture, default to docker for amd64 and podman for arm64
+DOCKER=$(if [ "$(uname -m)" = "arm64" ]; then echo podman; else echo docker; fi)
+
 set -e
 rm groundzero_ddl/casev3.sql
 rm groundzero_ddl/uacqid.sql
@@ -57,5 +61,5 @@ java -jar target/ssdc-rm-ddl-1.0-SNAPSHOT.jar exceptionmanager uk.gov.ons.ssdc.e
 ./build_init_script.sh
 
 pushd dev-common-postgres-image || exit 1
-docker build . -t europe-west2-docker.pkg.dev/ssdc-rm-ci/docker/ssdc-rm-dev-common-postgres:latest
+$DOCKER build . --platform linux/amd64 -t europe-west2-docker.pkg.dev/ssdc-rm-ci/docker/ssdc-rm-dev-common-postgres:latest
 popd || exit 1
