@@ -1,5 +1,5 @@
 format-check:
-	mvn fmt:check pmd:check
+	mvn spotless:check pmd:check
 
 build:
 	mvn compile
