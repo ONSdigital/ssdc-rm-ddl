@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import lombok.Getter;
-import src.main.java.uk.gov.ons.ssdc.common.model.entity.EqLaunchSettings;
 
 @Getter
 public class CollectionInstrumentSelectionRule implements Serializable {
