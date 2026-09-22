@@ -71,9 +71,9 @@ set schema 'casev3';
     create table action_template_row (
         id uuid not null,
         action_type varchar(255) not null check (action_type in ('EXPORT_FILE','OUTBOUND_TELEPHONE','FACE_TO_FACE','DEACTIVATE_UAC','SMS','EMAIL','EQ_FLUSH')),
-        cohort integer,
-        day_offset integer,
-        trigger_time time(6),
+        cohort integer not null,
+        day_offset integer not null,
+        trigger_time time(6) not null,
         action_template_id uuid not null,
         email_template_pack_code varchar(255),
         primary key (id)
@@ -623,8 +623,8 @@ CREATE TABLE ddl_version.version (version_tag varchar(256) PRIMARY KEY, updated_
 -- Version and patch number for the current ground zero,
 -- NOTE: These must be updated every time the repo is tagged
 -- NOTE: the CURRENT_VERSION in /patch_database.py must also be updated to match this version_tag
-INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (1600, current_timestamp);
-INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.5.0', current_timestamp);
+INSERT INTO ddl_version.patches (patch_number, applied_timestamp) VALUES (1700, current_timestamp);
+INSERT INTO ddl_version.version (version_tag, updated_timestamp) VALUES ('v1.6.0', current_timestamp);
 
 -- Seed Support Tool UI permissions
 BEGIN;
