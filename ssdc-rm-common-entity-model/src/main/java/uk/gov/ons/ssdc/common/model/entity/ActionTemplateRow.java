@@ -28,9 +28,12 @@ public class ActionTemplateRow {
   @ManyToOne(optional = true)
   private EmailTemplate emailTemplate;
 
-  @Column private Integer cohort;
+  @Column(nullable = false)
+  private Integer cohort;
 
-  @Column private Integer dayOffset;
+  @Column(nullable = false)
+  private Integer dayOffset;
 
-  @Column private OffsetTime triggerTime;
+  @Column(nullable = false)
+  private OffsetTime triggerTime;
 }

@@ -51,9 +51,9 @@
     create table action_template_row (
         id uuid not null,
         action_type varchar(255) not null check (action_type in ('EXPORT_FILE','OUTBOUND_TELEPHONE','FACE_TO_FACE','DEACTIVATE_UAC','SMS','EMAIL','EQ_FLUSH')),
-        cohort integer,
-        day_offset integer,
-        trigger_time time(6),
+        cohort integer not null,
+        day_offset integer not null,
+        trigger_time time(6) not null,
         action_template_id uuid not null,
         email_template_pack_code varchar(255),
         primary key (id)

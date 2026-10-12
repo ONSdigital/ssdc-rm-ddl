@@ -1,11 +1,12 @@
-package src.main.java.uk.gov.ons.ssdc.common.model.entity;
+package uk.gov.ons.ssdc.common.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
 import lombok.Getter;
 
 @Getter
-public class EqLaunchSettings {
+public class EqLaunchSettings implements Serializable {
 
   private final String sampleField;
   private final String launchDataFieldName;
